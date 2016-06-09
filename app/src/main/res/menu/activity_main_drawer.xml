@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_menu_homein"
+            android:title="Inicio" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_producto"
+            android:title="Productos" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_ventas"
+            android:title="Ventas" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_gastos"
+            android:title="Gastos" />
+    </group>
+
+    <item android:title="Razones Finacieras">
+        <menu>
+            <item
+                android:id="@+id/nav_razones"
+                android:icon="@drawable/ic_menu_razones"
+                android:title="Razones Financieras" />
+            <item
+                android:id="@+id/nav_graficos"
+                android:icon="@drawable/ic_menu_graficos"
+                android:title="Graficos" />
+        </menu>
+    </item>
+    <item android:title="Configuracion">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_configuracion"
+                android:title="Configuracion" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_cerrarsecion"
+                android:title="Cerrar Sesión" />
+        </menu>
+    </item>
+
+</menu>
