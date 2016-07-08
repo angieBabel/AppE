@@ -3,19 +3,19 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_homein"
             android:title="Inicio" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_producto"
             android:icon="@drawable/ic_menu_producto"
             android:title="Productos" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_ventas"
             android:icon="@drawable/ic_menu_ventas"
             android:title="Ventas" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_gastos"
             android:icon="@drawable/ic_menu_gastos"
             android:title="Gastos" />
     </group>
@@ -35,11 +35,11 @@
     <item android:title="Configuracion">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_conf"
                 android:icon="@drawable/ic_menu_configuracion"
                 android:title="Configuracion" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_cerrar"
                 android:icon="@drawable/ic_menu_cerrarsecion"
                 android:title="Cerrar Sesión" />
         </menu>
