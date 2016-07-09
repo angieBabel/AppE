@@ -1,5 +1,6 @@
 package com.example.yoo.appeb;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -15,6 +16,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    Typeface face= Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
     //add
     NavigationView navigationView = null;
     Toolbar toolbar = null;

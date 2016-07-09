@@ -21,17 +21,15 @@
         android:layout_weight="0.20" />
 
     <TextView
+        android:id="@+id/textTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Easy business"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#133040"
-        android:textAlignment="viewStart" />
+        android:textColor="#133040" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/textCorreo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="easy.business@gmail.com"
         android:textColor="#133040" />
