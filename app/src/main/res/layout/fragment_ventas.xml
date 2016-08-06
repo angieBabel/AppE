@@ -1,10 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.yoo.appeb.VentasFragment">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.yoo.appeb.VentasFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -23,13 +30,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <ImageView
-                    android:layout_width="68dp"
-                    android:layout_height="68dp"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
                     android:id="@+id/imageView3"
                     android:src="@drawable/ic_menu_ventas"
-                    android:adjustViewBounds="true" />
+                    android:adjustViewBounds="true"
+                    android:layout_weight="2" />
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="242dp"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Ventas"
@@ -47,27 +55,7 @@
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:id="@+id/TituloListaProductos"
-            android:layout_margin="5dp"
-            android:radius="10dp">
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Lista de productos"
-                android:id="@+id/textView3"
-                android:gravity="center_vertical|center_horizontal"
-                android:textSize="25dp"
-                android:textStyle="bold" />
-        </android.support.v7.widget.CardView>
-
-
-
-        <android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="289dp"
+            android:layout_height="match_parent"
             android:id="@+id/ListaProductos"
             android:layout_margin="10dp"
             android:radius="10dp">
@@ -75,19 +63,14 @@
         </android.support.v7.widget.CardView>
 
 
-
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Agregar Producto"
-            android:id="@+id/button"
-            android:background="#53e082"
-            android:textColor="#fcfafa"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textSize="25dp" />
     </LinearLayout>
-
-
 </RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/button" />
+</android.support.design.widget.CoordinatorLayout>

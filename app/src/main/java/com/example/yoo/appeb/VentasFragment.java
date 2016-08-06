@@ -26,4 +26,6 @@ public class VentasFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_ventas, container, false);
     }
 
+
+
 }
