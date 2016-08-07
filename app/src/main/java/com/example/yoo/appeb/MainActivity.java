@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         //code
         //Set the fragment initially
-        MainFragment fragment = new MainFragment();
+        fragmentaddproducto fragment = new fragmentaddproducto();
         android.support.v4.app.FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
-            fragment.getActivity().getActionBar().setTitle("Producto");
 
         } else if (id == R.id.nav_ventas) {
             //Define la actividad

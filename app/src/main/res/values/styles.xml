@@ -13,6 +13,7 @@
         <item name="background">@color/background</item>
         <item name="android:button">@color/button</item>
 
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -23,5 +24,9 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="MyButton" style="@style/Widget.AppCompat.Button">
+        <item name="colorControlHighlight">@color/button</item>
+        <item name="colorButtonNormal">@color/button</item>
+    </style>
 
 </resources>
