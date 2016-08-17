@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             //code
             //Set the fragment initially
-            MainFragment fragment = new MainFragment();
+            //MainFragment fragment = new MainFragment();
+            addnuevoproducto fragment = new addnuevoproducto();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);

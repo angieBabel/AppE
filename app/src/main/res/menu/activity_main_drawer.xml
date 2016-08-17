@@ -15,6 +15,10 @@
             android:icon="@drawable/ic_menu_ventas"
             android:title="Ventas" />
         <item
+            android:id="@+id/nav_cgastos"
+            android:icon="@drawable/ic_catalogogastos"
+            android:title="Catálogo Gastos" />
+        <item
             android:id="@+id/nav_gastos"
             android:icon="@drawable/ic_menu_gastos"
             android:title="Gastos" />
@@ -29,15 +33,15 @@
             <item
                 android:id="@+id/nav_graficos"
                 android:icon="@drawable/ic_menu_graficos"
-                android:title="Graficos" />
+                android:title="Gráficos" />
         </menu>
     </item>
-    <item android:title="Configuracion">
+    <item android:title="Configuración">
         <menu>
             <item
                 android:id="@+id/nav_conf"
                 android:icon="@drawable/ic_menu_configuracion"
-                android:title="Configuracion" />
+                android:title="Configuración" />
             <item
                 android:id="@+id/nav_cerrar"
                 android:icon="@drawable/ic_menu_cerrarsecion"
