@@ -17,7 +17,7 @@
         <item
             android:id="@+id/nav_cgastos"
             android:icon="@drawable/ic_catalogogastos"
-            android:title="Catálogo Gastos" />
+            android:title="Catálogo de Gastos" />
         <item
             android:id="@+id/nav_gastos"
             android:icon="@drawable/ic_menu_gastos"
