@@ -1,13 +1,75 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.yoo.appeb.RazonesFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    android:fitsSystemWindows="true"
+    tools:context="com.example.yoo.appeb.VentasFragment">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context="com.example.yoo.appeb.VentasFragment">
 
-</RelativeLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1">
+
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TituloProductos"
+                android:layout_marginTop="5dp"
+                android:layout_margin="10dp">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="71dp"
+                        android:layout_height="52dp"
+                        android:id="@+id/imageView3"
+                        android:src="@drawable/ic_menu_ventas"
+                        android:adjustViewBounds="true" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="62dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Razones Financieras"
+                        android:id="@+id/Rfinancieras"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="30dp"
+                        android:textIsSelectable="true"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ListaProductos"
+                android:layout_margin="10dp"
+                android:radius="10dp">
+
+            </android.support.v7.widget.CardView>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/button" />
+</android.support.design.widget.CoordinatorLayout>
