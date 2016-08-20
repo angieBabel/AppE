@@ -5,7 +5,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:fitsSystemWindows="true"
-tools:context="com.example.yoo.appeb.ProductoFragment">
+tools:context="com.example.yoo.appeb.editvent">
 
 <LinearLayout
     android:orientation="vertical"
@@ -16,27 +16,26 @@ tools:context="com.example.yoo.appeb.ProductoFragment">
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="57dp"
+        android:layout_height="wrap_content"
         android:id="@+id/TituloProductos"
         android:layout_marginTop="5dp"
-        android:layout_margin="10dp"
-        android:layout_weight="0.06">
+        android:layout_margin="10dp">
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:layout_width="62dp"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/imageView4"
-                android:src="@drawable/ic_primaryproductos" />
+                android:src="@drawable/ic_primaryventas" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="53dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Agregar producto"
+                android:text="Agregar venta"
                 android:id="@+id/Productos"
                 android:gravity="center_vertical|center_horizontal"
                 android:textSize="@dimen/abc_text_size_title_material"
@@ -49,12 +48,11 @@ tools:context="com.example.yoo.appeb.ProductoFragment">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginTop="10dp"
-        android:weightSum="1"
-        android:layout_weight=".2">
+        android:layout_marginTop="5dp"
+        android:weightSum="1">
 
         <TextView
             android:layout_width="fill_parent"
@@ -67,10 +65,11 @@ tools:context="com.example.yoo.appeb.ProductoFragment">
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:id="@+id/edtNombreProd"
             android:layout_gravity="center_horizontal"
-            android:elevation="1dp" />
+            android:elevation="1dp"
+            android:inputType="text" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -78,30 +77,52 @@ tools:context="com.example.yoo.appeb.ProductoFragment">
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Precio"
             android:id="@+id/textView4"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:elevation="1dp" />
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:id="@+id/edtPrecioProd"
             android:layout_gravity="center_horizontal"
             android:elevation="1dp"
-            android:numeric="decimal" />
+            android:numeric="decimal"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Abono"
+            android:id="@+id/textView5"
+            android:elevation="1dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="15dp" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="32dp"
+            android:id="@+id/edtabonoProd"
+            android:elevation="1dp"
+            android:numeric="decimal"
+            android:inputType="numberDecimal" />
+
+        <Button
+            android:layout_width="323dp"
+            android:layout_height="48dp"
+            android:text="Aceptar"
+            android:id="@+id/button"
+            android:background="@color/button"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textStyle="normal|bold"
+            android:elevation="1dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginTop="40dp" />
+
 
     </LinearLayout>
-
-    <Button
-        android:layout_width="323dp"
-        android:layout_height="48dp"
-        android:text="Aceptar"
-        android:id="@+id/button"
-        android:layout_gravity="bottom|center_horizontal"
-        android:background="@color/button"
-        android:textColor="#ffffff"
-        android:textSize="20dp"
-        android:textStyle="normal|bold"
-        android:elevation="1dp" />
 
 </LinearLayout>
 
