@@ -34,6 +34,11 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
             @Override
             public void onClick(View view) {
                 text.setText(String.valueOf("hola"));
+                addnuevoproducto fragment = new addnuevoproducto();
+                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                        getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                fragmentTransaction.commit();
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
             }
