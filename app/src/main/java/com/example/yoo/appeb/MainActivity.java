@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
             //code
             //Set the fragment initially
             //MainFragment fragment = new MainFragment();
-            addnuevoproducto fragment = new addnuevoproducto();
+            MainFragment fragment = new MainFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
