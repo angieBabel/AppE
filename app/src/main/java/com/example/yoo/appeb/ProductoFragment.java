@@ -29,11 +29,10 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
         View view = inflater.inflate(R.layout.fragment_producto, container, false);
         text = (TextView) view.findViewById(R.id.Productos);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabProducto);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                text.setText(String.valueOf("hola"));
                 addnuevoproducto fragment = new addnuevoproducto();
                 android.support.v4.app.FragmentTransaction fragmentTransaction =
                         getFragmentManager().beginTransaction();

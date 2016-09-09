@@ -50,18 +50,18 @@
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/ListaProductos"
+            android:id="@+id/ListaGastos"
             android:layout_margin="10dp">
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/listView" />
+                android:id="@+id/listViewgastos" />
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fabCatGastos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
