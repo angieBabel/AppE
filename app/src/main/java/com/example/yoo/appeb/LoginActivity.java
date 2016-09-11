@@ -29,6 +29,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -99,11 +100,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmaillognInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //attemptLogin();
-                Intent callmain = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(callmain);
-
-
+                attemptLogin();
             }
         });
 
@@ -389,7 +386,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                finish();
+                //finish();
+                //Toast.makeText(getApplicationContext(),
+                  //      "Si jalo, el pedo esta en el intent", Toast.LENGTH_SHORT).show();
+                Intent callmain = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(callmain);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
