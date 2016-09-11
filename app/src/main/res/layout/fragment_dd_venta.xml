@@ -62,7 +62,8 @@ tools:context="com.example.yoo.appeb.ddVenta">
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="30dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -118,26 +119,48 @@ tools:context="com.example.yoo.appeb.ddVenta">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp">
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Modalidad de pago"
+                    android:text="Modo de pago"
                     android:id="@+id/textView8"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="38dp"
                     android:elevation="1dp" />
 
-                <Spinner
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/spinner"
-                    android:spinnerMode="dialog" />
+                <RadioGroup
+                    android:id="@+id/ModopagoRB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <RadioButton
+                        android:text="Contado"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/pagoContado"
+                        android:layout_weight="1"
+                        android:layout_marginTop="15dp" />
+
+                    <RadioButton
+                        android:text="Credito"
+                        android:id="@+id/pagoCredito"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="15dp" />
+                </RadioGroup>
+
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/deudor"
+                android:visibility="gone"
                 android:layout_marginTop="15dp">
 
                 <TextView
