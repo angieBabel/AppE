@@ -1,15 +1,21 @@
 package com.example.yoo.appeb;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,6 +50,9 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
     ArrayAdapter<String> ad;
     ListView lista;
     ProgressDialog PD;
+    String user= "1";
+    public static final String KEY_datos="datos";
+    String datos;
 
     public ProductoFragment() {
         // Required empty public constructor
@@ -74,6 +83,37 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
 
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
+        lista = (ListView)getView().findViewById(R.id.listViewProductos);
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int position, long arg3) {
+                datos = (String) lista.getItemAtPosition(position);
+                //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                builder.setMessage("Seleccione una opción")
+                        .setTitle("")
+                        .setPositiveButton("Eliminar", new DialogInterface.OnClickListener()  {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Log.i("Dialogos", "Confirmacion Eliminar.");
+
+                            }
+                        })
+                        .setNegativeButton("Agregar Alumnos", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Log.i("Dialogos", "Confirmacion Agregar.");
+
+                                HeadlinesFragment.OnHeadlineSelectedListener mCallback = null;
+                                mCallback.editProduct(datos);
+                            }
+                        });
+                builder.show();
+
+            }
+        });
 
         PD = new ProgressDialog(getContext());
         PD.setMessage("Loading.....");
@@ -82,7 +122,7 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
 
     }
     public void ReadDataFromDB() {
-        lista = (ListView)getView().findViewById(R.id.listViewProductos);
+
         requestQueueLA = Volley.newRequestQueue(getActivity());
 
         PD.show();
@@ -99,7 +139,7 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
                         String nombre = producto.getString("nombre");
                         String precio = producto.getString("precio");
                         String usuario = producto.getString("id_usuario");
-                        if (usuario.equals("1")){
+                        if (usuario.equals(user)){
                             listaProductos.add(nombre + "  ,  " + precio);
                         };
 
@@ -135,6 +175,7 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
         ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaProductos);
         lista.setAdapter(ad);
 
+
     }
 
 
@@ -144,4 +185,28 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
     }
 
 
+    public static class HeadlinesFragment extends ListFragment {
+        OnHeadlineSelectedListener mCallback;
+
+        // Container Activity must implement this interface
+        public interface OnHeadlineSelectedListener {
+            public void editProduct (String dataP);
+        }
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+
+            // This makes sure that the container activity has implemented
+            // the callback interface. If not, it throws an exception
+            try {
+                mCallback = (OnHeadlineSelectedListener) activity;
+            } catch (ClassCastException e) {
+                throw new ClassCastException(activity.toString()
+                        + " must implement OnHeadlineSelectedListener");
+            }
+        }
+
+      //  ...
+    }
 }
