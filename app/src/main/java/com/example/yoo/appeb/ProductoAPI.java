@@ -22,6 +22,10 @@ import retrofit2.http.Query;*/
 
 public interface ProductoAPI {
 
+
+    @GET("productos.php")
+    Call <ModeloDatosList> getProductos();
+
     @GET("/productos.php")
     Call<List<producto>> productsList(
             @Path("idUsuario") String idUsuario);

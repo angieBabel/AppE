@@ -6,26 +6,26 @@ package com.example.yoo.appeb;
 
 public class producto {
     //variables
-    private int id_producto;
-    private int id_usuario;
+    private String id_producto;
+    private String id_usuario;
     private String nombre;
-    private int precio;
+    private String precio;
 
 
     //Getters and setters
-    public int getIdProducto() {
+    public String getIdProducto() {
         return id_producto;
     }
 
-    public void setIdProducto(int id_producto) {
+    public void setIdProducto(String id_producto) {
         this.id_producto = id_producto;
     }
 
-    public int getIdUsuario() {
+    public String getIdUsuario() {
         return id_usuario;
     }
 
-    public void setIdUsuario(int id_usuario) {
+    public void setIdUsuario(String id_usuario) {
         this.id_usuario = id_usuario;
     }
 
@@ -37,11 +37,11 @@ public class producto {
         this.nombre = nombre;
     }
 
-    public int getPrecio() {
+    public String getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(String precio) {
         this.precio = precio;
     }
 
