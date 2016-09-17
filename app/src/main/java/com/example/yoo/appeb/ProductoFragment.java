@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -102,12 +103,18 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
 
                             }
                         })
-                        .setNegativeButton("Agregar Alumnos", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Editar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 Log.i("Dialogos", "Confirmacion Agregar.");
 
-                                HeadlinesFragment.OnHeadlineSelectedListener mCallback = null;
-                                mCallback.editProduct(datos);
+                                editProducto fragment = new editProducto();
+                                Bundle args = new Bundle();
+                                args.putString("datos", datos);
+                                fragment.setArguments(args);
+                                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                                        getFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                                fragmentTransaction.commit();
                             }
                         });
                 builder.show();
@@ -185,7 +192,7 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
     }
 
 
-    public static class HeadlinesFragment extends ListFragment {
+    public static class HeadlinesFragment extends Fragment {
         OnHeadlineSelectedListener mCallback;
 
         // Container Activity must implement this interface

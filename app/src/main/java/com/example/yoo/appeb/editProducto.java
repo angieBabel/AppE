@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 /**
@@ -14,8 +16,9 @@ import android.widget.EditText;
  */
 public class editProducto extends Fragment {
 
-    private EditText nombreProd;
-    private EditText precioProd;
+    EditText nombreProd;
+    EditText precioProd;
+    String datos;
 
     public editProducto() {
         // Required empty public constructor
@@ -25,18 +28,31 @@ public class editProducto extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_producto, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_producto, container, false);
         // Inflate the layout for this fragment
         //String datos = getArguments() != null ? getArguments().getString("datos") : "email@email.com";
-        String datos = getArguments().getString("datos");
+        datos = getArguments().getString("datos");
+        Button agregar = (Button) view.findViewById(R.id.button);
+
+        return view;
+    }
+
+    public void editProd(){
+        
+    }
+
+
+    public void onActivityCreated(Bundle state) {
+        super.onActivityCreated(state);
+
+        Toast.makeText(getContext(),datos,Toast.LENGTH_LONG ).show();
         nombreProd = (EditText)getView().findViewById(R.id.edtNombreProd);
         precioProd = (EditText)getView().findViewById(R.id.edtPrecioProd);
 
         String[] dataArray = datos.split(",");
-        nombreProd.setText(dataArray[0].trim());
+        nombreProd.setText(dataArray[0]);
         precioProd.setText(dataArray[1].trim());
         //lista = (ListView)getView().findViewById(R.id.listViewProductos);
-        return view;
-    }
 
+    }
 }
