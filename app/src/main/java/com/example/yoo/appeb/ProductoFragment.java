@@ -25,8 +25,10 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -39,6 +41,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static android.R.attr.data;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,7 +50,10 @@ import java.util.Objects;
 public class ProductoFragment extends Fragment  implements NavigationView.OnNavigationItemSelectedListener {
 
     RequestQueue requestQueueLA;
+    RequestQueue requestQueueDelete;
     String showURL = "http://webcolima.com/wsecomapping/productos.php";
+    String deleteURL = "http://webcolima.com/wsecomapping/delProd.php";
+
     ArrayList<String> listaProductos= new ArrayList<String>();
     ArrayAdapter<String> ad;
     ListView lista;
@@ -54,6 +61,7 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
     String user= "1";
     public static final String KEY_datos="datos";
     String datos;
+    String idProd;
 
     public ProductoFragment() {
         // Required empty public constructor
@@ -100,6 +108,8 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
                         .setPositiveButton("Eliminar", new DialogInterface.OnClickListener()  {
                             public void onClick(DialogInterface dialog, int id) {
                                 Log.i("Dialogos", "Confirmacion Eliminar.");
+                                String[] data = datos.split(",");
+                                eliminar(data[0]);
 
                             }
                         })
@@ -183,6 +193,35 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
         ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaProductos);
         lista.setAdapter(ad);
 
+
+    }
+    public void eliminar(final String s){
+        requestQueueDelete = Volley.newRequestQueue(getContext());
+        StringRequest request = new StringRequest(Request.Method.POST, deleteURL, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getContext(),"Producto eliminado con éxito",Toast.LENGTH_LONG ).show();
+                ReadDataFromDB();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+                        parameters.put("idProducto", s);
+                return parameters;
+
+                // idC+","+rubro+", "+nombre+", "+costo
+            }
+        };
+        requestQueueDelete.add(request);
 
     }
 
