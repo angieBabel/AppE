@@ -146,8 +146,9 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
                         String nombre = producto.getString("nombre");
                         String precio = producto.getString("precio");
                         String usuario = producto.getString("id_usuario");
+                        String idP = producto.getString("id_producto");
                         if (usuario.equals(user)){
-                            listaProductos.add(nombre + "  ,  " + precio);
+                            listaProductos.add(idP+","+nombre + "  ,  " + precio);
                         };
 
 
