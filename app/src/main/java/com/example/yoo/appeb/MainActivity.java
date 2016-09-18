@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import static com.example.yoo.appeb.R.layout.fragment_edit_producto;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,  ProductoFragment.HeadlinesFragment.OnHeadlineSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
     //add
     NavigationView navigationView = null;
     Toolbar toolbar = null;

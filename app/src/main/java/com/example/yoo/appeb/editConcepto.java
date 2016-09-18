@@ -1,109 +1,196 @@
 package com.example.yoo.appeb;
 
-import android.content.Context;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.KissPK.appeb.R;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link editConcepto.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link editConcepto#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class editConcepto extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    EditText nombreConcepto;// edtNombreConcepto;
+    EditText precioConcpeto;//           edtPrecioConcepto
+    Spinner rubroExistente; //spinnerRE
+    EditText nuevoRubro; //edtTextNuevoRubro
+    String datos;
+    Button editarProd;
+    ArrayList<String> listaRubros= new ArrayList<String>();
+    ArrayAdapter<String> dataAdapter;
+    String[] dataArray;
+    RequestQueue requestQueueSend;
+    RequestQueue requestQueueGetRubros;
+    String editURL = "http://webcolima.com/wsecomapping/editConcepto.php";
+    String getURL = "http://webcolima.com/wsecomapping/rubros.php";
+    String user= "1";
 
-    private OnFragmentInteractionListener mListener;
 
     public editConcepto() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment editConcepto.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static editConcepto newInstance(String param1, String param2) {
-        editConcepto fragment = new editConcepto();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_concepto, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_agregargasto, container, false);
+        //text = (TextView) view.findViewById(R.id.Productos);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+        datos = getArguments().getString("datos");
+        //idC+","+rubro+", "+nombre+", "+costo
+        editarProd = (Button) view.findViewById(R.id.button);
+        editarProd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                requestQueueSend = Volley.newRequestQueue(getContext());
+                StringRequest request = new StringRequest(Request.Method.POST, editURL, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getContext(),"Producto modificado con éxito",Toast.LENGTH_LONG ).show();
+                        nombreConcepto.setText("");
+                        precioConcpeto.setText("");
+                        nuevoRubro.setText("");
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> parameters = new HashMap<String, String>();
+                       /* parameters.put("idConcepto", dataArray[0]);
+                        parameters.put("idRubro", nombreProd.getText().toString());
+                        parameters.put("nombre", precioProd.getText().toString());
+                        parameters.put("costo", precioProd.getText().toString());*/
+                        return parameters;
+
+                       // idC+","+rubro+", "+nombre+", "+costo
+                    }
+                };
+                requestQueueSend.add(request);
+            }
+        });
+
+        return view;
+    }
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+    public void onActivityCreated(Bundle state) {
+        super.onActivityCreated(state);
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+        nombreConcepto = (EditText)getView().findViewById(R.id.edtNombreConcepto);
+        precioConcpeto = (EditText)getView().findViewById(R.id.edtPrecioConcepto);
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        dataArray = datos.split(",");
+        nombreConcepto.setText(dataArray[2]);
+        precioConcpeto.setText(dataArray[3].trim());
+
+        LinearLayout layoutRE = (LinearLayout)getView().findViewById(R.id.RE);
+        LinearLayout layoutRN = (LinearLayout)getView().findViewById(R.id.RN);
+        RadioGroup RG = (RadioGroup)getView().findViewById(R.id.RubrosRB);
+        RG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+              @Override
+              public void onCheckedChanged(RadioGroup group, int checkedId) {
+                  switch(checkedId){
+                      case R.id.rubroE:
+                          // do operations specific to this selection
+                          mostrarRE(getView());
+                          break;
+
+                      case R.id.rubroN:
+                          // do operations specific to this selection
+                          mostrarRN(getView());
+                          break;
+                  }
+              }
+          }
+        );
+    }
+    public void mostrarRE(View view) {
+        //((TextView) view.findViewById(R.id.textView_superior)).setText(mItem.textoEncima);
+        ((LinearLayout) view.findViewById(R.id.RE)).setVisibility(View.VISIBLE);
+        ((LinearLayout) view.findViewById(R.id.RN)).setVisibility(View.GONE);
+        listaRubros.clear();
+        Spinner spinnerAlumAc = (Spinner)getView().findViewById(R.id.spinnerRE);
+        requestQueueGetRubros = Volley.newRequestQueue(getContext());
+        //listaA(la);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                getURL ,new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response)  {
+                try {
+                    JSONArray alumnos = response.getJSONArray("all");
+                    for (int i = 0; i < alumnos.length(); i++) {
+
+                        JSONObject alumno = alumnos.getJSONObject(i);
+                        String idRubro = alumno.getString("id_rubro");
+                        String nombre = alumno.getString("nombre");
+                        String usuario = alumno.getString("id_usuario");
+                        if (usuario.equals(user) || usuario.equals("0") ){
+                            listaRubros.add(idRubro + "\n" + nombre);
+                        };
+                        //listaA[i]=idaula;
+                    }
+                    dataAdapter.notifyDataSetChanged();
+
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.append(error.getMessage());
+
+            }
+        });
+
+        requestQueueGetRubros.add(jsonObjectRequest);
+        dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,listaRubros);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAlumAc.setAdapter(dataAdapter);
+        //spinnerAlumAc.setOnItemSelectedListener(AlumnoActividad.this);
+
+
+    }
+    public void mostrarRN(View view){
+        ((LinearLayout) view.findViewById(R.id.RN)).setVisibility(View.VISIBLE);
+        ((LinearLayout) view.findViewById(R.id.RE)).setVisibility(View.GONE);
     }
 }

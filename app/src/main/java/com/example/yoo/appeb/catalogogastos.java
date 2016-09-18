@@ -14,8 +14,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -88,7 +97,7 @@ public class catalogogastos extends Fragment {
                             public void onClick(DialogInterface dialog, int id) {
                                 Log.i("Dialogos", "Confirmacion Agregar.");
 
-                                editProducto fragment = new editProducto();
+                                editConcepto fragment = new editConcepto();
                                 Bundle args = new Bundle();
                                 args.putString("datos", datos);
                                 fragment.setArguments(args);
@@ -107,6 +116,64 @@ public class catalogogastos extends Fragment {
         PD.setMessage("Loading.....");
         PD.setCancelable(false);
         ReadDataFromDB();
+
+    }
+    public void ReadDataFromDB() {
+
+        requestQueueLA = Volley.newRequestQueue(getActivity());
+
+        PD.show();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,showURL,new com.android.volley.Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                listaGastos.add("Id Concepto          Costo");
+                try {
+                    JSONArray alumnos = response.getJSONArray("all");
+                    for (int i = 0; i < alumnos.length(); i++) {
+
+                        JSONObject producto = alumnos.getJSONObject(i);
+                        String rubro = producto.getString("nombrerubro");
+                        String nombre = producto.getString("nombre");
+                        String costo = producto.getString("costo");
+                        String usuario = producto.getString("id_usuario");
+                        String idC = producto.getString("id_concepto");
+                        if (usuario.equals(user)){
+                            listaGastos.add(idC+","+rubro+", "+nombre+", "+costo);
+                        };
+
+
+                    } // for loop ends
+                    ad.notifyDataSetChanged();
+
+                    PD.dismiss();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                PD.dismiss();
+                Toast.makeText(getContext(),error.toString(),Toast.LENGTH_LONG ).show();
+            }
+        });/*{
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> param = new HashMap<String,String>();
+                param.put("id_usuario", "1");
+                return param;
+            }
+        };*/
+
+        requestQueueLA.add(jsonObjectRequest);
+
+        ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaGastos);
+        lista.setAdapter(ad);
+
 
     }
 
