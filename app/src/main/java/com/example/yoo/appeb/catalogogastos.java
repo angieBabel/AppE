@@ -16,10 +16,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -27,6 +30,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -34,7 +39,9 @@ import java.util.ArrayList;
  */
 public class catalogogastos extends Fragment {
     RequestQueue requestQueueLA;
+    RequestQueue requestQueueDelete;
     String showURL = "http://webcolima.com/wsecomapping/catalogogastos.php";
+    String deleteURL = "http://webcolima.com/wsecomapping/delConcepto.php";
     ArrayList<String> listaGastos= new ArrayList<String>();
     ArrayAdapter<String> ad;
     ListView lista;
@@ -90,6 +97,8 @@ public class catalogogastos extends Fragment {
                         .setPositiveButton("Eliminar", new DialogInterface.OnClickListener()  {
                             public void onClick(DialogInterface dialog, int id) {
                                 Log.i("Dialogos", "Confirmacion Eliminar.");
+                                String[] data = datos.split(",");
+                                eliminar(data[0]);
 
                             }
                         })
@@ -174,6 +183,36 @@ public class catalogogastos extends Fragment {
         ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaGastos);
         lista.setAdapter(ad);
 
+
+    }
+    public void eliminar(final String s){
+        requestQueueDelete = Volley.newRequestQueue(getContext());
+        StringRequest request = new StringRequest(Request.Method.POST, deleteURL, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getContext(),"Producto eliminado con éxito",Toast.LENGTH_LONG ).show();
+                ad.clear();
+                ad.notifyDataSetChanged();
+                ReadDataFromDB();
+                ad.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("idConcepto", s);
+                return parameters;
+                // idC+","+rubro+", "+nombre+", "+costo
+            }
+        };
+        requestQueueDelete.add(request);
 
     }
 

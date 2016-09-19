@@ -41,13 +41,13 @@ public class editConcepto extends Fragment {
 
     EditText nombreConcepto;// edtNombreConcepto;
     EditText precioConcpeto;//           edtPrecioConcepto
-    Spinner rubroExistente; //spinnerRE
-    EditText nuevoRubro; //edtTextNuevoRubro
+    String rubroExistente; //spinnerRE
     String datos;
-    Button editarProd;
+
     ArrayList<String> listaRubros= new ArrayList<String>();
     ArrayAdapter<String> dataAdapter;
     String[] dataArray;
+    Spinner spinner;
     RequestQueue requestQueueSend;
     RequestQueue requestQueueGetRubros;
     String editURL = "http://webcolima.com/wsecomapping/editConcepto.php";
@@ -64,47 +64,18 @@ public class editConcepto extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_agregargasto, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_concepto, container, false);
         //text = (TextView) view.findViewById(R.id.Productos);
 
         datos = getArguments().getString("datos");
         //idC+","+rubro+", "+nombre+", "+costo
-        editarProd = (Button) view.findViewById(R.id.button);
+        Button editarProd = (Button) view.findViewById(R.id.button);
         editarProd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                requestQueueSend = Volley.newRequestQueue(getContext());
-                StringRequest request = new StringRequest(Request.Method.POST, editURL, new Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(getContext(),"Producto modificado con éxito",Toast.LENGTH_LONG ).show();
-                        nombreConcepto.setText("");
-                        precioConcpeto.setText("");
-                        nuevoRubro.setText("");
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> parameters = new HashMap<String, String>();
-                       /* parameters.put("idConcepto", dataArray[0]);
-                        parameters.put("idRubro", nombreProd.getText().toString());
-                        parameters.put("nombre", precioProd.getText().toString());
-                        parameters.put("costo", precioProd.getText().toString());*/
-                        return parameters;
-
-                       // idC+","+rubro+", "+nombre+", "+costo
-                    }
-                };
-                requestQueueSend.add(request);
+                editConcept();
             }
+
         });
 
         return view;
@@ -119,34 +90,8 @@ public class editConcepto extends Fragment {
         dataArray = datos.split(",");
         nombreConcepto.setText(dataArray[2]);
         precioConcpeto.setText(dataArray[3].trim());
-
-        LinearLayout layoutRE = (LinearLayout)getView().findViewById(R.id.RE);
-        LinearLayout layoutRN = (LinearLayout)getView().findViewById(R.id.RN);
-        RadioGroup RG = (RadioGroup)getView().findViewById(R.id.RubrosRB);
-        RG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-              @Override
-              public void onCheckedChanged(RadioGroup group, int checkedId) {
-                  switch(checkedId){
-                      case R.id.rubroE:
-                          // do operations specific to this selection
-                          mostrarRE(getView());
-                          break;
-
-                      case R.id.rubroN:
-                          // do operations specific to this selection
-                          mostrarRN(getView());
-                          break;
-                  }
-              }
-          }
-        );
-    }
-    public void mostrarRE(View view) {
-        //((TextView) view.findViewById(R.id.textView_superior)).setText(mItem.textoEncima);
-        ((LinearLayout) view.findViewById(R.id.RE)).setVisibility(View.VISIBLE);
-        ((LinearLayout) view.findViewById(R.id.RN)).setVisibility(View.GONE);
         listaRubros.clear();
-        Spinner spinnerAlumAc = (Spinner)getView().findViewById(R.id.spinnerRE);
+        spinner = (Spinner)getView().findViewById(R.id.spinnerRE);
         requestQueueGetRubros = Volley.newRequestQueue(getContext());
         //listaA(la);
 
@@ -184,13 +129,47 @@ public class editConcepto extends Fragment {
         requestQueueGetRubros.add(jsonObjectRequest);
         dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,listaRubros);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAlumAc.setAdapter(dataAdapter);
-        //spinnerAlumAc.setOnItemSelectedListener(AlumnoActividad.this);
-
-
+        spinner.setAdapter(dataAdapter);
     }
-    public void mostrarRN(View view){
-        ((LinearLayout) view.findViewById(R.id.RN)).setVisibility(View.VISIBLE);
-        ((LinearLayout) view.findViewById(R.id.RE)).setVisibility(View.GONE);
-    }
+
+    public void editConcept(){
+
+        String text = spinner.getSelectedItem().toString();
+        String[] rubros=text.split("\n");
+        rubroExistente=rubros[0].trim();
+
+        requestQueueSend = Volley.newRequestQueue(getContext());
+        StringRequest request = new StringRequest(Request.Method.POST, editURL, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getContext(),"Producto modificado con éxito",Toast.LENGTH_LONG ).show();
+                nombreConcepto.setText("");
+                precioConcpeto.setText("");
+                catalogogastos fragment = new catalogogastos();
+                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                        getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                fragmentTransaction.commit();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("idConcepto",dataArray[0]);
+                parameters.put("nombre", nombreConcepto.getText().toString());
+                parameters.put("costo", precioConcpeto.getText().toString());
+                parameters.put("idRubro", rubroExistente);
+                return parameters;
+            }
+            // idC+","+rubro+", "+nombre+", "+costo
+        };
+        requestQueueSend.add(request);
+    };
 }

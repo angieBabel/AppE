@@ -16,10 +16,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -27,15 +30,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GastoFragment extends Fragment {
+public class detalleGasto extends Fragment {
 
     RequestQueue requestQueueLA;
-    String showURL = "http://webcolima.com/wsecomapping/gastos.php";
+    RequestQueue requestQueueDelete;
+    String showURL = "http://webcolima.com/wsecomapping/detallegastos.php";
+    String deleteURL = "http://webcolima.com/wsecomapping/delGasto.php";
 
     ArrayList<String> listaProductos= new ArrayList<String>();
     ArrayAdapter<String> ad;
@@ -44,10 +51,10 @@ public class GastoFragment extends Fragment {
     String user= "1";
     public static final String KEY_datos="datos";
     String datos;
-    String idProd;
+    String idRubro;
 
 
-    public GastoFragment() {
+    public detalleGasto() {
         // Required empty public constructor
     }
 
@@ -57,19 +64,10 @@ public class GastoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_gasto, container, false);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabGasto);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addconcepto fragment = new addconcepto();
-                android.support.v4.app.FragmentTransaction fragmentTransaction =
-                        getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, fragment);
-                fragmentTransaction.commit();
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-            }
-        });
+        datos = getArguments().getString("datos");
+        String[] dataArray = datos.split(",");
+        idRubro= dataArray[0];
+
         return view;
     }
     public void onActivityCreated(Bundle state) {
@@ -87,18 +85,11 @@ public class GastoFragment extends Fragment {
 
                 builder.setMessage("Seleccione una opción")
                         .setTitle("")
-                        .setPositiveButton("Ver detalle", new DialogInterface.OnClickListener()  {
+                        .setPositiveButton("Eliminar", new DialogInterface.OnClickListener()  {
                             public void onClick(DialogInterface dialog, int id) {
-                                Log.i("Dialogos", "Confirmacion Agregar.");
-
-                                editProducto fragment = new editProducto();
-                                Bundle args = new Bundle();
-                                args.putString("datos", datos);
-                                fragment.setArguments(args);
-                                android.support.v4.app.FragmentTransaction fragmentTransaction =
-                                        getFragmentManager().beginTransaction();
-                                fragmentTransaction.replace(R.id.fragment_container, fragment);
-                                fragmentTransaction.commit();
+                                Log.i("Dialogos", "Confirmacion Eliminar.");
+                                String[] data = datos.split(",");
+                                eliminar(data[0]);
 
                             }
                         });
@@ -129,12 +120,15 @@ public class GastoFragment extends Fragment {
                     for (int i = 0; i < alumnos.length(); i++) {
 
                         JSONObject producto = alumnos.getJSONObject(i);
-                        String nombre = producto.getString("nombrerubro");
-                        String precio = producto.getString("totalgasto");
-                        String idR = producto.getString("rubro");
+                        String idG = producto.getString("idgasto");
+                        String concepto = producto.getString("nombreconcepto");
+                        String cantidad = producto.getString("cantidad");
                         String usuario = producto.getString("id_usuario");
-                        if (usuario.equals(user)){
-                            listaProductos.add(idR+","+nombre + "  ,  " + precio);
+                        String fecha = producto.getString("fecha");
+                        String tG = producto.getString("totalgasto");
+                        String idR = producto.getString("rubro");
+                        if (usuario.equals(user) && idR.equals(idRubro)){
+                            listaProductos.add(idG+","+concepto+ " , " + cantidad + " , " +fecha+ " , " +tG);
                         };
 
 
@@ -160,5 +154,35 @@ public class GastoFragment extends Fragment {
 
         ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaProductos);
         lista.setAdapter(ad);
+    }
+    public void eliminar(final String s){
+        requestQueueDelete = Volley.newRequestQueue(getContext());
+        StringRequest request = new StringRequest(Request.Method.POST, deleteURL, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getContext(),"Producto eliminado con éxito",Toast.LENGTH_LONG ).show();
+                ad.clear();
+                ad.notifyDataSetChanged();
+                ReadDataFromDB();
+                ad.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("idGasto", s);
+                return parameters;
+                // idC+","+rubro+", "+nombre+", "+costo
+            }
+        };
+        requestQueueDelete.add(request);
+
     }
 }

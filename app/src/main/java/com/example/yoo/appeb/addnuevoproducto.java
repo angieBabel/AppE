@@ -70,6 +70,11 @@ public class addnuevoproducto extends Fragment  {
                 Toast.makeText(getContext(),"Producto agregado con éxito",Toast.LENGTH_LONG ).show();
                 nombreProd.setText("");
                 precioProd.setText("");
+                ProductoFragment fragment = new ProductoFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                        getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                fragmentTransaction.commit();
             }
         }, new Response.ErrorListener() {
             @Override

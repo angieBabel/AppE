@@ -179,15 +179,7 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
                 PD.dismiss();
                 Toast.makeText(getContext(),error.toString(),Toast.LENGTH_LONG ).show();
             }
-        });/*{
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> param = new HashMap<String,String>();
-                param.put("id_usuario", "1");
-                return param;
-            }
-        };*/
-
+        });
         requestQueueLA.add(jsonObjectRequest);
 
         ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaProductos);
@@ -202,8 +194,10 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getContext(),"Producto eliminado con éxito",Toast.LENGTH_LONG ).show();
+                ad.clear();
+                ad.notifyDataSetChanged();
                 ReadDataFromDB();
-
+                ad.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -217,7 +211,6 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
                 Map<String, String> parameters = new HashMap<String, String>();
                         parameters.put("idProducto", s);
                 return parameters;
-
                 // idC+","+rubro+", "+nombre+", "+costo
             }
         };
