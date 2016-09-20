@@ -88,6 +88,10 @@ public class editConcepto extends Fragment {
         precioConcpeto = (EditText)getView().findViewById(R.id.edtPrecioConcepto);
 
         dataArray = datos.split(",");
+        //idC+","+rubro+", "+nombre+", "+costo
+        String myString = dataArray[0]+ "\n" +dataArray[1]; //the value you want the position for
+
+
         nombreConcepto.setText(dataArray[2]);
         precioConcpeto.setText(dataArray[3].trim());
         listaRubros.clear();
@@ -130,6 +134,19 @@ public class editConcepto extends Fragment {
         dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,listaRubros);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
+        spinner.setSelection(3);//getIndex(spinner)
+    }
+    private int getIndex(Spinner spinner)
+    {
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().indexOf(dataArray[1]) != -1){
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 
     public void editConcept(){
