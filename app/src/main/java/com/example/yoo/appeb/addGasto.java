@@ -158,7 +158,7 @@ public class addGasto extends Fragment {
                // listaCatGastos.add(idC + "," + nombre+ "," +costo);
                 String cant =cantidadD.getText().toString();
                 int tot = Integer.parseInt(cant)*Integer.parseInt(gastos[2]);
-                String date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
 
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put("id_usuario",user);
