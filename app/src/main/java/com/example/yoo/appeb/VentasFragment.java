@@ -135,7 +135,7 @@ public class VentasFragment extends Fragment {
     RequestQueue requestQueueLA;
     RequestQueue requestQueueDelete;
     String showURL = "http://webcolima.com/wsecomapping/ventas.php";
-    String deleteURL = "http://webcolima.com/wsecomapping/delProd.php";
+    String deleteURL = "http://webcolima.com/wsecomapping/delVenta.php";
 
     ArrayList<String> listaProductos= new ArrayList<String>();
     ArrayAdapter<String> ad;
@@ -192,6 +192,7 @@ public class VentasFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int id) {
                                 Log.i("Dialogos", "Confirmacion Eliminar.");
                                 String[] data = datos.split(",");
+                               // Toast.makeText(getContext(),data[0] ,Toast.LENGTH_LONG ).show();
                                 eliminar(data[0]);
 
                             }
@@ -267,6 +268,7 @@ public class VentasFragment extends Fragment {
 
     }
     public void eliminar(final String s){
+        /*Toast.makeText(getContext(),"xgo vivo",Toast.LENGTH_LONG ).show();*/
         requestQueueDelete = Volley.newRequestQueue(getContext());
         StringRequest request = new StringRequest(Request.Method.POST, deleteURL, new Response.Listener<String>() {
 
@@ -281,6 +283,7 @@ public class VentasFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(),error.toString(),Toast.LENGTH_LONG ).show();
 
             }
         }) {
