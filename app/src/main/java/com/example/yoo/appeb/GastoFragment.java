@@ -61,7 +61,7 @@ public class GastoFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addconcepto fragment = new addconcepto();
+                addGasto fragment = new addGasto();
                 android.support.v4.app.FragmentTransaction fragmentTransaction =
                         getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -76,7 +76,7 @@ public class GastoFragment extends Fragment {
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
         lista = (ListView)getView().findViewById(R.id.listView);
-       /* lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -92,7 +92,7 @@ public class GastoFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int id) {
                                 Log.i("Dialogos", "Confirmacion Agregar.");
 
-                                editProducto fragment = new editProducto();
+                                detalleGasto fragment = new detalleGasto();
                                 Bundle args = new Bundle();
                                 args.putString("datos", datos);
                                 fragment.setArguments(args);
@@ -105,14 +105,13 @@ public class GastoFragment extends Fragment {
                         });
                 builder.show();
             }
-        });*/
+        });
 
 
         PD = new ProgressDialog(getContext());
         PD.setMessage("Loading.....");
         PD.setCancelable(false);
         ReadDataFromDB();
-
     }
 
     public void ReadDataFromDB() {

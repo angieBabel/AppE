@@ -67,7 +67,6 @@ public class detalleGasto extends Fragment {
         datos = getArguments().getString("datos");
         String[] dataArray = datos.split(",");
         idRubro= dataArray[0];
-
         return view;
     }
     public void onActivityCreated(Bundle state) {
@@ -161,7 +160,7 @@ public class detalleGasto extends Fragment {
 
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getContext(),"Producto eliminado con éxito",Toast.LENGTH_LONG ).show();
+                Toast.makeText(getContext(),"Gasto eliminado con éxito",Toast.LENGTH_LONG ).show();
                 ad.clear();
                 ad.notifyDataSetChanged();
                 ReadDataFromDB();

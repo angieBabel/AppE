@@ -30,31 +30,29 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.example.yoo.appeb.R.id.cantidad;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class addGasto extends Fragment {
-    RequestQueue requestQueueA;
-    String addURL = "http://webcolima.com/wsecomapping/addConcepto.php";
-    String getURL = "http://webcolima.com/wsecomapping/rubros.php";
+    String addURL = "http://webcolima.com/wsecomapping/addGasto.php";
+    String getURL = "http://webcolima.com/wsecomapping/catalogogastos.php";
 
-    EditText nombreConcepto;// edtNombreConcepto;
-    EditText precioConcpeto;//           edtPrecioConcepto
-    String rubroExistente; //spinnerRE
-    EditText nuevoRubro; //edtTextNuevoRubro
-    String tipoRubro;
-    Button addConcepto;
     Spinner spinner;
-    ArrayList<String> listaRubros= new ArrayList<String>();
+    ArrayList<String> listaCatGastos= new ArrayList<String>();
     ArrayAdapter<String> dataAdapter;
     RequestQueue requestQueueSend;
-    RequestQueue requestQueueGetRubros;
+    RequestQueue requestQueueGetCatGastos;
     String user= "1";
+    EditText cantidadD;
 
     public addGasto() {
         // Required empty public constructor
@@ -64,112 +62,20 @@ public class addGasto extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_agregargasto, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_gasto, container, false);
         //text = (TextView) view.findViewById(R.id.Productos);
         super.onCreate(savedInstanceState);
         return view;
     }
-    @Override
+   // @Override
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
 
-        nombreConcepto = (EditText)getView().findViewById(R.id.edtNombreConcepto);
-        precioConcpeto = (EditText)getView().findViewById(R.id.edtPrecioConcepto);
-        nuevoRubro = (EditText)getView().findViewById(R.id.newRubro);
-        spinner = (Spinner)getView().findViewById(R.id.spinnerRE);
+        cantidadD = (EditText) getView().findViewById(R.id.cantidad);
+        spinner = (Spinner)getView().findViewById(R.id.spinnerGastos);
 
-        LinearLayout layoutRE = (LinearLayout)getView().findViewById(R.id.RE);
-        LinearLayout layoutRN = (LinearLayout)getView().findViewById(R.id.RN);
-
-
-        Button addPP = (Button) getView().findViewById(R.id.button);
-        addPP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addNewConcepto();
-            }
-        });
-        RadioGroup RG = (RadioGroup)getView().findViewById(R.id.RubrosRB);
-        RG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                                          @Override
-                                          public void onCheckedChanged(RadioGroup group, int checkedId) {
-                                              switch(checkedId){
-                                                  case R.id.rubroE:
-                                                      // do operations specific to this selection
-                                                      mostrarRE(getView());
-                                                      break;
-
-                                                  case R.id.rubroN:
-                                                      // do operations specific to this selection
-                                                      mostrarRN(getView());
-                                                      break;
-                                              }
-                                          }
-                                      }
-        );
-    }
-
-
-    public void addNewConcepto(){
-        if (!rubroExistente.equals("no")){
-            String text = spinner.getSelectedItem().toString();
-            String[] rubros=text.split("\n");
-            rubroExistente=rubros[0].trim();
-        }
-
-        Toast.makeText(getContext(),user,Toast.LENGTH_LONG ).show();
-        Toast.makeText(getContext(),nombreConcepto.getText().toString(),Toast.LENGTH_LONG ).show();
-        Toast.makeText(getContext(),precioConcpeto.getText().toString(),Toast.LENGTH_LONG ).show();
-        Toast.makeText(getContext(),rubroExistente,Toast.LENGTH_LONG ).show();
-        Toast.makeText(getContext(),tipoRubro,Toast.LENGTH_LONG ).show();
-        Toast.makeText(getContext(),nuevoRubro.getText().toString(),Toast.LENGTH_LONG ).show();
-
-
-        requestQueueA = Volley.newRequestQueue(getContext());
-        StringRequest request = new StringRequest(Request.Method.POST, addURL, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(getContext(),"Concepto agregado con éxito",Toast.LENGTH_LONG ).show();
-                nombreConcepto.setText("");
-                precioConcpeto.setText("");
-                catalogogastos fragment = new catalogogastos();
-                android.support.v4.app.FragmentTransaction fragmentTransaction =
-                        getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, fragment);
-                fragmentTransaction.commit();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(),error.toString(),Toast.LENGTH_LONG ).show();
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("idUsuario",user);
-                parameters.put("nombre", nombreConcepto.getText().toString());
-                parameters.put("precio", precioConcpeto.getText().toString());
-                parameters.put("rubroExistente", rubroExistente);
-                parameters.put("tiporubro", tipoRubro);
-                parameters.put("rubroNuevo", nuevoRubro.getText().toString());
-                return parameters;
-            }
-        };
-        requestQueueA.add(request);
-    }
-
-
-    public void mostrarRE(View view) {
-        tipoRubro="Existe";
-
-        //((TextView) view.findViewById(R.id.textView_superior)).setText(mItem.textoEncima);
-        ((LinearLayout) view.findViewById(R.id.RE)).setVisibility(View.VISIBLE);
-        ((LinearLayout) view.findViewById(R.id.RN)).setVisibility(View.GONE);
-        listaRubros.clear();
-        requestQueueGetRubros = Volley.newRequestQueue(getContext());
+        listaCatGastos.clear();
+        requestQueueGetCatGastos= Volley.newRequestQueue(getContext());
         //listaA(la);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
@@ -181,11 +87,12 @@ public class addGasto extends Fragment {
                     for (int i = 0; i < alumnos.length(); i++) {
 
                         JSONObject alumno = alumnos.getJSONObject(i);
-                        String idRubro = alumno.getString("id_rubro");
+                        String idC = alumno.getString("id_concepto");
                         String nombre = alumno.getString("nombre");
+                        String costo = alumno.getString("costo");
                         String usuario = alumno.getString("id_usuario");
-                        if (usuario.equals(user) || usuario.equals("0") ){
-                            listaRubros.add(idRubro + "\n" + nombre);
+                        if (usuario.equals(user)){
+                            listaCatGastos.add(idC + "," + nombre+ "," +costo);
                         };
                         //listaA[i]=idaula;
                     }
@@ -203,18 +110,72 @@ public class addGasto extends Fragment {
             }
         });
 
-        requestQueueGetRubros.add(jsonObjectRequest);
-        dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,listaRubros);
+        requestQueueGetCatGastos.add(jsonObjectRequest);
+        dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,listaCatGastos);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
-        //spinnerAlumAc.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-        //rubroExistente = spinnerAlumAc.getSelectedItem().toString();
+
+
+        Button addPP = (Button) getView().findViewById(R.id.button);
+        addPP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNewGasto();
+            }
+        });
     }
 
-    public void mostrarRN(View view){
-        tipoRubro = "NoExiste";
-        rubroExistente="no";
-        ((LinearLayout) view.findViewById(R.id.RN)).setVisibility(View.VISIBLE);
-        ((LinearLayout) view.findViewById(R.id.RE)).setVisibility(View.GONE);
+
+    public void addNewGasto(){
+
+
+        requestQueueSend = Volley.newRequestQueue(getContext());
+        StringRequest request = new StringRequest(Request.Method.POST, addURL, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getContext(),"Gasto agregado con éxito",Toast.LENGTH_LONG ).show();
+                cantidadD.setText("");
+                GastoFragment fragment = new GastoFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                        getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                fragmentTransaction.commit();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(),error.toString(),Toast.LENGTH_LONG ).show();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                String text = spinner.getSelectedItem().toString();
+                String[] gastos=text.split(",");
+
+               // listaCatGastos.add(idC + "," + nombre+ "," +costo);
+                String cant =cantidadD.getText().toString();
+                int tot = Integer.parseInt(cant)*Integer.parseInt(gastos[2]);
+                String date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("id_usuario",user);
+                parameters.put("cantidad", cant);
+                parameters.put("id_concepto", gastos[0]);
+                parameters.put("fecha", date);
+                parameters.put("total", String.valueOf(tot));
+
+
+
+
+                //$fecha = $_POST["fecha"];
+
+                return parameters;
+            }
+        };
+        requestQueueSend.add(request);
     }
+
 }

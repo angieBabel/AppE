@@ -117,14 +117,6 @@ public class agregargasto extends Fragment {
             rubroExistente=rubros[0].trim();
         }
 
-        Toast.makeText(getContext(),user,Toast.LENGTH_LONG ).show();
-        Toast.makeText(getContext(),nombreConcepto.getText().toString(),Toast.LENGTH_LONG ).show();
-        Toast.makeText(getContext(),precioConcpeto.getText().toString(),Toast.LENGTH_LONG ).show();
-        Toast.makeText(getContext(),rubroExistente,Toast.LENGTH_LONG ).show();
-        Toast.makeText(getContext(),tipoRubro,Toast.LENGTH_LONG ).show();
-        Toast.makeText(getContext(),nuevoRubro.getText().toString(),Toast.LENGTH_LONG ).show();
-
-
         requestQueueA = Volley.newRequestQueue(getContext());
         StringRequest request = new StringRequest(Request.Method.POST, addURL, new Response.Listener<String>() {
 
