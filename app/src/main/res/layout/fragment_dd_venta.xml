@@ -80,22 +80,6 @@ tools:context="com.example.yoo.appeb.ddVenta">
                     android:spinnerMode="dialog" />
             </LinearLayout>
 
-           <!-- <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Producto"
-                android:id="@+id/textView"
-                android:layout_marginTop="15dp"
-                android:elevation="1dp" />-->
-
-            <!--<EditText
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:id="@+id/edtNombreProd"
-                android:layout_gravity="center_horizontal"
-                android:elevation="1dp" />-->
-
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

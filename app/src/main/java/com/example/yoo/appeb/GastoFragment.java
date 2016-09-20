@@ -37,7 +37,7 @@ public class GastoFragment extends Fragment {
     RequestQueue requestQueueLA;
     String showURL = "http://webcolima.com/wsecomapping/gastos.php";
 
-    ArrayList<String> listaProductos= new ArrayList<String>();
+    ArrayList<String> listaGastos= new ArrayList<String>();
     ArrayAdapter<String> ad;
     ListView lista;
     ProgressDialog PD;
@@ -72,10 +72,11 @@ public class GastoFragment extends Fragment {
         });
         return view;
     }
+
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
         lista = (ListView)getView().findViewById(R.id.listView);
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       /* lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -103,9 +104,9 @@ public class GastoFragment extends Fragment {
                             }
                         });
                 builder.show();
-
             }
-        });
+        });*/
+
 
         PD = new ProgressDialog(getContext());
         PD.setMessage("Loading.....");
@@ -123,21 +124,19 @@ public class GastoFragment extends Fragment {
 
             @Override
             public void onResponse(JSONObject response) {
-                listaProductos.add("Producto          Precio");
+                listaGastos.add("Producto          Precio");
                 try {
                     JSONArray alumnos = response.getJSONArray("all");
                     for (int i = 0; i < alumnos.length(); i++) {
 
                         JSONObject producto = alumnos.getJSONObject(i);
                         String nombre = producto.getString("nombrerubro");
-                        String precio = producto.getString("totalgasto");
+                        String total = producto.getString("totalgasto");
                         String idR = producto.getString("rubro");
                         String usuario = producto.getString("id_usuario");
                         if (usuario.equals(user)){
-                            listaProductos.add(idR+","+nombre + "  ,  " + precio);
+                            listaGastos.add(idR+","+nombre + "," + total);
                         };
-
-
                     } // for loop ends
                     ad.notifyDataSetChanged();
 
@@ -158,7 +157,7 @@ public class GastoFragment extends Fragment {
         });
         requestQueueLA.add(jsonObjectRequest);
 
-        ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaProductos);
+        ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaGastos);
         lista.setAdapter(ad);
     }
 }
