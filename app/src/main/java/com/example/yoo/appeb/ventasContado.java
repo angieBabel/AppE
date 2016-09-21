@@ -1,102 +1,10 @@
 package com.example.yoo.appeb;
 
-import android.graphics.drawable.LayerDrawable;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class VentasFragment extends Fragment {
-    ViewPager mViewPager;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.fragment_ventas, container, false);
-
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabVenta);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ddVenta fragment = new ddVenta();
-                android.support.v4.app.FragmentTransaction fragmentTransaction =
-                        getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, fragment);
-                fragmentTransaction.commit();
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();*/
-            }
-        });
-        // Inflate the layout for this fragment
-        return view;
-    }
-
-    public void onActivityCreated(Bundle state) {
-        super.onActivityCreated(state);
-
-        mViewPager = (ViewPager) getView().findViewById(R.id.pager);
-        setupViewPager(mViewPager);
-        TabLayout tabs = (TabLayout) getView().findViewById(R.id.tabs);
-        tabs.setupWithViewPager(mViewPager);
-    }
-
-    private void setupViewPager(ViewPager viewPager) {
-        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getChildFragmentManager());
-        //adapter.addFragment(new ventasContado(), "Contado");
-        //adapter.addFragment(new ventasCredito(), "Crédito");
-        //viewPager.setAdapter(adapter);
-    }
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragments = new ArrayList<>();
-        private final List<String> mFragmentTitles = new ArrayList<>();
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragments.add(fragment);
-            mFragmentTitles.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitles.get(position);
-        }
-    }
-
-
-}
-
-/*
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -127,10 +35,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-*//**
- * A simple {@link Fragment} subclass.
- *//*
-public class VentasFragment extends Fragment {
+
+public class ventasContado extends Fragment {
 
     RequestQueue requestQueueLA;
     RequestQueue requestQueueDelete;
@@ -147,7 +53,7 @@ public class VentasFragment extends Fragment {
     String idProd;
 
 
-    public VentasFragment() {
+    public ventasContado() {
         // Required empty public constructor
     }
 
@@ -166,8 +72,8 @@ public class VentasFragment extends Fragment {
                         getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, fragment);
                 fragmentTransaction.commit();
-                *//*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*//*
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();*/
             }
         });
         // Inflate the layout for this fragment
@@ -296,4 +202,4 @@ public class VentasFragment extends Fragment {
         requestQueueDelete.add(request);
 
     }
-}*/
+}
