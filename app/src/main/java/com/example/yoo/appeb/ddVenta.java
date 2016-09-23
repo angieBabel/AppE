@@ -1,7 +1,6 @@
 package com.example.yoo.appeb;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -56,8 +55,7 @@ public class ddVenta extends Fragment {
     ListView lista;
     RequestQueue requestQueueSend;
     RequestQueue requestQueueGet;
-    String user;
-    SharedPreferences prefs;
+    String user= "1";
 
 
     public ddVenta() {
@@ -78,9 +76,6 @@ public class ddVenta extends Fragment {
 
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
-        SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias", getActivity().MODE_PRIVATE);
-        String usuario = prefs.getString("User", "0");
-        user = usuario;
 
         spinner = (Spinner)getView().findViewById(R.id.spinnerProducto);
 
