@@ -44,7 +44,8 @@ public class detalleGasto extends Fragment {
     String showURL = "http://webcolima.com/wsecomapping/detallegastos.php";
     String deleteURL = "http://webcolima.com/wsecomapping/delGasto.php";
 
-    ArrayList<String> listaProductos= new ArrayList<String>();
+    //ArrayList<String> listaProductos= new ArrayList<String>();
+    ArrayList <gastosDetail_list> listaProductos = new ArrayList<gastosDetail_list>();
     ArrayAdapter<String> ad;
     ListView lista;
     ProgressDialog PD;
@@ -52,6 +53,7 @@ public class detalleGasto extends Fragment {
     public static final String KEY_datos="datos";
     String datos;
     String idRubro;
+    gastosdetailslist_adapter adapter;
 
 
     public detalleGasto() {
@@ -77,7 +79,8 @@ public class detalleGasto extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
-                datos = (String) lista.getItemAtPosition(position);
+                //datos = (String) lista.getItemAtPosition(position);
+                datos = listaProductos.get(position).getIdGD();
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -113,7 +116,7 @@ public class detalleGasto extends Fragment {
 
             @Override
             public void onResponse(JSONObject response) {
-                listaProductos.add("Producto          Precio");
+                //listaProductos.add("Producto          Precio");
                 try {
                     JSONArray alumnos = response.getJSONArray("all");
                     for (int i = 0; i < alumnos.length(); i++) {
@@ -127,12 +130,14 @@ public class detalleGasto extends Fragment {
                         String tG = producto.getString("totalgasto");
                         String idR = producto.getString("rubro");
                         if (usuario.equals(user) && idR.equals(idRubro)){
-                            listaProductos.add(idG+","+concepto+ " , " + cantidad + " , " +fecha+ " , " +tG);
+                            //listaProductos.add(idG+","+concepto+ " , " + cantidad + " , " +fecha+ " , " +tG);
+                            listaProductos.add(new gastosDetail_list(concepto,"Cantidad: "+ cantidad,"Total"+ tG,"Fecha"+ fecha,idR));
                         };
 
 
                     } // for loop ends
-                    ad.notifyDataSetChanged();
+                    //ad.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
 
                     PD.dismiss();
 
@@ -151,8 +156,10 @@ public class detalleGasto extends Fragment {
         });
         requestQueueLA.add(jsonObjectRequest);
 
-        ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaProductos);
-        lista.setAdapter(ad);
+        /*ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaProductos);
+        lista.setAdapter(ad);*/
+        adapter = new gastosdetailslist_adapter(getActivity(), listaProductos);
+        lista.setAdapter(adapter);
     }
     public void eliminar(final String s){
         requestQueueDelete = Volley.newRequestQueue(getContext());

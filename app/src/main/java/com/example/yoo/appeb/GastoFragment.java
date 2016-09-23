@@ -37,7 +37,8 @@ public class GastoFragment extends Fragment {
     RequestQueue requestQueueLA;
     String showURL = "http://webcolima.com/wsecomapping/gastos.php";
 
-    ArrayList<String> listaGastos= new ArrayList<String>();
+    //ArrayList<String> listaGastos= new ArrayList<String>();
+    ArrayList <gastos_list> listaGastos = new ArrayList<gastos_list>();
     ArrayAdapter<String> ad;
     ListView lista;
     ProgressDialog PD;
@@ -45,6 +46,7 @@ public class GastoFragment extends Fragment {
     public static final String KEY_datos="datos";
     String datos;
     String idProd;
+    gastoslist_adapter adapter;
 
 
     public GastoFragment() {
@@ -81,7 +83,8 @@ public class GastoFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
-                datos = (String) lista.getItemAtPosition(position);
+                //datos = (String) lista.getItemAtPosition(position);
+                datos = listaGastos.get(position).getIdGasto();
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -123,7 +126,7 @@ public class GastoFragment extends Fragment {
 
             @Override
             public void onResponse(JSONObject response) {
-                listaGastos.add("Producto          Precio");
+                //listaGastos.add("Producto          Precio");
                 try {
                     JSONArray alumnos = response.getJSONArray("all");
                     for (int i = 0; i < alumnos.length(); i++) {
@@ -134,10 +137,12 @@ public class GastoFragment extends Fragment {
                         String idR = producto.getString("rubro");
                         String usuario = producto.getString("id_usuario");
                         if (usuario.equals(user)){
-                            listaGastos.add(idR+","+nombre + "," + total);
+                            //listaGastos.add(idR+","+nombre + "," + total);
+                            listaGastos.add(new gastos_list(nombre,"Total: "+ total,idR));
                         };
                     } // for loop ends
-                    ad.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
+                    //ad.notifyDataSetChanged();
 
                     PD.dismiss();
 
@@ -156,7 +161,10 @@ public class GastoFragment extends Fragment {
         });
         requestQueueLA.add(jsonObjectRequest);
 
-        ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaGastos);
-        lista.setAdapter(ad);
+        /*ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaGastos);
+        lista.setAdapter(ad);*/
+
+        adapter = new gastoslist_adapter(getActivity(), listaGastos);
+        lista.setAdapter(adapter);
     }
 }

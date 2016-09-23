@@ -55,7 +55,8 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
     String showURL = "http://webcolima.com/wsecomapping/productos.php";
     String deleteURL = "http://webcolima.com/wsecomapping/delProd.php";
 
-    ArrayList<String> listaProductos= new ArrayList<String>();
+    //ArrayList<String> listaProductos= new ArrayList<String>();
+    ArrayList <productos_list> listaProductos = new ArrayList<productos_list>();
     ArrayAdapter<String> ad;
     ListView lista;
     ProgressDialog PD;
@@ -64,6 +65,7 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
     public static final String KEY_datos="datos";
     String datos;
     String idProd;
+    productoslistadapter adapter;
 
 
     public ProductoFragment() {
@@ -107,7 +109,8 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
-                datos = (String) lista.getItemAtPosition(position);
+                //datos = (String) lista.getItemAtPosition(position);
+                datos = listaProductos.get(position).getIdProducto();
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -156,7 +159,7 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
 
             @Override
             public void onResponse(JSONObject response) {
-                listaProductos.add("Producto          Precio");
+                //listaProductos.add("Producto          Precio");
                 try {
                     JSONArray alumnos = response.getJSONArray("all");
                     for (int i = 0; i < alumnos.length(); i++) {
@@ -167,12 +170,14 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
                         String usuario = producto.getString("id_usuario");
                         String idP = producto.getString("id_producto");
                         if (usuario.equals(user)){
-                            listaProductos.add(idP+","+nombre + "  ,  " + precio);
+                            //listaProductos.add(idP+","+nombre + "  ,  " + precio);
+                            listaProductos.add(new productos_list(nombre,"Precio: "+ precio,idP));
                         };
 
 
                     } // for loop ends
-                    ad.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
+                    //ad.notifyDataSetChanged();
 
                     PD.dismiss();
 
@@ -191,8 +196,15 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
         });
         requestQueueLA.add(jsonObjectRequest);
 
-        ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaProductos);
-        lista.setAdapter(ad);
+        /*ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaProductos);
+        lista.setAdapter(ad);*/
+        adapter = new productoslistadapter(getActivity(), listaProductos);
+        /*ListView lv = (ListView) getView().findViewById(R.id.listViewProductos);
+        productoslistadapter adapter = new productoslistadapter(getActivity(), listViewProductos);
+
+        lv.setAdapter(adapter);*/
+        lista.setAdapter(adapter);
+
 
 
     }
