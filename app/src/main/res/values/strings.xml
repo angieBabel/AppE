@@ -22,4 +22,9 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="gfbarras">Barras</string>
+    <string name="gflineal">Lineal</string>
+    <string name="gfpastel">Pastel</string>
+
 </resources>
