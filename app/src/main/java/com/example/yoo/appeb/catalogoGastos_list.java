@@ -1,10 +1,12 @@
 package com.example.yoo.appeb;
 
+import android.widget.ListAdapter;
+
 /**
  * Created by angelicabarreda on 23/09/16.
  */
 
-public class catalogoGastos_list {
+public class catalogoGastos_list  {
     private String nombreRubroCG;
     private String conceptoCG;
     private String costoCG;

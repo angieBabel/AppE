@@ -101,7 +101,7 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
                 //datos = (String) lista.getItemAtPosition(position);
-                datos = listaProductos.get(position).getNombre();
+                datos = listaProductos.get(position).getIdProducto();
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

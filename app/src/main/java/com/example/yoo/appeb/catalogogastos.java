@@ -42,13 +42,15 @@ public class catalogogastos extends Fragment {
     RequestQueue requestQueueDelete;
     String showURL = "http://webcolima.com/wsecomapping/catalogogastos.php";
     String deleteURL = "http://webcolima.com/wsecomapping/delConcepto.php";
-    ArrayList<String> listaGastos= new ArrayList<String>();
+    //ArrayList<String> listaGastos= new ArrayList<String>();
+    ArrayList <catalogoGastos_list> listaGastos = new ArrayList<catalogoGastos_list>();
     ArrayAdapter<String> ad;
     ListView lista;
     ProgressDialog PD;
     String user= "1";
     public static final String KEY_datos="datos";
     String datos;
+    catalogogastoslist_adapter adapter;
 
 
 
@@ -87,7 +89,8 @@ public class catalogogastos extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
-                datos = (String) lista.getItemAtPosition(position);
+                //datos = (String) lista.getItemAtPosition(position);
+                datos = listaGastos.get(position).getIdCG();
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -136,7 +139,7 @@ public class catalogogastos extends Fragment {
 
             @Override
             public void onResponse(JSONObject response) {
-                listaGastos.add("Id Concepto          Costo");
+                //listaGastos.add("Id Concepto          Costo");
                 try {
                     JSONArray alumnos = response.getJSONArray("all");
                     for (int i = 0; i < alumnos.length(); i++) {
@@ -148,12 +151,14 @@ public class catalogogastos extends Fragment {
                         String usuario = producto.getString("id_usuario");
                         String idC = producto.getString("id_concepto");
                         if (usuario.equals(user)){
-                            listaGastos.add(idC+","+rubro+", "+nombre+", "+costo);
+                            //listaGastos.add(idC+","+rubro+", "+nombre+", "+costo);
+                            listaGastos.add(new catalogoGastos_list(rubro,"Concepto: "+ nombre,"Costo"+ costo,idC));
                         };
 
 
                     } // for loop ends
-                    ad.notifyDataSetChanged();
+                    //ad.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
 
                     PD.dismiss();
 
@@ -180,8 +185,11 @@ public class catalogogastos extends Fragment {
 
         requestQueueLA.add(jsonObjectRequest);
 
-        ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaGastos);
-        lista.setAdapter(ad);
+        /*ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaGastos);
+        lista.setAdapter(ad);*/
+
+        adapter = new catalogogastoslist_adapter(getActivity(), listaGastos);
+        lista.setAdapter(adapter);
 
 
     }
