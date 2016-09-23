@@ -28,9 +28,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setContentView(R.layout.activity_login);
-
-
+        prefs = getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
         //code
         //Set the fragment initially
        MainFragment fragment = new MainFragment();
