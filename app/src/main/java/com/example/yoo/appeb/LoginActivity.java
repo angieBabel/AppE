@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                 }
                 if (acceso=="correcto"){
-                   /* String dateI = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+                    String dateI = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
                     String dateF = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
 
                     SharedPreferences.Editor editor = prefs.edit();
@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor.putString("FI", dateI);
                     editor.putString("FF", dateF);
                     editor.putString("TipoGrafica", "Barras");
-                    editor.commit();*/
+                    editor.commit();
                     openProfile(view);
                 }else {
                     registrar(mail,pass);
