@@ -57,8 +57,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -69,46 +68,37 @@
                     android:gravity="center_vertical|center_horizontal"
                     android:textSize="@dimen/abc_text_size_title_material"
                     android:textIsSelectable="true"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp" />
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:paddingBottom="15dp">
+                    android:layout_height="match_parent">
 
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:text="Inicia"
+                            android:text="Fecha Inicio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="@dimen/abc_text_size_title_material"
                             android:id="@+id/textView16"
                             android:layout_weight="1"
-                            android:layout_marginRight="5dp"
-                            android:textSize="18sp"
-                            android:gravity="center_vertical|start" />
+                            android:layout_marginRight="5dp" />
 
                         <EditText
-                            android:layout_width="193dp"
+                            android:layout_width="178dp"
                             android:layout_height="wrap_content"
                             android:inputType="date"
                             android:ems="10"
                             android:id="@+id/editTextFI"
                             android:layout_marginRight="5dp"
-                            android:gravity="center"
-                            android:enabled="false" />
+                            android:gravity="center" />
 
                         <ImageButton
                             android:layout_width="wrap_content"
@@ -124,32 +114,27 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="end"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
-
+                        android:layout_height="match_parent">
+                        
                         <TextView
-                            android:text="Termina"
+                            android:text="Fecha Inicio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:gravity="center_vertical|start"
-                            android:textSize="18sp"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="@dimen/abc_text_size_title_material"
                             android:id="@+id/textv"
                             android:layout_weight="1"
                             android:layout_marginRight="5dp" />
 
                         <EditText
-                            android:layout_width="189dp"
+                            android:layout_width="178dp"
                             android:layout_height="wrap_content"
                             android:inputType="date"
                             android:ems="10"
                             android:id="@+id/editTextFF"
                             android:layout_marginRight="5dp"
-                            android:gravity="center"
-                            android:enabled="false" />
+                            android:gravity="center" />
 
                         <ImageButton
                             android:layout_width="wrap_content"
@@ -160,9 +145,67 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:layout_gravity="center" />
-
+                        
                     </LinearLayout>
                 </LinearLayout>
+
+
+
+                <!--<LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:text="FI"
+                        android:layout_width="196dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_height="match_parent"
+                        android:id="@+id/tvFI"
+                        android:textSize="@dimen/mdtp_date_picker_header_height"
+                        android:layout_weight="0.45" />
+
+
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:text="Fecha Fin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="@dimen/abc_text_size_title_material"
+                    android:id="@+id/tv"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:text="FF"
+                        android:layout_width="196dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvFF" />
+
+                    <Button
+                        android:text="Poner fecha"
+                        android:layout_width="102dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnFF"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_margin="5dp" />
+
+                </LinearLayout>-->
+
+
 
             </LinearLayout>
 
@@ -175,59 +218,30 @@
             android:layout_height="wrap_content"
             android:id="@+id/cGraficas"
             android:layout_marginTop="5dp"
-            android:layout_margin="10dp"
-            android:layout_weight="0.41">
+            android:layout_margin="10dp">
 
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="1"
-                android:layout_marginTop="10dp">
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:orientation="horizontal"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:gravity="center_horizontal"
-                    android:layout_marginBottom="20dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        app:srcCompat="@drawable/ic_stats"
-                        android:id="@+id/imageView6"
-                        android:layout_marginRight="5dp"
-                        tools:ignore="VectorDrawableCompat" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Tipo de grafica"
-                        android:id="@+id/tGrafica"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:textSize="@dimen/abc_text_size_title_material"
-                        android:textIsSelectable="true"
-                        android:textStyle="bold"
-                        android:layout_marginLeft="5dp" />
-
-                </LinearLayout>
+                    android:layout_height="53dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Tipo de grafica"
+                    android:id="@+id/tGrafica"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="@dimen/abc_text_size_title_material"
+                    android:textIsSelectable="true"
+                    android:textStyle="bold" />
 
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/spinnerG"
-                    android:layout_marginRight="80dp"
-                    android:layout_marginLeft="80dp"
-                    android:gravity="center_vertical"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    />
+                    android:layout_marginBottom="15dp" />
 
 
             </LinearLayout>

@@ -9,11 +9,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Spinner;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -27,13 +33,16 @@ public class ConfFragment extends Fragment {
     btnFF este es el boton de la fecha final
 
 
-    spinnerGrafica spinner
+
 
      */
-    Button button;
-    Button buttonFF;
-    TextView FI;
-    TextView FF;
+    ImageButton button;
+    ImageButton buttonFF;
+    EditText FI;
+    EditText FF;
+    String btnpres;
+    Spinner spinner;
+
 
 
     public ConfFragment() {
@@ -50,21 +59,63 @@ public class ConfFragment extends Fragment {
 
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
+        final String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
 
-        button = (Button)getView().findViewById(R.id.btnFI);
-        buttonFF = (Button)getView().findViewById(R.id.btnFF);
-        FI = (TextView)getView().findViewById(R.id.tvFI);
+
+        button = (ImageButton)getView().findViewById(R.id.btnFI);
+        buttonFF = (ImageButton)getView().findViewById(R.id.btnFF);
+        FI = (EditText)getView().findViewById(R.id.editTextFI);
+        FF = (EditText)getView().findViewById(R.id.editTextFF);
+        FI.setText(date);
+        FF.setText(date);
+
+        List<tipos_graficas> items = new ArrayList<tipos_graficas>(3);
+        items.add(new tipos_graficas(getString(R.string.gfbarras), R.drawable.ic_barras));
+        items.add(new tipos_graficas(getString(R.string.gflineal), R.drawable.ic_lineal));
+        items.add(new tipos_graficas(getString(R.string.gfpastel), R.drawable.ic_pastel));
+
+        spinner = (Spinner) getView().findViewById(R.id.spinnerG);
+        spinner.setAdapter(new tiposgraficasadapter(getActivity(),items));
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
+            {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                //nothing
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogFragment newFragment = new SelectDateFragment();
                 newFragment.show(getFragmentManager(), "DatePicker");
+                btnpres="btnI";
+
+            }
+        });
+        buttonFF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment newFFFragment = new SelectDateFragment();
+                newFFFragment.show(getFragmentManager(), "DatePicker");
+                btnpres="btnF";
+
             }
         });
 
 
     }
+
+    public void getSystemService(String layoutInflaterService) {
+    }
+
     public class SelectDateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
         @Override
@@ -80,7 +131,12 @@ public class ConfFragment extends Fragment {
             populateSetDate(yy, mm+1, dd);
         }
         public void populateSetDate(int year, int month, int day) {
-            FI.setText(month+"/"+day+"/"+year);
+            if(btnpres.equals("btnF")){
+                FF.setText(day + "/" + month + "/" + year);
+            }else {
+                FI.setText(day + "/" + month + "/" + year);
+            }
+
         }
 
     }
