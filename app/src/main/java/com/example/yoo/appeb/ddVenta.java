@@ -149,7 +149,7 @@ public class ddVenta extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-                String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+                //String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
                 //idP+","+nombre + "  ,  " + preci
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put("id_usuario",user);
@@ -158,7 +158,7 @@ public class ddVenta extends Fragment {
                 parameters.put("cantidad", cant.getText().toString());
                 parameters.put("modopago", modoP);
                 parameters.put("deudor", deudo.getText().toString());
-                parameters.put("fecha", date);
+                //parameters.put("fecha", date);
                 return parameters;
             }
         };
