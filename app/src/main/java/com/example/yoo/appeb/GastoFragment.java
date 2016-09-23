@@ -84,7 +84,7 @@ public class GastoFragment extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
                 //datos = (String) lista.getItemAtPosition(position);
-                datos = listaGastos.get(position).getIdGasto();
+                datos = listaGastos.get(position).getIdRubro();
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

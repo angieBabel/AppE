@@ -34,6 +34,9 @@ public class editProducto extends Fragment {
     String[] dataArray;
     RequestQueue requestQueueA;
     String editURL = "http://webcolima.com/wsecomapping/editProd.php";
+    String name;
+    String precio;
+    String idProd;
 
     public editProducto() {
         // Required empty public constructor
@@ -46,7 +49,11 @@ public class editProducto extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_producto, container, false);
         // Inflate the layout for this fragment
         //String datos = getArguments() != null ? getArguments().getString("datos") : "email@email.com";
-        datos = getArguments().getString("datos");
+        //datos = getArguments().getString("datos");
+        name = getArguments().getString("name");
+        precio = getArguments().getString("precio");
+        idProd = getArguments().getString("idProd");
+
         editarProd = (Button) view.findViewById(R.id.button);
         editarProd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +83,7 @@ public class editProducto extends Fragment {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> parameters = new HashMap<String, String>();
-                        parameters.put("idProd", dataArray[0]);
+                        parameters.put("idProd", idProd);
                         parameters.put("nombre", nombreProd.getText().toString());
                         parameters.put("precio", precioProd.getText().toString());
                         return parameters;
@@ -93,13 +100,13 @@ public class editProducto extends Fragment {
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
 
-        Toast.makeText(getContext(),datos,Toast.LENGTH_LONG ).show();
+        Toast.makeText(getContext(),name,Toast.LENGTH_LONG ).show();
         nombreProd = (EditText)getView().findViewById(R.id.edtNombreProd);
         precioProd = (EditText)getView().findViewById(R.id.edtPrecioProd);
 
-        dataArray = datos.split(",");
-        nombreProd.setText(dataArray[1]);
-        precioProd.setText(dataArray[2].trim());
+        //dataArray = datos.split(",");
+        nombreProd.setText(name);
+        precioProd.setText(precio);
         //lista = (ListView)getView().findViewById(R.id.listViewProductos);
 
     }

@@ -62,6 +62,8 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
     String user= "1";
     public static final String KEY_datos="datos";
     String datos;
+    String name;
+    String precio;
     String idProd;
     productoslistadapter adapter;
 
@@ -99,7 +101,7 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int position, long arg3) {
+                                    final int position, long arg3) {
                 //datos = (String) lista.getItemAtPosition(position);
                 datos = listaProductos.get(position).getIdProducto();
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
@@ -111,8 +113,9 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
                         .setPositiveButton("Eliminar", new DialogInterface.OnClickListener()  {
                             public void onClick(DialogInterface dialog, int id) {
                                 Log.i("Dialogos", "Confirmacion Eliminar.");
-                                String[] data = datos.split(",");
-                                eliminar(data[0]);
+                                //String[] data = datos.split(",");
+                                //eliminar(data[0]);
+                                eliminar(datos);
 
                             }
                         })
@@ -122,7 +125,12 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
 
                                 editProducto fragment = new editProducto();
                                 Bundle args = new Bundle();
-                                args.putString("datos", datos);
+                                idProd = listaProductos.get(position).getIdProducto();
+                                name= listaProductos.get(position).getNombre();
+                                precio = listaProductos.get(position).getprecioProducto();
+                                args.putString("idProd", idProd);
+                                args.putString("name", name);
+                                args.putString("precio", precio);
                                 fragment.setArguments(args);
                                 android.support.v4.app.FragmentTransaction fragmentTransaction =
                                         getFragmentManager().beginTransaction();
@@ -206,10 +214,13 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getContext(),"Producto eliminado con éxito",Toast.LENGTH_LONG ).show();
-                ad.clear();
-                ad.notifyDataSetChanged();
+                //ad.clear();
+                adapter.clear();
+                //ad.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
                 ReadDataFromDB();
-                ad.notifyDataSetChanged();
+                //ad.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override

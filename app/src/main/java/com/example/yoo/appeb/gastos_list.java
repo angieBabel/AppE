@@ -7,12 +7,12 @@ package com.example.yoo.appeb;
 public class gastos_list {
     private String nombreRubro;
     private String totalGasto;
-    private String idGasto;
+    private String idRubro;
 
-    public gastos_list(String nombreRubro, String totalGasto,String idGasto ) {
+    public gastos_list(String nombreRubro, String totalGasto,String idRubro ) {
         this.nombreRubro = nombreRubro;
         this.totalGasto = totalGasto;
-        this.idGasto = idGasto;
+        this.idRubro = idRubro;
     }
 
     public String getNombreRubro() {
@@ -31,11 +31,11 @@ public class gastos_list {
         this.totalGasto = totalGasto;
     }
 
-    public String getIdGasto() {
-        return idGasto;
+    public String getIdRubro() {
+        return idRubro;
     }
 
-    public void setIdGasto(String idGasto) {
-        this.idGasto= idGasto;
+    public void setIdGasto(String idRubro) {
+        this.idRubro= idRubro;
     }
 }

@@ -131,7 +131,7 @@ public class detalleGasto extends Fragment {
                         String idR = producto.getString("rubro");
                         if (usuario.equals(user) && idR.equals(idRubro)){
                             //listaProductos.add(idG+","+concepto+ " , " + cantidad + " , " +fecha+ " , " +tG);
-                            listaProductos.add(new gastosDetail_list(concepto,"Cantidad: "+ cantidad,"Total"+ tG,"Fecha"+ fecha,idR));
+                            listaProductos.add(new gastosDetail_list(concepto,"Cantidad: "+ cantidad,"Total: "+ tG,"Fecha: "+ fecha,idR));
                         };
 
 
