@@ -1,6 +1,7 @@
 package com.example.yoo.appeb;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import java.util.Map;
 public class addnuevoproducto extends Fragment  {
     EditText nombreProd;
     EditText precioProd;
-    String user= "1";
+    String user;
     RequestQueue requestQueueA;
     String addURL = "http://webcolima.com/wsecomapping/addProd.php";
 
@@ -48,6 +49,11 @@ public class addnuevoproducto extends Fragment  {
     }
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
+
+        SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias",getActivity().MODE_PRIVATE);
+        String usuario = prefs.getString("User", "0");
+        user = usuario;
+
         nombreProd = (EditText)getView().findViewById(R.id.edtNombreProd);
         precioProd = (EditText)getView().findViewById(R.id.edtPrecioProd);
         Button addPP = (Button) getView().findViewById(R.id.button);

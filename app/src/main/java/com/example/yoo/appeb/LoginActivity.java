@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private Button btnLogin;
     private EditText inputUser,inputPassword;
+    SharedPreferences prefs;
 
 
 
@@ -56,6 +57,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+         prefs = getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
+        String usuario = prefs.getString("User", "0");
+        if (usuario != "0"){
+            openProfile(view);
+        }
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -116,9 +122,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                 }
                 if (acceso=="correcto"){
-                   /* Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    i.putExtra("key","value");
-                    startActivity(i);*/
+                    String dateI = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+                    String dateF = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("User", idUser);
+                    editor.putString("FI", dateI);
+                    editor.putString("FF", dateF);
+                    editor.putString("TipoGrafica", "Barras");
+                    editor.commit();
                     openProfile(view);
                 }else {
                     registrar(mail,pass);
@@ -138,19 +150,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
     //Envio de datos del perfil
     private  void openProfile(View view){
-        String dateI = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-        String dateF = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-        SharedPreferences prefs =
-                getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("User", idUser);
-        editor.putString("FI", dateI);
-        editor.putString("FF", dateF);
-        editor.putString("TipoGrafica", "Barras");
-        editor.commit();
-
-
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         /*ntent.putExtra(KEY_USERNAME,username);*/
         intent.putExtra("User",idUser);
