@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginTop="10dp">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:weightSum="1">
+        <TextView
+            android:text="Concepto"
+            android:layout_width="252dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtNombreConcepto"
+            android:textSize="16sp"
+            android:textStyle="normal|bold" />
+        <TextView
+            android:text="id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtidGD"
+            android:layout_weight="0.69"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <TextView
+        android:text="Cantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCantidadGD"
+        android:textSize="14sp"
+        android:layout_marginStart="35dp"/>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:weightSum="1">
+
+        <TextView
+            android:text="Total"
+            android:layout_width="193dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtTotalGD"
+            android:layout_marginStart="15dp"
+            android:textSize="14sp"
+            android:layout_weight="0.20" />
+
+        <TextView
+                android:text="Fecha"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtfechaGD"
+                android:layout_weight="0.61"
+                android:textSize="14sp"/>
+    </LinearLayout>
+
+</LinearLayout>
+
