@@ -59,9 +59,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
          prefs = getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
         String usuario = prefs.getString("User", "0");
-        if (usuario != "0"){
+        /*if (usuario != "0"){
             openProfile(view);
-        }
+        }*/
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);

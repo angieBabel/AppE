@@ -41,7 +41,7 @@ public class GastoFragment extends Fragment {
     ArrayAdapter<String> ad;
     ListView lista;
     ProgressDialog PD;
-    String user= "1";
+    String user;
     public static final String KEY_datos="datos";
     String datos;
     String idProd;
@@ -57,6 +57,10 @@ public class GastoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_gasto, container, false);
+
+
+
+
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabGasto);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,9 +142,6 @@ public class GastoFragment extends Fragment {
                         };
                     } // for loop ends
                     ad.notifyDataSetChanged();
-
-                    PD.dismiss();
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

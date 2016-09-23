@@ -1,6 +1,7 @@
 package com.example.yoo.appeb;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -76,6 +77,9 @@ public class agregargasto extends Fragment {
         nombreConcepto = (EditText)getView().findViewById(R.id.edtNombreConcepto);
         precioConcpeto = (EditText)getView().findViewById(R.id.edtPrecioConcepto);
         nuevoRubro = (EditText)getView().findViewById(R.id.newRubro);
+        SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias",getActivity().MODE_PRIVATE);
+        String usuario = prefs.getString("User", "0");
+        user = usuario;
         spinner = (Spinner)getView().findViewById(R.id.spinnerRE);
 
         LinearLayout layoutRE = (LinearLayout)getView().findViewById(R.id.RE);

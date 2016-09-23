@@ -4,6 +4,7 @@ package com.example.yoo.appeb;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -81,6 +82,9 @@ public class catalogogastos extends Fragment {
     }
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
+        SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias",getActivity().MODE_PRIVATE);
+        String usuario = prefs.getString("User", "0");
+        user = usuario;
         lista = (ListView)getView().findViewById(R.id.listViewgastos);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
