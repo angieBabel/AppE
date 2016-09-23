@@ -1,11 +1,24 @@
 package com.example.yoo.appeb;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -13,6 +26,15 @@ import android.view.ViewGroup;
  */
 public class editventa extends Fragment {
 
+    EditText nombreProd;
+    EditText abono;
+    String datos;
+    Button editarVenta;
+    String[] dataArray;
+    RequestQueue requestQueueA;
+    String editURL = "http://webcolima.com/wsecomapping/editVenta.php";
+    int abonoD;
+    int abonoP;
 
     public editventa() {
         // Required empty public constructor
@@ -22,8 +44,78 @@ public class editventa extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_editventa, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_editventa, container, false);
+        //String datos = getArguments() != null ? getArguments().getString("datos") : "email@email.com";
+        datos = getArguments().getString("datos");
+
+        editarVenta = (Button) view.findViewById(R.id.button);
+        editarVenta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abonoP = Integer.parseInt(abono.getText().toString());
+               /* parameters.put("idAdeudo", dataArray[0]);
+                parameters.put("abonoT", String.valueOf(abonoP+abonoD));
+                parameters.put("abonoP",String.valueOf(abonoP));*/
+
+                requestQueueA = Volley.newRequestQueue(getContext());
+                StringRequest request = new StringRequest(Request.Method.POST, editURL, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getContext(),"Abono agregado con éxito",Toast.LENGTH_LONG ).show();
+
+                        nombreProd.setText("");
+                        //precioProd.setText("");
+                        VentasFragment fragment = new VentasFragment();
+                        Bundle args = new Bundle();
+                        args.putString("datos", "credito");
+                        fragment.setArguments(args);
+                        android.support.v4.app.FragmentTransaction fragmentTransaction =
+                                getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container, fragment);
+                        fragmentTransaction.commit();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+
+                        Map<String, String> parameters = new HashMap<String, String>();
+                        parameters.put("idAdeudo", dataArray[0]);
+                        parameters.put("abonoT", String.valueOf(abonoP+abonoD));
+                        parameters.put("abonoP",String.valueOf(abonoP));
+                        return parameters;
+                    }
+                };
+                requestQueueA.add(request);
+            }
+        });
+
+        return view;
     }
 
+
+    public void onActivityCreated(Bundle state) {
+        super.onActivityCreated(state);
+
+
+        nombreProd = (EditText)getView().findViewById(R.id.edtNombreProd);
+        abono = (EditText)getView().findViewById(R.id.edtabonoProd);
+        //listaProductos.add(idAdeudo +","+nombreproducto +","+deudor +","+deuda +","+fechaventa +","+abono +","+abono_periodo);
+        dataArray = datos.split(",");
+        nombreProd.setText(dataArray[1]);
+        abonoD = Integer.parseInt(dataArray[5].toString());
+        //abonoP = Integer.parseInt(abono.getText().toString());
+
+    }
+
+    public void editProd(){
+//        listaAlumno(v);
+    }
 }

@@ -160,7 +160,7 @@ tools:context="com.example.yoo.appeb.ddVenta">
                 <EditText
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edtabonoProd"
+                    android:id="@+id/deudo"
                     android:layout_gravity="center_horizontal"
                     android:elevation="1dp"
 

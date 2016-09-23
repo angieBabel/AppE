@@ -1,13 +1,195 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="com.example.yoo.appeb.ConfFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:weightSum="1">
 
-</RelativeLayout>
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/TituloProductos"
+            android:layout_marginTop="5dp"
+            android:layout_margin="10dp">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="42dp"
+                    android:id="@+id/imageView4"
+                    android:src="@drawable/ic_menu_manage" />
+
+                <TextView
+                    android:layout_width="194dp"
+                    android:layout_height="53dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Configuracion"
+                    android:id="@+id/Productos"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="@dimen/abc_text_size_title_material"
+                    android:textIsSelectable="true"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/contentPanel"
+            android:layout_marginTop="5dp"
+            android:layout_margin="10dp">
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="53dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Periodo"
+                    android:id="@+id/Titulo"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="@dimen/abc_text_size_title_material"
+                    android:textIsSelectable="true"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:text="Fecha Inicio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="@dimen/abc_text_size_title_material"
+                    android:id="@+id/textView16"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:text="FI"
+                        android:layout_width="196dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvFI" />
+
+                    <Button
+                        android:text="Poner fecha"
+                        android:layout_width="102dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnFI"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_margin="5dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:text="Fecha Fin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="@dimen/abc_text_size_title_material"
+                    android:id="@+id/tv"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:text="FF"
+                        android:layout_width="196dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvFF" />
+
+                    <Button
+                        android:text="Poner fecha"
+                        android:layout_width="102dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnFF"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_margin="5dp" />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cGraficas"
+            android:layout_marginTop="5dp"
+            android:layout_margin="10dp">
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="53dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Tipo de grafica"
+                    android:id="@+id/tGrafica"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="@dimen/abc_text_size_title_material"
+                    android:textIsSelectable="true"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerG"
+                    android:layout_marginBottom="15dp" />
+
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>
+

@@ -71,7 +71,6 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_producto, container, false);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabProducto);
