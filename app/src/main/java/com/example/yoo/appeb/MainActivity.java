@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import static com.example.yoo.appeb.R.layout.fragment_edit_producto;
 
@@ -28,7 +29,16 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //SharedPreferences prefs;
         prefs = getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
+        String usuario = prefs.getString("User", "0");
+        String fechaInicio = prefs.getString("FI", "0");
+        String fechaFin = prefs.getString("FF", "0");
+        String tipoGrafica = prefs.getString("TipoGrafica", "0");
+
+        //Toast.makeText(this,"user "+usuario+" FI: "+fechaInicio+" FF: "+fechaFin+" TG: "+tipoGrafica,Toast.LENGTH_LONG ).show();
+
         //code
         //Set the fragment initially
        MainFragment fragment = new MainFragment();
@@ -163,6 +173,7 @@ public class MainActivity extends AppCompatActivity
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString("User", "0");
             editor.commit();
+
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             MainActivity.this.startActivity(intent);
         }

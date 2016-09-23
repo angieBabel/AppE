@@ -59,7 +59,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
          prefs = getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
         String usuario = prefs.getString("User", "0");
-        if (usuario != "0"){
+        if (!usuario.equals("0")){
+            //Toast.makeText(LoginActivity.this,"si entra con diferente de 0 :7 "+usuario,Toast.LENGTH_LONG ).show();
             openProfile(view);
         }
 
@@ -74,7 +75,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         userLogin();
-        //openProfile(view);
     }//Login
 
     //Logueo
@@ -126,6 +126,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String dateF = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
 
                     SharedPreferences.Editor editor = prefs.edit();
+
                     editor.putString("User", idUser);
                     editor.putString("FI", dateI);
                     editor.putString("FF", dateF);
