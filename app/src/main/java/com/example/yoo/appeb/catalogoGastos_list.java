@@ -29,7 +29,7 @@ public class catalogoGastos_list {
         return conceptoCG;
     }
 
-    public void setConceptoCG(String cantidadGD) {
+    public void setConceptoCG(String conceptoCG) {
         this.conceptoCG = conceptoCG;
     }
 
