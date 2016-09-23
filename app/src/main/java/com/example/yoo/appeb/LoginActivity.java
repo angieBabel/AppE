@@ -1,6 +1,7 @@
 package com.example.yoo.appeb;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -23,6 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -135,6 +138,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
     //Envio de datos del perfil
     private  void openProfile(View view){
+        String dateI = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+        String dateF = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+        SharedPreferences prefs =
+                getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("User", idUser);
+        editor.putString("FI", dateI);
+        editor.putString("FF", dateF);
+        editor.putString("TipoGrafica", "Barras");
+        editor.commit();
+
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         /*ntent.putExtra(KEY_USERNAME,username);*/
