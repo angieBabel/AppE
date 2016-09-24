@@ -53,6 +53,10 @@ public class editConcepto extends Fragment {
     String editURL = "http://webcolima.com/wsecomapping/editConcepto.php";
     String getURL = "http://webcolima.com/wsecomapping/rubros.php";
     String user= "1";
+    String nombreR;
+    String concepto;
+    String costo;
+    String idCG;
 
 
     public editConcepto() {
@@ -66,8 +70,12 @@ public class editConcepto extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_concepto, container, false);
         //text = (TextView) view.findViewById(R.id.Productos);
+        nombreR = getArguments().getString("rubro");
+        concepto = getArguments().getString("concepto");
+        costo =getArguments().getString("costo");
+        idCG =getArguments().getString("idCG");
 
-        datos = getArguments().getString("datos");
+        //datos = getArguments().getString("datos");
         //idC+","+rubro+", "+nombre+", "+costo
         Button editarProd = (Button) view.findViewById(R.id.button);
         editarProd.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +86,8 @@ public class editConcepto extends Fragment {
 
         });
 
+
+
         return view;
     }
     @Override
@@ -87,13 +97,13 @@ public class editConcepto extends Fragment {
         nombreConcepto = (EditText)getView().findViewById(R.id.edtNombreConcepto);
         precioConcpeto = (EditText)getView().findViewById(R.id.edtPrecioConcepto);
 
-        dataArray = datos.split(",");
+        //dataArray = datos.split(",");
         //idC+","+rubro+", "+nombre+", "+costo
-        String myString = dataArray[0]+ "\n" +dataArray[1]; //the value you want the position for
+        //String myString = dataArray[0]+ "\n" +dataArray[1]; //the value you want the position for
 
 
-        nombreConcepto.setText(dataArray[2]);
-        precioConcpeto.setText(dataArray[3].trim());
+        nombreConcepto.setText(concepto);
+        precioConcpeto.setText(costo);
         listaRubros.clear();
         spinner = (Spinner)getView().findViewById(R.id.spinnerRE);
         requestQueueGetRubros = Volley.newRequestQueue(getContext());
@@ -179,7 +189,7 @@ public class editConcepto extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("idConcepto",dataArray[0]);
+                parameters.put("idConcepto",idCG);
                 parameters.put("nombre", nombreConcepto.getText().toString());
                 parameters.put("costo", precioConcpeto.getText().toString());
                 parameters.put("idRubro", rubroExistente);

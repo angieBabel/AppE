@@ -8,6 +8,15 @@
     android:layout_marginTop="10dp">
 
     <TextView
+        android:text="id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtidCG"
+        android:textSize="14sp"
+        android:layout_weight="0.16"
+        android:visibility="gone" />
+
+    <TextView
         android:text="Rubro"
         android:layout_width="252dp"
         android:layout_height="wrap_content"
@@ -17,39 +26,48 @@
         android:textStyle="normal|bold" />
 
 
-    <TextView
-        android:text="Concepto"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtConceptoCG"
-        android:textSize="14sp"
-        android:layout_marginStart="35dp"/>
+        android:layout_marginLeft="30dp">
 
+        <TextView
+            android:text="Concepto: "
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/textView19" />
+
+        <TextView
+            android:text="Concepto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtConceptoCG"
+            android:textSize="14sp"
+            android:layout_marginStart="5dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="30dp"
         android:weightSum="1">
 
         <TextView
-            android:text="Costo"
-            android:layout_width="193dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtcostoCG"
-            android:layout_marginStart="15dp"
-            android:textSize="14sp"
-            android:layout_weight="0.67" />
-
-        <TextView
-            android:text="id"
+            android:text="Costo: $"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txtidCG"
-            android:textSize="14sp"
-            android:layout_weight="0.16"
-            android:visibility="gone" />
+            android:id="@+id/textView22" />
+
+        <TextView
+            android:text="Costo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtcostoCG"
+            android:layout_marginStart="5dp"
+            android:textSize="14sp" />
+
     </LinearLayout>
 
 </LinearLayout>
