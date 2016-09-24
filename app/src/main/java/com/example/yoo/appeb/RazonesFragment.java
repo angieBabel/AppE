@@ -97,9 +97,6 @@ public class RazonesFragment extends Fragment {
                         String mp = producto.getString("mp");
                         String usuario = producto.getString("id_usuario");
                         String fecha = producto.getString("fecha");
-                        //Toast.makeText(getContext(),"Si hayo usuario "+user+" ss "+usuario,Toast.LENGTH_LONG ).show();
-                        //Date date1 = sdf.parse("1995-02-23");
-
                         String a,m,d;
                         String[] fech=fecha.split("-");
                         a = fech[0];

@@ -1,5 +1,7 @@
 package com.example.yoo.appeb;
 
+import com.facebook.FacebookSdk;
+
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -147,10 +149,6 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_gastos) {
-            /*Intent i = new Intent(this, prueba.class);
-
-            //Inicia la actividad
-            startActivity(i);*/
             GastoFragment fragment = new GastoFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();

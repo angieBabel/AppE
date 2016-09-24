@@ -89,12 +89,20 @@
                 android:text="Login"
                 android:textStyle="bold" />
 
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_FB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp" />
+
             <TextView
                 android:text="Registrar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/registro"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:textAlignment="center"
                 android:clickable="true"
                 android:onClick="onClick" />
