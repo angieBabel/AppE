@@ -2,6 +2,7 @@ package com.example.yoo.appeb;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -55,11 +56,14 @@ public class VentasFragment extends Fragment {
     ArrayAdapter<String> ad;
     ListView lista;
     ProgressDialog PD;
-    String user= "1";
+    String user;
     public static final String KEY_datos="datos";
     String datos;
     String datosR;
     String tipoVenta;
+    SharedPreferences prefs;
+    String fi;
+    String ff;
 
 
     @Override
@@ -86,6 +90,11 @@ public class VentasFragment extends Fragment {
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
         //si hay datos enviados
+         prefs = getActivity().getSharedPreferences("MisPreferencias",getActivity().MODE_PRIVATE);
+        String usuario = prefs.getString("User", "0");
+        fi = prefs.getString("FI", "0");
+        ff = prefs.getString("FF", "0");
+        user = usuario;
         datosR = getArguments() != null ? getArguments().getString("datos") : "email@email.com";
 
         TabLayout tabs = (TabLayout) getView().findViewById(R.id.tabs);
@@ -207,7 +216,7 @@ public class VentasFragment extends Fragment {
                         String fechaventa = producto.getString("fechaventa");
                         String totalventa = producto.getString("totalventa");
                         String idProducto = producto.getString("idProducto");
-                        if (id_usuario.equals(user)){
+                        if (id_usuario.equals(user) /*&& fechaventa > fi && fechaventa < ff*/){
                             if (modopago.equals("0")){
                                 modopago="Contado";
                             }else {

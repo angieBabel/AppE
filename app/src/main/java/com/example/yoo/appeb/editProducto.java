@@ -99,8 +99,9 @@ public class editProducto extends Fragment {
 
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
-
+        
         Toast.makeText(getContext(),name,Toast.LENGTH_LONG ).show();
+
         nombreProd = (EditText)getView().findViewById(R.id.edtNombreProd);
         precioProd = (EditText)getView().findViewById(R.id.edtPrecioProd);
 

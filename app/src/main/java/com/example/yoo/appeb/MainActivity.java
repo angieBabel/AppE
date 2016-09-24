@@ -1,6 +1,8 @@
 package com.example.yoo.appeb;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,13 +20,15 @@ public class MainActivity extends AppCompatActivity
     //add
     NavigationView navigationView = null;
     Toolbar toolbar = null;
+    SharedPreferences prefs;
+
     //end
 
     //@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        prefs = getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
         //code
         //Set the fragment initially
        MainFragment fragment = new MainFragment();
@@ -156,8 +160,12 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
 
         }else if (id == R.id.nav_cerrar) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("User", "0");
+            editor.commit();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            MainActivity.this.startActivity(intent);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

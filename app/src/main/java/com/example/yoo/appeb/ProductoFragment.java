@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -59,13 +60,15 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
     ArrayAdapter<String> ad;
     ListView lista;
     ProgressDialog PD;
-    String user= "1";
+    SharedPreferences prefs;
+    String user;
     public static final String KEY_datos="datos";
     String datos;
     String name;
     String precio;
     String idProd;
     productoslistadapter adapter;
+
 
     public ProductoFragment() {
         // Required empty public constructor
@@ -76,6 +79,10 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_producto, container, false);
+        SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias",getActivity().MODE_PRIVATE);
+        String usuario = prefs.getString("User", "0");
+        user = usuario;
+
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabProducto);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +102,8 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
     }
 
     public void onActivityCreated(Bundle state) {
+
+
         super.onActivityCreated(state);
         lista = (ListView)getView().findViewById(R.id.listViewProductos);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
