@@ -170,7 +170,7 @@ public class ProductoFragment extends Fragment  implements NavigationView.OnNavi
                         String idP = producto.getString("id_producto");
                         if (usuario.equals(user)){
                             //listaProductos.add(idP+","+nombre + "  ,  " + precio);
-                            listaProductos.add(new productos_list(nombre,"Precio: "+ precio,idP));
+                            listaProductos.add(new productos_list(nombre,precio,idP));
                         };
 
 
