@@ -93,9 +93,11 @@
                 android:text="Registrar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView17"
+                android:id="@+id/registro"
                 android:layout_marginTop="20dp"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:clickable="true"
+                android:onClick="onClick" />
 
         </LinearLayout>
     </ScrollView>

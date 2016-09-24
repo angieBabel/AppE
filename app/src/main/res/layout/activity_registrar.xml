@@ -86,7 +86,6 @@
                     android:hint="Apellido"
                     android:imeActionId="@+id/login"
                     android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -132,7 +131,7 @@
 
 
             <Button
-                android:id="@+id/log_in_button"
+                android:id="@+id/sign_in_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

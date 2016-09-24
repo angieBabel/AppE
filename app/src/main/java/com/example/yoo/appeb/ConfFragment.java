@@ -89,16 +89,16 @@ public class ConfFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
             {
                 SharedPreferences.Editor editor = prefs.edit();
-                if (position==1){
+                if (position==0){
                     editor.putString("TipoGrafica", "Barras");
-                } else if (position==2){
+                } else if (position==1){
                     editor.putString("TipoGrafica", "Lineal");
-                } else if (position==3){
+                } else if (position==2){
                     editor.putString("TipoGrafica", "Pastel");
                 }
                 editor.commit();
                 String tipoGrafica = prefs.getString("TipoGrafica", "0");
-                Toast.makeText(getContext()," TG: "+tipoGrafica,Toast.LENGTH_LONG ).show();
+                //Toast.makeText(getContext()," TG: "+tipoGrafica,Toast.LENGTH_LONG ).show();
             }
 
             @Override
@@ -158,12 +158,11 @@ public class ConfFragment extends Fragment {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString("FI", FI.getText().toString());
             editor.putString("FF", FF.getText().toString());
-            editor.putString("TipoGrafica", "Barras");
             editor.commit();
             String fechaInicio = prefs.getString("FI", "0");
             String fechaFin = prefs.getString("FF", "0");
             String tipoGrafica = prefs.getString("TipoGrafica", "0");
-            Toast.makeText(getContext(),"FI: "+fechaInicio+" FF: "+fechaFin+" TG: "+tipoGrafica,Toast.LENGTH_LONG ).show();
+            //Toast.makeText(getContext(),"FI: "+fechaInicio+" FF: "+fechaFin+" TG: "+tipoGrafica,Toast.LENGTH_LONG ).show();
         }
 
     }

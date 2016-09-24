@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -45,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String nombree;
     String apellidoo;
     String correoo;
+    TextView signbutton;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
 
@@ -71,6 +73,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
+        signbutton= (TextView) findViewById(R.id.registro);
+        //TextView modelTextview = (TextView)findViewById(R.id.modelEdit);
+        signbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signin(v);
+
+            }
+        });
+
         btnLogin = (Button) findViewById(R.id.log_in_button);
 
         btnLogin.setOnClickListener(this);
@@ -137,7 +149,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     c1.add(Calendar.MONTH, -1);
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
                     String dateI =  sdf.format(c1.getTime());
-
                     String dateF = new SimpleDateFormat("dd/MM/yy").format(new Date());
 
                     SharedPreferences.Editor editor = prefs.edit();
@@ -152,7 +163,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor.commit();
                     openProfile(view);
                 }else {
-                    registrar(view);
+                    signin(view);
                 }
 
             }
@@ -176,7 +187,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         LoginActivity.this.startActivity(intent);
     }
 
-    private void registrar(View v) {
+    private void signin(View v) {
+        Toast.makeText(LoginActivity.this,"lo inento",Toast.LENGTH_LONG ).show();
+        Intent intent = new Intent(LoginActivity.this, registrar.class);
+        //ntent.putExtra(KEY_USERNAME,username);
+        //intent.putExtra("User",idUser);
+        LoginActivity.this.startActivity(intent);
 
     }
 
