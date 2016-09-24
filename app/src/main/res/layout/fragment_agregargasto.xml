@@ -66,15 +66,16 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Nombre"
                     android:id="@+id/textView"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:elevation="1dp" />
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/edtNombreConcepto"
                     android:layout_gravity="center_horizontal"
-                    android:elevation="1dp" />
+                    android:elevation="1dp"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -82,7 +83,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Precio"
                     android:id="@+id/textView4"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="5dp"
                     android:elevation="1dp" />
 
                 <EditText
@@ -91,7 +92,8 @@
                     android:id="@+id/edtPrecioConcepto"
                     android:layout_gravity="center_horizontal"
                     android:elevation="1dp"
-                    android:numeric="decimal" />
+                    android:numeric="decimal"
+                    android:textSize="14sp" />
 
 
                 <RadioGroup
@@ -121,7 +123,7 @@
                     android:layout_width="match_parent"
                     android:id="@+id/RE"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="30dp">
 
@@ -149,7 +151,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/RN"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
                         android:text="Nuevo Rubro"
