@@ -45,7 +45,6 @@ public class GastoFragment extends Fragment {
     String user= "1";
     public static final String KEY_datos="datos";
     String datos;
-    String idProd;
     gastoslist_adapter adapter;
 
 
@@ -138,7 +137,7 @@ public class GastoFragment extends Fragment {
                         String usuario = producto.getString("id_usuario");
                         if (usuario.equals(user)){
                             //listaGastos.add(idR+","+nombre + "," + total);
-                            listaGastos.add(new gastos_list(nombre,"Total: "+ total,idR));
+                            listaGastos.add(new gastos_list(nombre,total,idR));
                         };
                     } // for loop ends
                     adapter.notifyDataSetChanged();

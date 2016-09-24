@@ -65,10 +65,11 @@ public class detalleGasto extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_gasto, container, false);
-        datos = getArguments().getString("datos");
-        String[] dataArray = datos.split(",");
-        idRubro= dataArray[0];
+        View view= inflater.inflate(R.layout.fragment_detalle_gasto, container, false);
+        //datos = getArguments().getString("datos");
+        //String[] dataArray = datos.split(",");
+        //idRubro= dataArray[0];
+        idRubro = getArguments().getString("datos");
         return view;
     }
     public void onActivityCreated(Bundle state) {
@@ -90,8 +91,9 @@ public class detalleGasto extends Fragment {
                         .setPositiveButton("Eliminar", new DialogInterface.OnClickListener()  {
                             public void onClick(DialogInterface dialog, int id) {
                                 Log.i("Dialogos", "Confirmacion Eliminar.");
-                                String[] data = datos.split(",");
-                                eliminar(data[0]);
+                                //String[] data = datos.split(",");
+                                //eliminar(data[0]);
+                                eliminar(datos);
 
                             }
                         });
@@ -131,7 +133,7 @@ public class detalleGasto extends Fragment {
                         String idR = producto.getString("rubro");
                         if (usuario.equals(user) && idR.equals(idRubro)){
                             //listaProductos.add(idG+","+concepto+ " , " + cantidad + " , " +fecha+ " , " +tG);
-                            listaProductos.add(new gastosDetail_list(concepto,"Cantidad: "+ cantidad,"Total: "+ tG,"Fecha: "+ fecha,idR));
+                            listaProductos.add(new gastosDetail_list(concepto,cantidad,tG,fecha,idR,idG));
                         };
 
 
@@ -168,10 +170,10 @@ public class detalleGasto extends Fragment {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getContext(),"Gasto eliminado con éxito",Toast.LENGTH_LONG ).show();
-                ad.clear();
-                ad.notifyDataSetChanged();
+                adapter.clear();
+                adapter.notifyDataSetChanged();
                 ReadDataFromDB();
-                ad.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override

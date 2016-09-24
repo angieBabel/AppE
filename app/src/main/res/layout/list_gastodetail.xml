@@ -3,67 +3,90 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="20dp"
-    android:layout_marginEnd="20dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
     android:layout_marginTop="10dp">
 
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:weightSum="1">
-        <TextView
-            android:text="Concepto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtNombreConcepto"
-            android:textSize="16sp"
-            android:textStyle="normal|bold" />
-        <TextView
-            android:text="id"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/txtidGD"
-            android:layout_weight="0.69"
-            android:textSize="14sp"
-            android:visibility="gone" />
-
-    </LinearLayout>
+    <TextView
+        android:text="id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/txtidGD"
+        android:layout_weight="1"
+        android:visibility="gone" />
 
     <TextView
-        android:text="Cantidad"
-        android:layout_width="wrap_content"
+        android:text="idRGD"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtCantidadGD"
-        android:textSize="14sp"
-        android:layout_marginStart="35dp"/>
+        android:id="@+id/txtidRGD"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+    <TextView
+        android:text="Concepto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtNombreConcepto"
+        android:textSize="16sp"
+        android:textStyle="normal|bold"
+        android:layout_marginLeft="20dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginLeft="30dp">
+
+        <TextView
+            android:text="Cantidad: "
+            android:layout_width="77dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView20" />
+
+        <TextView
+            android:text="Cantidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCantidadGD"
+            android:textSize="14sp"
+            android:layout_marginLeft="5dp" />
+
+    </LinearLayout>
 
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="30dp"
         android:weightSum="1">
 
         <TextView
+            android:text="Total: $"
+            android:layout_width="61dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView21" />
+
+        <TextView
             android:text="Total"
-            android:layout_width="wrap_content"
+            android:layout_width="157dp"
             android:layout_height="wrap_content"
             android:id="@+id/txtTotalGD"
-            android:layout_marginStart="15dp"
-            android:textSize="14sp"
-            android:layout_weight="0.20" />
+            android:layout_marginStart="5dp"
+            android:textSize="14sp" />
 
         <TextView
                 android:text="Fecha"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtfechaGD"
-                android:layout_weight="0.61"
-                android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:textAlignment="textEnd"
+            android:layout_weight="1" />
+
     </LinearLayout>
 
 </LinearLayout>

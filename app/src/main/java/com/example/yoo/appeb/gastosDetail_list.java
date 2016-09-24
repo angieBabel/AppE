@@ -10,13 +10,15 @@ public class gastosDetail_list {
     private String totalGD;
     private String fechaGD;
     private String idGD;
+    private String idRGD;
 
-    public  gastosDetail_list(String nombreConcepto, String cantidadGD,String totalGD ,String fechaGD, String idGD) {
+    public  gastosDetail_list(String nombreConcepto, String cantidadGD,String totalGD ,String fechaGD, String idGD, String idRGD) {
         this.nombreConcepto = nombreConcepto;
         this.cantidadGD = cantidadGD;
         this.totalGD = totalGD;
         this.fechaGD = fechaGD;
         this.idGD = idGD;
+        this.idRGD = idRGD;
     }
 
     public String getNombreConcepto() {
@@ -57,5 +59,13 @@ public class gastosDetail_list {
 
     public void setIdGD(String idGD) {
         this.idGD= idGD;
+    }
+
+    public String getIdRGD() {
+        return idRGD;
+    }
+
+    public void setIdRGD(String idRGD) {
+        this.idRGD= idRGD;
     }
 }
