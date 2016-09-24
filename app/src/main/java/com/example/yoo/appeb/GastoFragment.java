@@ -45,7 +45,6 @@ public class GastoFragment extends Fragment {
     String user= "1";
     public static final String KEY_datos="datos";
     String datos;
-    String idProd;
     gastoslist_adapter adapter;
 
 
@@ -84,7 +83,7 @@ public class GastoFragment extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
                 //datos = (String) lista.getItemAtPosition(position);
-                datos = listaGastos.get(position).getIdGasto();
+                datos = listaGastos.get(position).getIdRubro();
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -138,7 +137,7 @@ public class GastoFragment extends Fragment {
                         String usuario = producto.getString("id_usuario");
                         if (usuario.equals(user)){
                             //listaGastos.add(idR+","+nombre + "," + total);
-                            listaGastos.add(new gastos_list(nombre,"Total: "+ total,idR));
+                            listaGastos.add(new gastos_list(nombre,total,idR));
                         };
                     } // for loop ends
                     adapter.notifyDataSetChanged();

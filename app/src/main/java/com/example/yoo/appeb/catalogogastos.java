@@ -50,6 +50,10 @@ public class catalogogastos extends Fragment {
     String user= "1";
     public static final String KEY_datos="datos";
     String datos;
+    String nombreR;
+    String concepto;
+    String costo;
+    String idCG;
     catalogogastoslist_adapter adapter;
 
 
@@ -100,14 +104,19 @@ public class catalogogastos extends Fragment {
                         .setPositiveButton("Eliminar", new DialogInterface.OnClickListener()  {
                             public void onClick(DialogInterface dialog, int id) {
                                 Log.i("Dialogos", "Confirmacion Eliminar.");
-                                String[] data = datos.split(",");
-                                eliminar(data[0]);
+                                //String[] data = datos.split(",");
+                                //eliminar(data[0]);
+                                eliminar(datos);
 
                             }
                         })
                         .setNegativeButton("Editar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 Log.i("Dialogos", "Confirmacion Agregar.");
+                                String nombreR;
+                                String concepto;
+                                String costo;
+                                String idCG;
 
                                 editConcepto fragment = new editConcepto();
                                 Bundle args = new Bundle();
@@ -152,7 +161,7 @@ public class catalogogastos extends Fragment {
                         String idC = producto.getString("id_concepto");
                         if (usuario.equals(user)){
                             //listaGastos.add(idC+","+rubro+", "+nombre+", "+costo);
-                            listaGastos.add(new catalogoGastos_list(rubro,"Concepto: "+ nombre,"Costo"+ costo,idC));
+                            listaGastos.add(new catalogoGastos_list(rubro,nombre,costo,idC));
                         };
 
 
@@ -200,10 +209,13 @@ public class catalogogastos extends Fragment {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getContext(),"Producto eliminado con éxito",Toast.LENGTH_LONG ).show();
-                ad.clear();
-                ad.notifyDataSetChanged();
+                //ad.clear();
+                adapter.clear();
+                //ad.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
                 ReadDataFromDB();
-                ad.notifyDataSetChanged();
+                //ad.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override

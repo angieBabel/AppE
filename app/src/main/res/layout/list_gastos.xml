@@ -21,13 +21,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.11"
-        android:layout_marginStart="20dp">
+        android:layout_marginStart="25dp">
+
+        <TextView
+            android:text="Total: $"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView18" />
 
         <TextView
             android:text="Total"
-            android:layout_width="288dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtTotalGasto" />
+            android:id="@+id/txtTotalGasto"
+            android:layout_marginLeft="5dp" />
 
         <TextView
             android:text="id"

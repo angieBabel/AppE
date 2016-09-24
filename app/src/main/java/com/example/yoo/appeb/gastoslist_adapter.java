@@ -45,8 +45,8 @@ public class gastoslist_adapter extends ArrayAdapter {
 
         // Recogemos el TextView para mostrar el número de celda y lo
         // establecemos.
-        TextView idGastos = (TextView) item.findViewById(R.id.txtidGastos);
-        idGastos.setText(datos.get(position).getIdGasto());
+        TextView idRubro = (TextView) item.findViewById(R.id.txtidGastos);
+        idRubro.setText(datos.get(position).getIdRubro());
 
         // Devolvemos la vista para que se muestre en el ListView.
         return item;

@@ -47,6 +47,8 @@ public class gastosdetailslist_adapter extends ArrayAdapter {
         TextView idGD = (TextView) item.findViewById(R.id.txtidGD);
         idGD.setText(datos.get(position).getIdGD());
 
+        TextView idRGD = (TextView) item.findViewById(R.id.txtidRGD);
+        idRGD.setText(datos.get(position).getIdRGD());
 
         // Devolvemos la vista para que se muestre en el ListView.
         return item;
