@@ -92,7 +92,7 @@ public class catalogogastos extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int position, long arg3) {
+                                    final int position, long arg3) {
                 //datos = (String) lista.getItemAtPosition(position);
                 datos = listaGastos.get(position).getIdCG();
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
@@ -113,14 +113,18 @@ public class catalogogastos extends Fragment {
                         .setNegativeButton("Editar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 Log.i("Dialogos", "Confirmacion Agregar.");
-                                String nombreR;
-                                String concepto;
-                                String costo;
-                                String idCG;
+                                nombreR= listaGastos.get(position).getNombreRubroCG();
+                                concepto= listaGastos.get(position).getConceptoCG();
+                                costo= listaGastos.get(position).getCostoCG();
+                                idCG= listaGastos.get(position).getIdCG();
 
                                 editConcepto fragment = new editConcepto();
                                 Bundle args = new Bundle();
-                                args.putString("datos", datos);
+                                args.putString("rubro", nombreR);
+                                args.putString("concepto", concepto);
+                                args.putString("costo", costo);
+                                args.putString("ideCG", idCG);
+
                                 fragment.setArguments(args);
                                 android.support.v4.app.FragmentTransaction fragmentTransaction =
                                         getFragmentManager().beginTransaction();
