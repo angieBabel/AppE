@@ -136,7 +136,7 @@ public class ddVenta extends Fragment {
                 cant.setText("");
                 VentasFragment fragment = new VentasFragment();
                 Bundle args = new Bundle();
-                args.putString("datos", "contado");
+                args.putString("datos", modoP);
                 fragment.setArguments(args);
                 android.support.v4.app.FragmentTransaction fragmentTransaction =
                         getFragmentManager().beginTransaction();

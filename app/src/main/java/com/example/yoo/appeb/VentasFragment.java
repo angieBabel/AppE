@@ -188,7 +188,7 @@ public class VentasFragment extends Fragment {
         PD = new ProgressDialog(getContext());
         PD.setMessage("Loading.....");
         PD.setCancelable(false);
-        if (datosR == "credito"){
+        if (datosR == "Credito"){
             readCredito();
         }else {
             readContado();
