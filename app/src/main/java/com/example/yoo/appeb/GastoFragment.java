@@ -4,6 +4,7 @@ package com.example.yoo.appeb;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -26,7 +27,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -42,10 +46,15 @@ public class GastoFragment extends Fragment {
     ArrayAdapter<String> ad;
     ListView lista;
     ProgressDialog PD;
-    String user= "1";
+    String user;
     public static final String KEY_datos="datos";
     String datos;
     gastoslist_adapter adapter;
+    SharedPreferences prefs;
+    String fi, ff;
+
+    Date FECHAI; //date2 es el 31 de octubre de 2001
+    Date FECHAF;
 
 
     public GastoFragment() {
@@ -58,6 +67,12 @@ public class GastoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_gasto, container, false);
+        prefs = getActivity().getSharedPreferences("MisPreferencias",getActivity().MODE_PRIVATE);
+        user = prefs.getString("User", "0");
+        fi = prefs.getString("FI", "0");
+        ff = prefs.getString("FF", "0");
+
+
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabGasto);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,10 +150,31 @@ public class GastoFragment extends Fragment {
                         String total = producto.getString("totalgasto");
                         String idR = producto.getString("rubro");
                         String usuario = producto.getString("id_usuario");
-                        if (usuario.equals(user)){
-                            //listaGastos.add(idR+","+nombre + "," + total);
-                            listaGastos.add(new gastos_list(nombre,total,idR));
-                        };
+                        String fecha = producto.getString("fechaGasto");
+                        String a,m,d;
+                        String[] fech=fecha.split("-");
+                        a = fech[0];
+                        m = fech[1];
+                        d = fech[2];
+                        try{
+
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                            //sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+                            Date FECHAI = formatter.parse(fi);
+                            Date FECHAF = formatter.parse(ff);
+                            Date fechaDB = formatter.parse(d+"/"+m+"/"+a);
+
+
+                            if (usuario.equals(user) && FECHAI.compareTo(fechaDB) <= 0 && FECHAF.compareTo(fechaDB) >= 0/*&& FECHAI.compareTo(fechaDB) <= 0 && FECHAF.compareTo(fechaDB) >= 0*/ ){
+
+                                //listaGastos.add(idR+","+nombre + "," + total);
+                                listaGastos.add(new gastos_list(nombre,total,idR));
+                            };
+
+                        }catch (ParseException e1){
+                            Toast.makeText(getContext(),"error "+e1,Toast.LENGTH_LONG ).show();
+                        }
                     } // for loop ends
                     adapter.notifyDataSetChanged();
                     //ad.notifyDataSetChanged();
