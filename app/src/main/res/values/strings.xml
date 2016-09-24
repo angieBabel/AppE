@@ -26,5 +26,6 @@
     <string name="gfbarras">Barras</string>
     <string name="gflineal">Lineal</string>
     <string name="gfpastel">Pastel</string>
+    <string name="title_activity_registrar">registrar</string>
 
 </resources>

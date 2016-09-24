@@ -3,9 +3,11 @@ package com.example.yoo.appeb;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,7 +21,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.yoo.appeb.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,80 +33,94 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+//import com.example.KissPK.appeb.R;
 
-    RequestQueue requestQueueLA;
+public class registrar extends AppCompatActivity implements View.OnClickListener{
+
+
     RequestQueue requestQueueDelete;
+    RequestQueue requestQueueLA;
+    String signURL = "http://webcolima.com/wsecomapping/signin.php";
     String showURL = "http://webcolima.com/wsecomapping/allUsers.php";
-    String addURL = "http://webcolima.com/wsecomapping/delProd.php";
-
-    String mail;
-    String pass;
-    String acceso;
-    String idUser;
+    EditText nombre;
+    EditText apellido;
+    EditText pass;
+    EditText email;
+    Button send;
     String nombree;
     String apellidoo;
     String correoo;
-    TextView signbutton;
-    private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
-
-    private Button btnLogin;
-    private EditText inputUser,inputPassword;
+    String acceso;
+    String idUser;
     SharedPreferences prefs;
-
-
-
-    String LOGIN_URL= "http://192.168.1.66:8080/OpenDoor/login.php";
-
     View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-         prefs = getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
-        String usuario = prefs.getString("User", "0");
-        if (!usuario.equals("0")){
-            //Toast.makeText(LoginActivity.this,"si entra con diferente de 0 :7 "+usuario,Toast.LENGTH_LONG ).show();
-            openProfile(view);
-        }
+        setContentView(R.layout.activity_registrar);
 
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        mPasswordView = (EditText) findViewById(R.id.password);
-        signbutton= (TextView) findViewById(R.id.registro);
-        //TextView modelTextview = (TextView)findViewById(R.id.modelEdit);
-        signbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signin(v);
 
-            }
-        });
+        prefs = getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
 
-        btnLogin = (Button) findViewById(R.id.log_in_button);
+        nombre = (EditText) findViewById(R.id.nombre);
+        apellido = (EditText) findViewById(R.id.apellido);
+        email = (EditText) findViewById(R.id.email);
+        pass = (EditText) findViewById(R.id.password);
 
-        btnLogin.setOnClickListener(this);
+
+        send = (Button) findViewById(R.id.sign_in_button);
+
+        send.setOnClickListener(this);
+
+        /*TextView register= (TextView) findViewById(R.id.registro);
+        register.setOnClickListener((View.OnClickListener) this);*/
     }
-
-
-    @Override
     public void onClick(View view) {
-        userLogin();
+
+        registrar();
     }//Login
 
-    //Logueo
+    private void registrar() {
+        requestQueueDelete = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.POST, signURL, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Toast.makeText(getApplication(),"Bienvenido "+nombre.getText().toString()+" "+apellido.getText().toString(),Toast.LENGTH_LONG ).show();
+                userLogin();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("nombre", nombre.getText().toString());
+                parameters.put("apellido", apellido.getText().toString());
+                parameters.put("email", email.getText().toString());
+                parameters.put("pass", pass.getText().toString());
+                return parameters;
+                // idC+","+rubro+", "+nombre+", "+costo
+            }
+        };
+        requestQueueDelete.add(request);
+    }
     private void userLogin() {
 
-        mail = mEmailView.getText().toString();
-        pass = mPasswordView.getText().toString();
+        final String maill = email.getText().toString();
+        final String ppass =pass.getText().toString();
 
         //Toast.makeText(LoginActivity.this,"si llama al redData",Toast.LENGTH_LONG ).show();
         //Toast.makeText(LoginActivity.this,"mail ingresado"+mail,Toast.LENGTH_LONG ).show();
         //Toast.makeText(LoginActivity.this,"pass ingresado"+pass,Toast.LENGTH_LONG ).show();
 
 
-        requestQueueLA = Volley.newRequestQueue(LoginActivity.this);
+        requestQueueLA = Volley.newRequestQueue(registrar.this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,showURL,new Response.Listener<JSONObject>() {
 
@@ -125,13 +140,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 //                        Toast.makeText(LoginActivity.this,id_usuario+","+correo+","+contrasenia,Toast.LENGTH_LONG ).show();
 
-                        if (correo.equals(mail) && contrasenia.equals(pass)){
+                        if (correo.equals(maill) && contrasenia.equals(ppass)){
                             acceso ="correcto";
                             idUser =id_usuario;
                             nombree =nombre;
                             apellidoo=apellido;
                             correoo=correo;
-                            Toast.makeText(LoginActivity.this,"Bienvenido "+nombre+" "+apellido,Toast.LENGTH_LONG ).show();
+                            Toast.makeText(registrar.this,"Bienvenido "+nombre+" "+apellido,Toast.LENGTH_LONG ).show();
                             //Toast.makeText(LoginActivity.this,"Acceso "+acceso,Toast.LENGTH_LONG ).show();
                             i = alumnos.length();
                             //
@@ -142,8 +157,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                 }
                 if (acceso=="correcto"){
-
-
 
                     Calendar c1 = GregorianCalendar.getInstance();
                     c1.add(Calendar.MONTH, -1);
@@ -162,8 +175,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor.putString("TipoGrafica", "Barras");
                     editor.commit();
                     openProfile(view);
-                }else {
-                    signin(view);
                 }
 
             }
@@ -172,7 +183,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(LoginActivity.this,error.toString(),Toast.LENGTH_LONG ).show();
+                Toast.makeText(registrar.this,error.toString(),Toast.LENGTH_LONG ).show();
             }
         });
         requestQueueLA.add(jsonObjectRequest);
@@ -181,19 +192,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //Envio de datos del perfil
     private  void openProfile(View view){
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(registrar.this, MainActivity.class);
         /*ntent.putExtra(KEY_USERNAME,username);*/
-        intent.putExtra("User",idUser);
-        LoginActivity.this.startActivity(intent);
-    }
-
-    private void signin(View v) {
-        Toast.makeText(LoginActivity.this,"lo inento",Toast.LENGTH_LONG ).show();
-        Intent intent = new Intent(LoginActivity.this, registrar.class);
-        //ntent.putExtra(KEY_USERNAME,username);
         //intent.putExtra("User",idUser);
-        LoginActivity.this.startActivity(intent);
-
+        registrar.this.startActivity(intent);
     }
 
 }
