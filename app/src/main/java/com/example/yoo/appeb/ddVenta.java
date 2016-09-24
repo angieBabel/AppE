@@ -1,6 +1,7 @@
 package com.example.yoo.appeb;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -55,7 +56,8 @@ public class ddVenta extends Fragment {
     ListView lista;
     RequestQueue requestQueueSend;
     RequestQueue requestQueueGet;
-    String user= "1";
+    String user;
+    SharedPreferences prefs;
 
 
     public ddVenta() {
@@ -69,6 +71,8 @@ public class ddVenta extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_dd_venta, container, false);
+        prefs = getActivity().getSharedPreferences("MisPreferencias",getActivity().MODE_PRIVATE);
+        user = prefs.getString("User", "0");
         super.onCreate(savedInstanceState);
         return view;
 
@@ -132,7 +136,7 @@ public class ddVenta extends Fragment {
                 cant.setText("");
                 VentasFragment fragment = new VentasFragment();
                 Bundle args = new Bundle();
-                args.putString("datos", "contado");
+                args.putString("datos", modoP);
                 fragment.setArguments(args);
                 android.support.v4.app.FragmentTransaction fragmentTransaction =
                         getFragmentManager().beginTransaction();

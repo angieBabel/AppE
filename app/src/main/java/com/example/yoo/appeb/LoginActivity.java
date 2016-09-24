@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -25,9 +28,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -40,13 +54,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String pass;
     String acceso;
     String idUser;
+    String nombree;
+    String apellidoo;
+    String correoo;
+    TextView signbutton;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
 
     private Button btnLogin;
     private EditText inputUser,inputPassword;
     SharedPreferences prefs;
-
+    CallbackManager callbackManager;
+    LoginButton loginButton;
 
 
     String LOGIN_URL= "http://192.168.1.66:8080/OpenDoor/login.php";
@@ -56,25 +75,76 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
+        callbackManager = CallbackManager.Factory.create();
+
+        loginButton = (LoginButton) view.findViewById(R.id.login_FB);
+
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+
+        });
+        AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_login);
          prefs = getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
         String usuario = prefs.getString("User", "0");
-        if (usuario != "0"){
+        if (!usuario.equals("0")){
+            //Toast.makeText(LoginActivity.this,"si entra con diferente de 0 :7 "+usuario,Toast.LENGTH_LONG ).show();
             openProfile(view);
         }
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
-        btnLogin = (Button) findViewById(R.id.log_in_button);
+        signbutton= (TextView) findViewById(R.id.registro);
+        //TextView modelTextview = (TextView)findViewById(R.id.modelEdit);
+        signbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signin(v);
 
-        btnLogin.setOnClickListener(this);
+            }
+        });
+
+       /* btnLogin = (Button) findViewById(R.id.log_in_button);
+
+        btnLogin.setOnClickListener(this);*/
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
     }
 
 
     @Override
     public void onClick(View view) {
         userLogin();
-        //openProfile(view);
     }//Login
 
     //Logueo
@@ -111,7 +181,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (correo.equals(mail) && contrasenia.equals(pass)){
                             acceso ="correcto";
                             idUser =id_usuario;
-                            //Toast.makeText(LoginActivity.this,"id del usuario :) "+idUser,Toast.LENGTH_LONG ).show();
+                            nombree =nombre;
+                            apellidoo=apellido;
+                            correoo=correo;
+                            Toast.makeText(LoginActivity.this,"Bienvenido "+nombre+" "+apellido,Toast.LENGTH_LONG ).show();
                             //Toast.makeText(LoginActivity.this,"Acceso "+acceso,Toast.LENGTH_LONG ).show();
                             i = alumnos.length();
                             //
@@ -122,18 +195,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                 }
                 if (acceso=="correcto"){
-                    String dateI = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-                    String dateF = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+
+
+
+                    Calendar c1 = GregorianCalendar.getInstance();
+                    c1.add(Calendar.MONTH, -1);
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+                    String dateI =  sdf.format(c1.getTime());
+                    String dateF = new SimpleDateFormat("dd/MM/yy").format(new Date());
 
                     SharedPreferences.Editor editor = prefs.edit();
+
                     editor.putString("User", idUser);
+                    editor.putString("Nombre", nombree);
+                    editor.putString("Apellido", apellidoo);
+                    editor.putString("Correo", correoo);
                     editor.putString("FI", dateI);
                     editor.putString("FF", dateF);
                     editor.putString("TipoGrafica", "Barras");
                     editor.commit();
                     openProfile(view);
                 }else {
-                    registrar(mail,pass);
+                    signin(view);
                 }
 
             }
@@ -148,6 +231,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         requestQueueLA.add(jsonObjectRequest);
 
     }
+
     //Envio de datos del perfil
     private  void openProfile(View view){
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -156,6 +240,51 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         LoginActivity.this.startActivity(intent);
     }
 
-    private void registrar(String mail, String pass) {
+    private void signin(View v) {
+        Toast.makeText(LoginActivity.this,"lo inento",Toast.LENGTH_LONG ).show();
+        Intent intent = new Intent(LoginActivity.this, registrar.class);
+        //ntent.putExtra(KEY_USERNAME,username);
+        //intent.putExtra("User",idUser);
+        LoginActivity.this.startActivity(intent);
+
     }
+
+    @Override
+    public void onCreateView(
+            LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_login, container, false);
+
+        loginButton = (LoginButton) view.findViewById(R.id.login_button);
+        loginButton.setReadPermissions("email");
+        // If using in a fragment
+        loginButton.setFragment(this);
+        // Other app specific specialization
+
+        // Callback registration
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // App code
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+            }
+        });
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

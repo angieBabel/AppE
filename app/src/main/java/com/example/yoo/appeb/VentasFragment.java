@@ -40,7 +40,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +73,11 @@ public class VentasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_ventas, container, false);
+        prefs = getActivity().getSharedPreferences("MisPreferencias",getActivity().MODE_PRIVATE);
+        user = prefs.getString("User", "0");
+        fi = prefs.getString("FI", "0");
+        ff = prefs.getString("FF", "0");
+
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabVenta);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,16 +98,12 @@ public class VentasFragment extends Fragment {
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
         //si hay datos enviados
-         prefs = getActivity().getSharedPreferences("MisPreferencias",getActivity().MODE_PRIVATE);
-        String usuario = prefs.getString("User", "0");
-        fi = prefs.getString("FI", "0");
-        ff = prefs.getString("FF", "0");
-        user = usuario;
+
         datosR = getArguments() != null ? getArguments().getString("datos") : "email@email.com";
 
         TabLayout tabs = (TabLayout) getView().findViewById(R.id.tabs);
 
-        tabs.addTab(tabs.newTab().setText("Contado"));
+        tabs.addTab(tabs.newTab().setText("Resumen"));
         tabs.addTab(tabs.newTab().setText("Crédito"));
 
         tabs.setOnTabSelectedListener(
@@ -111,7 +115,7 @@ public class VentasFragment extends Fragment {
                         PD.setCancelable(false);
                         ad.clear();
                         ad.notifyDataSetChanged();
-                        if (tab.getText() == "Contado"){
+                        if (tab.getText() == "Resumen"){
                             readContado();
 
                         }else if (tab.getText() == "Crédito"){
@@ -144,7 +148,7 @@ public class VentasFragment extends Fragment {
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
 
-                if (tipoVenta=="contado"){
+                if (tipoVenta=="resumen"){
                     builder.setMessage("Seleccione una opción")
                             .setTitle("")
                             .setPositiveButton("Eliminar", new DialogInterface.OnClickListener()  {
@@ -184,7 +188,7 @@ public class VentasFragment extends Fragment {
         PD = new ProgressDialog(getContext());
         PD.setMessage("Loading.....");
         PD.setCancelable(false);
-        if (datosR == "credito"){
+        if (datosR == "Credito"){
             readCredito();
         }else {
             readContado();
@@ -193,7 +197,7 @@ public class VentasFragment extends Fragment {
     }
 
     public void readContado(){
-        tipoVenta="contado";
+        tipoVenta="resumen";
         requestQueueLA = Volley.newRequestQueue(getActivity());
 
         PD.show();
@@ -216,14 +220,33 @@ public class VentasFragment extends Fragment {
                         String fechaventa = producto.getString("fechaventa");
                         String totalventa = producto.getString("totalventa");
                         String idProducto = producto.getString("idProducto");
-                        if (id_usuario.equals(user) /*&& fechaventa > fi && fechaventa < ff*/){
-                            if (modopago.equals("0")){
-                                modopago="Contado";
-                            }else {
-                                modopago="Crédito";
-                            }
-                            listaProductos.add(idventa +","+nombreproducto +","+precioproducto +","+cantidad +","+modopago +","+fechaventa +","+totalventa +","+idProducto);
-                        };
+
+                        String a,m,d;
+                        String[] fech=fechaventa.split("-");
+                        a = fech[0];
+                        m = fech[1];
+                        d = fech[2];
+                        try{
+
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                            //sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            //
+                            Date FECHAI = formatter.parse(fi);
+                            Date FECHAF = formatter.parse(ff);
+                            Date fechaDB = formatter.parse(d+"/"+m+"/"+a);
+
+                            if (id_usuario.equals(user) && FECHAI.compareTo(fechaDB) <= 0 && FECHAF.compareTo(fechaDB) >= 0/**/ ){
+                                //Toast.makeText(getContext(),idventa +","+nombreproducto +","+precioproducto +","+cantidad +","+modopago +","+d+"/"+m+"/"+a +","+totalventa +","+idProducto,Toast.LENGTH_LONG ).show();
+                                if (modopago.equals("0")){
+                                    modopago="Contado";
+                                }else {
+                                    modopago="Crédito";
+                                }
+                                listaProductos.add(idventa +","+nombreproducto +","+precioproducto +","+cantidad +","+modopago +","+d+"/"+m+"/"+a +","+totalventa +","+idProducto);
+                            };
+                        }catch (ParseException e1){
+                            Toast.makeText(getContext(),"error "+e1,Toast.LENGTH_LONG ).show();
+                        }
 
 
                     } // for loop ends
@@ -274,6 +297,7 @@ public class VentasFragment extends Fragment {
                         String abono_periodo = producto.getString("abono_periodo");
                         String fechaventa = producto.getString("fechaventa");
                         String idAdeudo = producto.getString("idAdeudo");
+
                         if (id_usuario.equals(user)){
 
                             listaProductos.add(idAdeudo +","+nombreproducto +","+deudor +","+deuda +","+fechaventa +","+abono +","+abono_periodo);

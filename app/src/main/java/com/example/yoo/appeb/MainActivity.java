@@ -1,9 +1,13 @@
 package com.example.yoo.appeb;
 
+import com.facebook.FacebookSdk;
+
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import static com.example.yoo.appeb.R.layout.fragment_edit_producto;
 
@@ -21,6 +28,8 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView = null;
     Toolbar toolbar = null;
     SharedPreferences prefs;
+    TextView correoo;
+    AppBarLayout appB;
 
     //end
 
@@ -28,7 +37,19 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //SharedPreferences prefs;
         prefs = getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
+        String usuario = prefs.getString("User", "0");
+        String fechaInicio = prefs.getString("FI", "0");
+        String fechaFin = prefs.getString("FF", "0");
+        String tipoGrafica = prefs.getString("TipoGrafica", "0");
+        String name = prefs.getString("Nombre", "0");
+        String lastname = prefs.getString("Apellido", "0");
+        String correo = prefs.getString("Correo", "0");
+
+        //Toast.makeText(this,"user "+usuario+" FI: "+fechaInicio+" FF: "+fechaFin+" TG: "+tipoGrafica+" nombre: "+correo,Toast.LENGTH_LONG ).show();
+
         //code
         //Set the fragment initially
        MainFragment fragment = new MainFragment();
@@ -50,7 +71,10 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -66,11 +90,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        correoo.setText("hola");
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -87,6 +113,8 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -121,10 +149,6 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_gastos) {
-            /*Intent i = new Intent(this, prueba.class);
-
-            //Inicia la actividad
-            startActivity(i);*/
             GastoFragment fragment = new GastoFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
@@ -163,6 +187,7 @@ public class MainActivity extends AppCompatActivity
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString("User", "0");
             editor.commit();
+
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             MainActivity.this.startActivity(intent);
         }
@@ -181,5 +206,7 @@ public class MainActivity extends AppCompatActivity
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+
 
 }
