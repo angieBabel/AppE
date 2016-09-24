@@ -66,13 +66,13 @@
                     android:id="@+id/RE"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:layout_marginBottom="30dp">
+                    android:layout_marginBottom="15dp">
 
                     <TextView
-                        android:layout_width="178dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Rubro"
+                        android:text="Rubro: "
                         android:id="@+id/textViewRE"
                         android:elevation="1dp"
                         android:allowUndo="true" />
@@ -82,7 +82,7 @@
                         android:layout_height="match_parent"
                         android:id="@+id/spinnerRE"
                         android:spinnerMode="dialog"
-                        android:layout_marginLeft="20dp"/>
+                        android:layout_marginLeft="5dp"/>
 
 
 
@@ -103,7 +103,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/edtNombreConcepto"
                     android:layout_gravity="center_horizontal"
-                    android:elevation="1dp" />
+                    android:elevation="1dp"
+                    android:layout_marginStart="10dp" />
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -120,7 +121,8 @@
                     android:id="@+id/edtPrecioConcepto"
                     android:layout_gravity="center_horizontal"
                     android:elevation="1dp"
-                    android:numeric="decimal" />
+                    android:numeric="decimal"
+                    android:layout_marginStart="10dp" />
 
                 <Button
                     android:layout_width="323dp"
@@ -134,7 +136,7 @@
                     android:elevation="1dp"
                     android:gravity="center_vertical|center_horizontal"
                     android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginTop="50dp" />
+                    android:layout_marginTop="20dp" />
 
 
             </LinearLayout>
