@@ -25,7 +25,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +42,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String pass;
     String acceso;
     String idUser;
+    String nombree;
+    String apellidoo;
+    String correoo;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
 
@@ -111,7 +116,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (correo.equals(mail) && contrasenia.equals(pass)){
                             acceso ="correcto";
                             idUser =id_usuario;
-                            //Toast.makeText(LoginActivity.this,"id del usuario :) "+idUser,Toast.LENGTH_LONG ).show();
+                            nombree =nombre;
+                            apellidoo=apellido;
+                            correoo=correo;
+                            Toast.makeText(LoginActivity.this,"Bienvenido "+nombre+" "+apellido,Toast.LENGTH_LONG ).show();
                             //Toast.makeText(LoginActivity.this,"Acceso "+acceso,Toast.LENGTH_LONG ).show();
                             i = alumnos.length();
                             //
@@ -122,19 +130,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                 }
                 if (acceso=="correcto"){
-                    String dateI = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-                    String dateF = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+
+
+
+                    Calendar c1 = GregorianCalendar.getInstance();
+                    c1.add(Calendar.MONTH, -1);
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+                    String dateI =  sdf.format(c1.getTime());
+
+                    String dateF = new SimpleDateFormat("dd/MM/yy").format(new Date());
 
                     SharedPreferences.Editor editor = prefs.edit();
 
                     editor.putString("User", idUser);
+                    editor.putString("Nombre", nombree);
+                    editor.putString("Apellido", apellidoo);
+                    editor.putString("Correo", correoo);
                     editor.putString("FI", dateI);
                     editor.putString("FF", dateF);
                     editor.putString("TipoGrafica", "Barras");
                     editor.commit();
                     openProfile(view);
                 }else {
-                    registrar(mail,pass);
+                    registrar(view);
                 }
 
             }
@@ -149,6 +167,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         requestQueueLA.add(jsonObjectRequest);
 
     }
+
     //Envio de datos del perfil
     private  void openProfile(View view){
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -157,6 +176,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         LoginActivity.this.startActivity(intent);
     }
 
-    private void registrar(String mail, String pass) {
+    private void registrar(View v) {
+
     }
+
 }

@@ -3,6 +3,7 @@ package com.example.yoo.appeb;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ public class ConfFragment extends Fragment {
     EditText FF;
     String btnpres;
     Spinner spinner;
-
+    SharedPreferences prefs;
 
 
     public ConfFragment() {
@@ -61,13 +63,18 @@ public class ConfFragment extends Fragment {
         super.onActivityCreated(state);
         final String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
 
+        prefs = getActivity().getSharedPreferences("MisPreferencias",getActivity().MODE_PRIVATE);
+
 
         button = (ImageButton)getView().findViewById(R.id.btnFI);
         buttonFF = (ImageButton)getView().findViewById(R.id.btnFF);
         FI = (EditText)getView().findViewById(R.id.editTextFI);
         FF = (EditText)getView().findViewById(R.id.editTextFF);
-        FI.setText(date);
-        FF.setText(date);
+
+        String fechaInicio = prefs.getString("FI", "0");
+        String fechaFin = prefs.getString("FF", "0");
+        FI.setText(fechaInicio);
+        FF.setText(fechaFin);
 
         List<tipos_graficas> items = new ArrayList<tipos_graficas>(3);
         items.add(new tipos_graficas(getString(R.string.gfbarras), R.drawable.ic_barras));
@@ -81,7 +88,17 @@ public class ConfFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
             {
-
+                SharedPreferences.Editor editor = prefs.edit();
+                if (position==1){
+                    editor.putString("TipoGrafica", "Barras");
+                } else if (position==2){
+                    editor.putString("TipoGrafica", "Lineal");
+                } else if (position==3){
+                    editor.putString("TipoGrafica", "Pastel");
+                }
+                editor.commit();
+                String tipoGrafica = prefs.getString("TipoGrafica", "0");
+                Toast.makeText(getContext()," TG: "+tipoGrafica,Toast.LENGTH_LONG ).show();
             }
 
             @Override
@@ -131,12 +148,22 @@ public class ConfFragment extends Fragment {
             populateSetDate(yy, mm+1, dd);
         }
         public void populateSetDate(int year, int month, int day) {
+
             if(btnpres.equals("btnF")){
                 FF.setText(day + "/" + month + "/" + year);
             }else {
                 FI.setText(day + "/" + month + "/" + year);
             }
 
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("FI", FI.getText().toString());
+            editor.putString("FF", FF.getText().toString());
+            editor.putString("TipoGrafica", "Barras");
+            editor.commit();
+            String fechaInicio = prefs.getString("FI", "0");
+            String fechaFin = prefs.getString("FF", "0");
+            String tipoGrafica = prefs.getString("TipoGrafica", "0");
+            Toast.makeText(getContext(),"FI: "+fechaInicio+" FF: "+fechaFin+" TG: "+tipoGrafica,Toast.LENGTH_LONG ).show();
         }
 
     }
