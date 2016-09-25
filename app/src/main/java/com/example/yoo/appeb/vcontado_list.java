@@ -5,4 +5,79 @@ package com.example.yoo.appeb;
  */
 
 public class vcontado_list {
+    private String nombreProductoVc;
+    private String fechaVc;
+    private String precioVc;
+    private String cantidadVc;
+    private String modopagoVc;
+    private String totalVc;
+    private String idVc;
+
+    public vcontado_list(String nombreProductoVc,String fechaVc, String precioVc,String cantidadVc, String  modopagoVc , String  totalVc, String idVc) {
+        this.nombreProductoVc = nombreProductoVc;
+        this.fechaVc= fechaVc;
+        this.precioVc = precioVc;
+        this.cantidadVc = cantidadVc;
+        this.modopagoVc = modopagoVc;
+        this.totalVc = totalVc;
+        this.idVc = idVc;
+    }
+
+    public String getNombreProductoVc() {
+        return nombreProductoVc;
+    }
+
+    public void setNombreProductoVc(String nombreProductoVc) {
+        this.nombreProductoVc = nombreProductoVc;
+    }
+
+    public String getPrecioVc() {
+        return precioVc;
+    }
+
+    public void setPrecioVc(String precioVc) {
+        this.precioVc = precioVc;
+    }
+
+    public String getCantidadVc() {
+        return cantidadVc;
+    }
+
+    public void setCantidadVc(String cantidadVc) {
+        this.cantidadVc= cantidadVc;
+    }
+
+    public String getModopagoVc() {
+        return modopagoVc;
+    }
+
+    public void setModopagoVc(String modopagoVc) {
+        this.modopagoVc= modopagoVc;
+    }
+
+    public String getIdVc() {
+        return idVc;
+    }
+
+    public void setIdVc(String idVc) {
+        this.idVc= idVc;
+    }
+
+    public String getFechaVc() {
+        return fechaVc;
+    }
+
+    public void setFechaVc(String fechaVC) {
+        this.fechaVc= fechaVc;
+    }
+
+    public String getTotalVc() {
+        return totalVc;
+    }
+
+    public void setTotalVc(String totalVc) {
+        this.totalVc= totalVc;
+    }
+
+
 }
