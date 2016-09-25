@@ -12,8 +12,9 @@ public class vcontado_list {
     private String modopagoVc;
     private String totalVc;
     private String idVc;
+    private String idpVc;
 
-    public vcontado_list(String nombreProductoVc,String fechaVc, String precioVc,String cantidadVc, String  modopagoVc , String  totalVc, String idVc) {
+    public vcontado_list( String nombreProductoVc, String fechaVc, String precioVc, String cantidadVc, String modopagoVc, String totalVc, String idpVc,String idVc) {
         this.nombreProductoVc = nombreProductoVc;
         this.fechaVc= fechaVc;
         this.precioVc = precioVc;
@@ -21,6 +22,7 @@ public class vcontado_list {
         this.modopagoVc = modopagoVc;
         this.totalVc = totalVc;
         this.idVc = idVc;
+        this.idpVc = idpVc;
     }
 
     public String getNombreProductoVc() {
@@ -77,6 +79,14 @@ public class vcontado_list {
 
     public void setTotalVc(String totalVc) {
         this.totalVc= totalVc;
+    }
+
+    public String getidpVc() {
+        return idpVc;
+    }
+
+    public void setidpVc(String idpVc) {
+        this.idpVc= idpVc;
     }
 
 
