@@ -203,13 +203,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 if (acceso=="correcto"){
 
-
-
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
                     Calendar c1 = GregorianCalendar.getInstance();
                     c1.add(Calendar.MONTH, -1);
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
                     String dateI =  sdf.format(c1.getTime());
-                    String dateF = new SimpleDateFormat("dd/MM/yy").format(new Date());
+                    Calendar c2 = GregorianCalendar.getInstance();
+                    String dateF =  sdf.format(c2.getTime());
 
                     SharedPreferences.Editor editor = prefs.edit();
 
@@ -223,7 +222,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor.commit();
                     openProfile(view);
                 }else {
-                    signin(view);
+                    //signin(view);
                 }
 
             }

@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class GastoFragment extends Fragment {
 
     RequestQueue requestQueueLA;
     String showURL = "http://webcolima.com/wsecomapping/gastos.php";
+    String  newurl;
 
     //ArrayList<String> listaGastos= new ArrayList<String>();
     ArrayList <gastos_list> listaGastos = new ArrayList<gastos_list>();
@@ -128,6 +130,19 @@ public class GastoFragment extends Fragment {
         PD = new ProgressDialog(getContext());
         PD.setMessage("Loading.....");
         PD.setCancelable(false);
+
+        String a,m,d,aa,mm,dd;
+        String[] fech=fi.split("/");
+        d = fech[0];
+        m = fech[1];
+        a = fech[2];
+        String[] fechh=ff.split("/");
+        dd = fechh[0];
+        mm = fechh[1];
+        aa = fechh[2];
+
+        newurl = showURL+"?id_usuario="+user+"&fechaInicio="+a+"-"+m+"-"+d+"&fechaFin="+aa+"-"+mm+"-"+dd;
+        //Toast.makeText(getContext(),newurl,Toast.LENGTH_LONG ).show();
         ReadDataFromDB();
     }
 
@@ -136,7 +151,7 @@ public class GastoFragment extends Fragment {
         requestQueueLA = Volley.newRequestQueue(getActivity());
 
         PD.show();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,showURL,new com.android.volley.Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,newurl,new com.android.volley.Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -151,30 +166,14 @@ public class GastoFragment extends Fragment {
                         String idR = producto.getString("rubro");
                         String usuario = producto.getString("id_usuario");
                         String fecha = producto.getString("fechaGasto");
-                        String a,m,d;
-                        String[] fech=fecha.split("-");
-                        a = fech[0];
-                        m = fech[1];
-                        d = fech[2];
-                        try{
-
-                            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                            //sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-                            Date FECHAI = formatter.parse(fi);
-                            Date FECHAF = formatter.parse(ff);
-                            Date fechaDB = formatter.parse(d+"/"+m+"/"+a);
 
 
-                            if (usuario.equals(user) && FECHAI.compareTo(fechaDB) <= 0 && FECHAF.compareTo(fechaDB) >= 0/*&& FECHAI.compareTo(fechaDB) <= 0 && FECHAF.compareTo(fechaDB) >= 0*/ ){
+                            if (usuario.equals(user)/* && FECHAI.compareTo(fechaDB) <= 0 && FECHAF.compareTo(fechaDB) >= 0*//*&& FECHAI.compareTo(fechaDB) <= 0 && FECHAF.compareTo(fechaDB) >= 0*//* */){
 
                                 //listaGastos.add(idR+","+nombre + "," + total);
                                 listaGastos.add(new gastos_list(nombre,total,idR));
                             };
 
-                        }catch (ParseException e1){
-                            Toast.makeText(getContext(),"error "+e1,Toast.LENGTH_LONG ).show();
-                        }
                     } // for loop ends
                     adapter.notifyDataSetChanged();
                     //ad.notifyDataSetChanged();
