@@ -68,9 +68,8 @@ tools:context="com.example.yoo.appeb.ddVenta">
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Producto"
+                    android:text="Producto: "
                     android:id="@+id/textView"
-                    android:layout_marginTop="15dp"
                     android:elevation="1dp" />
 
                 <Spinner
@@ -80,37 +79,42 @@ tools:context="com.example.yoo.appeb.ddVenta">
                     android:spinnerMode="dialog" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Cantidad"
-                android:id="@+id/textView4"
-                android:layout_marginTop="15dp"
-                android:elevation="1dp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/cantidad"
-                android:layout_gravity="center_horizontal"
-                android:elevation="1dp"
-                android:numeric="decimal"
-                android:layout_marginTop="15dp" />
-
             <LinearLayout
                 android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Cantidad: "
+                    android:id="@+id/textView4"
+                    android:elevation="1dp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cantidad"
+                    android:layout_gravity="center_horizontal"
+                    android:elevation="1dp"
+                    android:numeric="integer"
+                    android:layout_weight="1"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp">
 
                 <TextView
-                    android:layout_width="190dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Modo de pago"
                     android:id="@+id/textView8"
-                    android:layout_marginTop="38dp"
                     android:elevation="1dp" />
 
                 <RadioGroup
@@ -121,26 +125,28 @@ tools:context="com.example.yoo.appeb.ddVenta">
                     <RadioButton
                         android:text="Contado"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/pagoContado"
                         android:layout_weight="1"
-                        android:layout_marginTop="15dp" />
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="30dp" />
 
                     <RadioButton
                         android:text="Credito"
                         android:id="@+id/pagoCredito"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginTop="15dp" />
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="30dp" />
                 </RadioGroup>
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/deudor"
@@ -148,17 +154,17 @@ tools:context="com.example.yoo.appeb.ddVenta">
                 android:layout_marginTop="15dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Deudor"
+                    android:text="Nombre del deudor"
                     android:id="@+id/textView5"
                     android:layout_marginTop="10dp"
                     android:elevation="1dp"
                     android:layout_gravity="center_vertical" />
 
                 <EditText
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/deudo"
                     android:layout_gravity="center_horizontal"
@@ -180,7 +186,7 @@ tools:context="com.example.yoo.appeb.ddVenta">
                 android:elevation="1dp"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginTop="50dp" />
+                android:layout_marginTop="20dp" />
 
 
         </LinearLayout>
