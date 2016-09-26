@@ -1,5 +1,5 @@
 package com.example.yoo.appeb;
-
+import com.facebook.FacebookSdk;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +20,14 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.yoo.appeb.R;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,16 +61,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button btnLogin;
     private EditText inputUser,inputPassword;
     SharedPreferences prefs;
-
-
-
-    String LOGIN_URL= "http://192.168.1.66:8080/OpenDoor/login.php";
+    //FB
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
+    //
 
     View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //FB
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+
+        callbackManager = CallbackManager.Factory.create();
+        //
         setContentView(R.layout.activity_login);
          prefs = getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
         String usuario = prefs.getString("User", "0");
@@ -70,7 +84,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //Toast.makeText(LoginActivity.this,"si entra con diferente de 0 :7 "+usuario,Toast.LENGTH_LONG ).show();
             openProfile(view);
         }
-
+        //FB
+        loginButton = (LoginButton)findViewById(R.id.loginFB);
+        //
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
         signbutton= (TextView) findViewById(R.id.registro);
@@ -82,10 +98,54 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             }
         });
-
         btnLogin = (Button) findViewById(R.id.log_in_button);
-
         btnLogin.setOnClickListener(this);
+        //FB
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                String nombre, apellido,correo, id;
+
+                AccessToken accessToken = loginResult.getAccessToken();
+                //getUserDetailsFromFB(loginResult.getAccessToken());
+                Profile profile = Profile.getCurrentProfile();
+
+                nombre=profile.getFirstName();
+                apellido=profile.getLastName();
+                //correo= profile;
+                id=profile.getId();
+
+                Toast.makeText(LoginActivity.this,"Nombre "+nombre+" Apellido "+apellido+" ID "+id,Toast.LENGTH_LONG ).show();
+
+                /*info.setText(
+                        "User ID: "
+                                + loginResult.getAccessToken().getUserId()
+                                + "\n" +
+                                "Auth Token: "
+                                + loginResult.getAccessToken().getToken()
+
+
+                                 main.putExtra("name", profile.getFirstName());
+        main.putExtra("surname", profile.getLastName());
+                );*/
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+
+            }
+        });
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
 
@@ -143,13 +203,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 if (acceso=="correcto"){
 
-
-
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
                     Calendar c1 = GregorianCalendar.getInstance();
                     c1.add(Calendar.MONTH, -1);
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
                     String dateI =  sdf.format(c1.getTime());
-                    String dateF = new SimpleDateFormat("dd/MM/yy").format(new Date());
+                    Calendar c2 = GregorianCalendar.getInstance();
+                    String dateF =  sdf.format(c2.getTime());
 
                     SharedPreferences.Editor editor = prefs.edit();
 
@@ -163,7 +222,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor.commit();
                     openProfile(view);
                 }else {
-                    signin(view);
+                    //signin(view);
                 }
 
             }

@@ -1,6 +1,7 @@
 package com.example.yoo.appeb;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -54,7 +55,7 @@ public class agregargasto extends Fragment {
     ArrayAdapter<String> dataAdapter;
     RequestQueue requestQueueSend;
     RequestQueue requestQueueGetRubros;
-    String user= "1";
+    String user;
 
     public agregargasto() {
         // Required empty public constructor
@@ -64,6 +65,9 @@ public class agregargasto extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias",getActivity().MODE_PRIVATE);
+        String usuario = prefs.getString("User", "0");
+        user = usuario;
         View view = inflater.inflate(R.layout.fragment_agregargasto, container, false);
         //text = (TextView) view.findViewById(R.id.Productos);
         super.onCreate(savedInstanceState);
@@ -86,6 +90,7 @@ public class agregargasto extends Fragment {
         addPP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               // Toast.makeText(getContext(),"si manda llamar bien al onclick",Toast.LENGTH_LONG ).show();
                 addNewConcepto();
             }
         });
@@ -137,7 +142,6 @@ public class agregargasto extends Fragment {
                 Toast.makeText(getContext(),error.toString(),Toast.LENGTH_LONG ).show();
             }
         }) {
-
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<String, String>();

@@ -58,8 +58,9 @@ public class VentasFragment extends Fragment {
     //ArrayList<String> listaProductos= new ArrayList<String>();
     ArrayList <vcontado_list> listaProductos = new ArrayList<vcontado_list>();
     ArrayList <vcredito_list> listaProductosCred = new ArrayList<vcredito_list>();
-    ArrayAdapter<String> ad;
+    //vcreditolist_adapter ad;
     ListView lista;
+    ListView listaCredito;
     ProgressDialog PD;
     String user;
     public static final String KEY_datos="datos";
@@ -69,8 +70,8 @@ public class VentasFragment extends Fragment {
     SharedPreferences prefs;
     String fi;
     String ff;
-    vcontadolist_adapter adapter;
-    vcreditolist_adapter adaptador;
+    vcontadolist_adapter adapter =null;
+    vcreditolist_adapter adaptador=null;
     String nombreProd;
     String abono;
     String idventa;
@@ -85,6 +86,8 @@ public class VentasFragment extends Fragment {
         user = prefs.getString("User", "0");
         fi = prefs.getString("FI", "0");
         ff = prefs.getString("FF", "0");
+        adaptador=new vcreditolist_adapter(getActivity(),listaProductosCred);
+        adapter = new vcontadolist_adapter(getActivity(), listaProductos);
 
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabVenta);
@@ -113,7 +116,7 @@ public class VentasFragment extends Fragment {
 
         tabs.addTab(tabs.newTab().setText("Resumen"));
         tabs.addTab(tabs.newTab().setText("Crédito"));
-
+        //tabs.setCurrentTab(0);
         tabs.setOnTabSelectedListener(
                 new TabLayout.OnTabSelectedListener() {
                     @Override
@@ -121,17 +124,27 @@ public class VentasFragment extends Fragment {
                         PD = new ProgressDialog(getContext());
                         PD.setMessage("Loading.....");
                         PD.setCancelable(false);
-                        adapter.clear();
-                        adapter.notifyDataSetChanged();
-                        if (tab.getText() == "Resumen"){
-                            readContado();
 
+                       // adaptador.getCount();
+                        if (tab.getText() == "Resumen"){
+                            if (!adaptador.isEmpty()){
+                                //Toast.makeText(getContext(),"adapter de credito no limpio",Toast.LENGTH_LONG ).show();
+                                adaptador.clear();
+                                adaptador.notifyDataSetChanged();
+                            }
+                            readContado();
                         }else if (tab.getText() == "Crédito"){
+                            if (!adapter.isEmpty()){
+                                //Toast.makeText(getContext(),"adapter de contado ni vacio",Toast.LENGTH_LONG ).show();
+
+                                adapter.clear();
+                                adapter.notifyDataSetChanged();
+                            }
+
                             readCredito();
                         };
-
-
                     }
+
 
                     @Override
                     public void onTabUnselected(TabLayout.Tab tab) {
@@ -144,6 +157,8 @@ public class VentasFragment extends Fragment {
                     }
                 }
         );
+        /*listaCredito = (ListView)getView().findViewById(R.id.listViewVentas);
+        listaCredito.setOnItemClickListener(new A);*/
 
         lista = (ListView)getView().findViewById(R.id.listViewVentas);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -152,12 +167,13 @@ public class VentasFragment extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     final int position, long arg3) {
                 //datos = (String) lista.getItemAtPosition(position);
-                datos = (String) listaProductos.get(position).getIdVc();
+
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
 
                 if (tipoVenta=="resumen"){
+                    datos = (String) listaProductos.get(position).getIdVc();
                     builder.setMessage("Seleccione una opción")
                             .setTitle("")
                             .setPositiveButton("Eliminar", new DialogInterface.OnClickListener()  {
@@ -203,10 +219,13 @@ public class VentasFragment extends Fragment {
         PD.setMessage("Loading.....");
         PD.setCancelable(false);
         if (datosR == "Credito"){
-            readCredito();
+            tabs.getTabAt(1).select();
+            //readCredito();
         }else {
+            tabs.getTabAt(0).select();
             readContado();
         }
+        //readCredito();
 
     }
 
@@ -240,6 +259,7 @@ public class VentasFragment extends Fragment {
                         a = fech[0];
                         m = fech[1];
                         d = fech[2];
+                        //Toast.makeText(getContext(),"si lee el json ventas"+user,Toast.LENGTH_LONG ).show();
                         try{
 
                             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -248,14 +268,16 @@ public class VentasFragment extends Fragment {
                             Date FECHAI = formatter.parse(fi);
                             Date FECHAF = formatter.parse(ff);
                             Date fechaDB = formatter.parse(d+"/"+m+"/"+a);
+                            //Toast.makeText(getContext(),idventa +","+nombreproducto +","+precioproducto +","+cantidad +","+modopago +","+d+"/"+m+"/"+a +","+totalventa +","+idProducto,Toast.LENGTH_LONG ).show();
 
                             if (id_usuario.equals(user) && FECHAI.compareTo(fechaDB) <= 0 && FECHAF.compareTo(fechaDB) >= 0/**/ ){
-                                //Toast.makeText(getContext(),idventa +","+nombreproducto +","+precioproducto +","+cantidad +","+modopago +","+d+"/"+m+"/"+a +","+totalventa +","+idProducto,Toast.LENGTH_LONG ).show();
+                               // Toast.makeText(getContext(),idventa +","+nombreproducto +","+precioproducto +","+cantidad +","+modopago +","+d+"/"+m+"/"+a +","+totalventa +","+idProducto,Toast.LENGTH_LONG ).show();
                                 if (modopago.equals("0")){
                                     modopago="Contado";
                                 }else {
                                     modopago="Crédito";
                                 }
+                                //Toast.makeText(getContext(),"encuentra ventas",Toast.LENGTH_LONG ).show();
                                 listaProductos.add(new vcontado_list(nombreproducto, d+"/"+m+"/"+a, precioproducto,cantidad , modopago ,totalventa ,idProducto,idventa));
                             };
                         }catch (ParseException e1){
@@ -316,12 +338,13 @@ public class VentasFragment extends Fragment {
 
                         if (id_usuario.equals(user)){
 
-                            listaProductosCred.add(new vcredito_list(idAdeudo,nombreproducto,deudor ,deuda,fechaventa ,abono ,abono_periodo));
+                            listaProductosCred.add(new vcredito_list(nombreproducto,fechaventa,deudor ,deuda,abono ,abono_periodo ,idAdeudo));
+                            //String nombreProductoVcred,String fechaVcred, String deudorVcred, String deudaVcred, String  abonoVcred,String abonoperiodoVcred, String idVcred
                         };
 
 
                     } // for loop ends
-                    adapter.notifyDataSetChanged();
+                    adaptador.notifyDataSetChanged();
 
                     PD.dismiss();
 
@@ -340,8 +363,11 @@ public class VentasFragment extends Fragment {
         });
         requestQueueLA.add(jsonObjectRequest);
 
-        ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaProductos);
-        lista.setAdapter(ad);
+        ///ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaProductos);
+
+        //adaptador = new vcreditolist_adapter(getActivity(), listaProductosCred);
+        adaptador=new vcreditolist_adapter(getActivity(),listaProductosCred);
+        lista.setAdapter(adaptador);
 
     }
 
@@ -352,11 +378,11 @@ public class VentasFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getContext(),"Registro eliminado con éxito",Toast.LENGTH_LONG ).show();
-                adaptador.clear();
-                ad.notifyDataSetChanged();
+                adapter.clear();
+                adapter.notifyDataSetChanged();
                 //ReadDataFromDB();
                 readContado();
-                ad.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
