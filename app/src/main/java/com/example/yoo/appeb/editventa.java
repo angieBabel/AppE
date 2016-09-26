@@ -47,16 +47,11 @@ public class editventa extends Fragment {
         View view = inflater.inflate(R.layout.fragment_editventa, container, false);
         // Inflate the layout for this fragment
         //String datos = getArguments() != null ? getArguments().getString("datos") : "email@email.com";
-        datos = getArguments().getString("datos");
-
         editarVenta = (Button) view.findViewById(R.id.button);
         editarVenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 abonoP = Integer.parseInt(abono.getText().toString());
-               /* parameters.put("idAdeudo", dataArray[0]);
-                parameters.put("abonoT", String.valueOf(abonoP+abonoD));
-                parameters.put("abonoP",String.valueOf(abonoP));*/
 
                 requestQueueA = Volley.newRequestQueue(getContext());
                 StringRequest request = new StringRequest(Request.Method.POST, editURL, new Response.Listener<String>() {
@@ -87,7 +82,7 @@ public class editventa extends Fragment {
                     protected Map<String, String> getParams() throws AuthFailureError {
 
                         Map<String, String> parameters = new HashMap<String, String>();
-                        parameters.put("idAdeudo", dataArray[0]);
+                        parameters.put("idAdeudo", getArguments().getString("idventa"));
                         parameters.put("abonoT", String.valueOf(abonoP+abonoD));
                         parameters.put("abonoP",String.valueOf(abonoP));
                         return parameters;
@@ -105,12 +100,22 @@ public class editventa extends Fragment {
         super.onActivityCreated(state);
 
 
+
+
+        /*idProd = getArguments().getString("idventa");
+
+            args.putString("nombre", nombreProd);
+                                    args.putString("abono", abono);
+                                    args.putString("idventa", idventa);
+            * */
+
+
         nombreProd = (EditText)getView().findViewById(R.id.edtNombreProd);
         abono = (EditText)getView().findViewById(R.id.edtabonoProd);
         //listaProductos.add(idAdeudo +","+nombreproducto +","+deudor +","+deuda +","+fechaventa +","+abono +","+abono_periodo);
-        dataArray = datos.split(",");
-        nombreProd.setText(dataArray[1]);
-        abonoD = Integer.parseInt(dataArray[5].toString());
+//        dataArray = datos.split(",");
+        nombreProd.setText(getArguments().getString("nombre"));
+        abonoD = Integer.parseInt(getArguments().getString("abono"));
         //abonoP = Integer.parseInt(abono.getText().toString());
 
     }
