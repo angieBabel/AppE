@@ -55,7 +55,9 @@ public class VentasFragment extends Fragment {
     String showAdeudo = "http://webcolima.com/wsecomapping/adeudos.php";
     String deleteURL = "http://webcolima.com/wsecomapping/delVenta.php";
 
-    ArrayList<String> listaProductos= new ArrayList<String>();
+    //ArrayList<String> listaProductos= new ArrayList<String>();
+    ArrayList <vcontado_list> listaProductos = new ArrayList<vcontado_list>();
+    ArrayList <vcredito_list> listaProductosCred = new ArrayList<vcredito_list>();
     ArrayAdapter<String> ad;
     ListView lista;
     ProgressDialog PD;
@@ -67,6 +69,12 @@ public class VentasFragment extends Fragment {
     SharedPreferences prefs;
     String fi;
     String ff;
+    vcontadolist_adapter adapter;
+    vcreditolist_adapter adaptador;
+    String nombreProd;
+    String abono;
+    String idventa;
+    String editarVenta;
 
 
     @Override
@@ -113,8 +121,8 @@ public class VentasFragment extends Fragment {
                         PD = new ProgressDialog(getContext());
                         PD.setMessage("Loading.....");
                         PD.setCancelable(false);
-                        ad.clear();
-                        ad.notifyDataSetChanged();
+                        adapter.clear();
+                        adapter.notifyDataSetChanged();
                         if (tab.getText() == "Resumen"){
                             readContado();
 
@@ -142,8 +150,9 @@ public class VentasFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int position, long arg3) {
-                datos = (String) lista.getItemAtPosition(position);
+                                    final int position, long arg3) {
+                //datos = (String) lista.getItemAtPosition(position);
+                datos = (String) listaProductos.get(position).getIdVc();
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
@@ -154,8 +163,9 @@ public class VentasFragment extends Fragment {
                             .setPositiveButton("Eliminar", new DialogInterface.OnClickListener()  {
                                 public void onClick(DialogInterface dialog, int id) {
                                     Log.i("Dialogos", "Confirmacion Eliminar.");
-                                    String[] data = datos.split(",");
-                                    eliminar(data[0]);
+                                    //String[] data = datos.split(",");
+                                    //eliminar(data[0]);
+                                    eliminar(datos);
 
                                 }
                             });
@@ -166,10 +176,14 @@ public class VentasFragment extends Fragment {
                             .setPositiveButton("Editar", new DialogInterface.OnClickListener()  {
                                 public void onClick(DialogInterface dialog, int id) {
                                     Log.i("Dialogos", "Confirmacion Agregar.");
-
+                                    nombreProd= (String) listaProductosCred.get(position).getnombreProductoVcred();
+                                    abono = (String) listaProductosCred.get(position).getabonoVcred();
+                                    idventa = (String) listaProductosCred.get(position).getidVcred();
                                     editventa fragment = new editventa();
                                     Bundle args = new Bundle();
-                                    args.putString("datos", datos);
+                                    args.putString("nombre", nombreProd);
+                                    args.putString("abono", abono);
+                                    args.putString("idventa", idventa);
                                     fragment.setArguments(args);
                                     android.support.v4.app.FragmentTransaction fragmentTransaction =
                                             getFragmentManager().beginTransaction();
@@ -205,7 +219,7 @@ public class VentasFragment extends Fragment {
 
             @Override
             public void onResponse(JSONObject response) {
-                listaProductos.add("Producto          Precio");
+                //listaProductos.add("Producto          Precio");
                 try {
                     JSONArray alumnos = response.getJSONArray("all");
                     for (int i = 0; i < alumnos.length(); i++) {
@@ -242,7 +256,7 @@ public class VentasFragment extends Fragment {
                                 }else {
                                     modopago="Crédito";
                                 }
-                                listaProductos.add(idventa +","+nombreproducto +","+precioproducto +","+cantidad +","+modopago +","+d+"/"+m+"/"+a +","+totalventa +","+idProducto);
+                                listaProductos.add(new vcontado_list(nombreproducto, d+"/"+m+"/"+a, precioproducto,cantidad , modopago ,totalventa ,idProducto,idventa));
                             };
                         }catch (ParseException e1){
                             Toast.makeText(getContext(),"error "+e1,Toast.LENGTH_LONG ).show();
@@ -250,7 +264,7 @@ public class VentasFragment extends Fragment {
 
 
                     } // for loop ends
-                    ad.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
 
                     PD.dismiss();
 
@@ -269,8 +283,10 @@ public class VentasFragment extends Fragment {
         });
         requestQueueLA.add(jsonObjectRequest);
 
-        ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaProductos);
-        lista.setAdapter(ad);
+        //ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaProductos);
+        adapter = new vcontadolist_adapter(getActivity(), listaProductos);
+        //lista.setAdapter(ad);
+        lista.setAdapter(adapter);
 
     }
 
@@ -283,7 +299,7 @@ public class VentasFragment extends Fragment {
 
             @Override
             public void onResponse(JSONObject response) {
-                listaProductos.add("Producto          Precio");
+                //listaProductos.add("Producto          Precio");
                 try {
                     JSONArray alumnos = response.getJSONArray("all");
                     for (int i = 0; i < alumnos.length(); i++) {
@@ -300,12 +316,12 @@ public class VentasFragment extends Fragment {
 
                         if (id_usuario.equals(user)){
 
-                            listaProductos.add(idAdeudo +","+nombreproducto +","+deudor +","+deuda +","+fechaventa +","+abono +","+abono_periodo);
+                            listaProductosCred.add(new vcredito_list(idAdeudo,nombreproducto,deudor ,deuda,fechaventa ,abono ,abono_periodo));
                         };
 
 
                     } // for loop ends
-                    ad.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
 
                     PD.dismiss();
 
@@ -336,7 +352,7 @@ public class VentasFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getContext(),"Registro eliminado con éxito",Toast.LENGTH_LONG ).show();
-                ad.clear();
+                adaptador.clear();
                 ad.notifyDataSetChanged();
                 //ReadDataFromDB();
                 readContado();
