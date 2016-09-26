@@ -70,8 +70,8 @@ public class VentasFragment extends Fragment {
     SharedPreferences prefs;
     String fi;
     String ff;
-    vcontadolist_adapter adapter;
-    vcreditolist_adapter adaptador;
+    vcontadolist_adapter adapter =null;
+    vcreditolist_adapter adaptador=null;
     String nombreProd;
     String abono;
     String idventa;
@@ -86,6 +86,8 @@ public class VentasFragment extends Fragment {
         user = prefs.getString("User", "0");
         fi = prefs.getString("FI", "0");
         ff = prefs.getString("FF", "0");
+        adaptador=new vcreditolist_adapter(getActivity(),listaProductosCred);
+        adapter = new vcontadolist_adapter(getActivity(), listaProductos);
 
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabVenta);
@@ -114,7 +116,7 @@ public class VentasFragment extends Fragment {
 
         tabs.addTab(tabs.newTab().setText("Resumen"));
         tabs.addTab(tabs.newTab().setText("Crédito"));
-
+        //tabs.setCurrentTab(0);
         tabs.setOnTabSelectedListener(
                 new TabLayout.OnTabSelectedListener() {
                     @Override
@@ -122,18 +124,27 @@ public class VentasFragment extends Fragment {
                         PD = new ProgressDialog(getContext());
                         PD.setMessage("Loading.....");
                         PD.setCancelable(false);
-                        adapter.clear();
-                        adapter.notifyDataSetChanged();
 
+                       // adaptador.getCount();
                         if (tab.getText() == "Resumen"){
+                            if (!adaptador.isEmpty()){
+                                //Toast.makeText(getContext(),"adapter de credito no limpio",Toast.LENGTH_LONG ).show();
+                                adaptador.clear();
+                                adaptador.notifyDataSetChanged();
+                            }
                             readContado();
-
                         }else if (tab.getText() == "Crédito"){
+                            if (!adapter.isEmpty()){
+                                //Toast.makeText(getContext(),"adapter de contado ni vacio",Toast.LENGTH_LONG ).show();
+
+                                adapter.clear();
+                                adapter.notifyDataSetChanged();
+                            }
+
                             readCredito();
                         };
-
-
                     }
+
 
                     @Override
                     public void onTabUnselected(TabLayout.Tab tab) {
@@ -207,18 +218,18 @@ public class VentasFragment extends Fragment {
         PD = new ProgressDialog(getContext());
         PD.setMessage("Loading.....");
         PD.setCancelable(false);
-        if (datosR == "credito"){
-            readCredito();
+        if (datosR == "Credito"){
+            tabs.getTabAt(1).select();
+            //readCredito();
         }else {
+            tabs.getTabAt(0).select();
             readContado();
         }
+        //readCredito();
 
     }
 
     public void readContado(){
-        Toast.makeText(getContext(),"si entra alread ventas",Toast.LENGTH_LONG ).show();
-
-
         tipoVenta="resumen";
         requestQueueLA = Volley.newRequestQueue(getActivity());
 
@@ -248,7 +259,7 @@ public class VentasFragment extends Fragment {
                         a = fech[0];
                         m = fech[1];
                         d = fech[2];
-                        Toast.makeText(getContext(),"si lee el json ventas"+user,Toast.LENGTH_LONG ).show();
+                        //Toast.makeText(getContext(),"si lee el json ventas"+user,Toast.LENGTH_LONG ).show();
                         try{
 
                             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -257,16 +268,16 @@ public class VentasFragment extends Fragment {
                             Date FECHAI = formatter.parse(fi);
                             Date FECHAF = formatter.parse(ff);
                             Date fechaDB = formatter.parse(d+"/"+m+"/"+a);
-                            Toast.makeText(getContext(),idventa +","+nombreproducto +","+precioproducto +","+cantidad +","+modopago +","+d+"/"+m+"/"+a +","+totalventa +","+idProducto,Toast.LENGTH_LONG ).show();
+                            //Toast.makeText(getContext(),idventa +","+nombreproducto +","+precioproducto +","+cantidad +","+modopago +","+d+"/"+m+"/"+a +","+totalventa +","+idProducto,Toast.LENGTH_LONG ).show();
 
                             if (id_usuario.equals(user) && FECHAI.compareTo(fechaDB) <= 0 && FECHAF.compareTo(fechaDB) >= 0/**/ ){
-                                Toast.makeText(getContext(),idventa +","+nombreproducto +","+precioproducto +","+cantidad +","+modopago +","+d+"/"+m+"/"+a +","+totalventa +","+idProducto,Toast.LENGTH_LONG ).show();
+                               // Toast.makeText(getContext(),idventa +","+nombreproducto +","+precioproducto +","+cantidad +","+modopago +","+d+"/"+m+"/"+a +","+totalventa +","+idProducto,Toast.LENGTH_LONG ).show();
                                 if (modopago.equals("0")){
                                     modopago="Contado";
                                 }else {
                                     modopago="Crédito";
                                 }
-                                Toast.makeText(getContext(),"encuentra ventas",Toast.LENGTH_LONG ).show();
+                                //Toast.makeText(getContext(),"encuentra ventas",Toast.LENGTH_LONG ).show();
                                 listaProductos.add(new vcontado_list(nombreproducto, d+"/"+m+"/"+a, precioproducto,cantidad , modopago ,totalventa ,idProducto,idventa));
                             };
                         }catch (ParseException e1){

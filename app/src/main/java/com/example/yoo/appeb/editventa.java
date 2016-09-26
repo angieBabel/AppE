@@ -64,7 +64,7 @@ public class editventa extends Fragment {
                         //precioProd.setText("");
                         VentasFragment fragment = new VentasFragment();
                         Bundle args = new Bundle();
-                        args.putString("datos", "credito");
+                        args.putString("datos", "Credito");
                         fragment.setArguments(args);
                         android.support.v4.app.FragmentTransaction fragmentTransaction =
                                 getFragmentManager().beginTransaction();
@@ -100,20 +100,8 @@ public class editventa extends Fragment {
         super.onActivityCreated(state);
 
 
-
-
-        /*idProd = getArguments().getString("idventa");
-
-            args.putString("nombre", nombreProd);
-                                    args.putString("abono", abono);
-                                    args.putString("idventa", idventa);
-            * */
-
-
         nombreProd = (EditText)getView().findViewById(R.id.edtNombreProd);
         abono = (EditText)getView().findViewById(R.id.edtabonoProd);
-        //listaProductos.add(idAdeudo +","+nombreproducto +","+deudor +","+deuda +","+fechaventa +","+abono +","+abono_periodo);
-//        dataArray = datos.split(",");
         nombreProd.setText(getArguments().getString("nombre"));
         abonoD = Integer.parseInt(getArguments().getString("abono"));
         //abonoP = Integer.parseInt(abono.getText().toString());
