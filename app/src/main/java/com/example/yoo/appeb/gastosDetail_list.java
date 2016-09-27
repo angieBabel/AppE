@@ -11,7 +11,7 @@ public class gastosDetail_list {
     private String fechaGD;
     private String idGD;
     private String idRGD;
-
+                                           //concepto,cantidad,tG,fecha,idR,idG
     public  gastosDetail_list(String nombreConcepto, String cantidadGD,String totalGD ,String fechaGD, String idGD, String idRGD) {
         this.nombreConcepto = nombreConcepto;
         this.cantidadGD = cantidadGD;

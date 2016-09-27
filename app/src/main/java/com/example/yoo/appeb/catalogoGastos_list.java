@@ -11,12 +11,14 @@ public class catalogoGastos_list  {
     private String conceptoCG;
     private String costoCG;
     private String idCG;
+    private String idRubro;
 
-    public  catalogoGastos_list (String nombreRubroCG, String conceptoCG, String costoCG ,String idCG) {
+    public  catalogoGastos_list (String nombreRubroCG, String conceptoCG, String costoCG ,String idCG, String idRubro) {
         this.nombreRubroCG = nombreRubroCG;
         this.conceptoCG = conceptoCG;
         this.costoCG = costoCG;
         this.idCG = idCG;
+        this.idRubro = idRubro;
     }
 
     public String getNombreRubroCG() {
@@ -49,5 +51,13 @@ public class catalogoGastos_list  {
 
     public void setIdCG(String idGD) {
         this.idCG= idCG;
+    }
+
+    public String getidRubro() {
+        return idRubro;
+    }
+
+    public void setidRubro(String idRubro) {
+        this.idRubro= idRubro;
     }
 }

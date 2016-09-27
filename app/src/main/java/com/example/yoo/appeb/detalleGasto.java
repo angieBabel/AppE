@@ -96,6 +96,7 @@ public class detalleGasto extends Fragment {
                 //datos = (String) lista.getItemAtPosition(position);
                 datos = listaProductos.get(position).getIdGD();
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(),"datos del id del gasto "+datos,Toast.LENGTH_LONG ).show();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -162,9 +163,8 @@ public class detalleGasto extends Fragment {
                             if (usuario.equals(user) && idR.equals(idRubro) && FECHAI.compareTo(fechaDB) <= 0 && FECHAF.compareTo(fechaDB) >= 0/*&& FECHAI.compareTo(fechaDB) <= 0 && FECHAF.compareTo(fechaDB) >= 0*/ ){
 
                                 //listaProductos.add(idG+","+concepto+ " , " + cantidad + " , " +fecha+ " , " +tG);
-                            listaProductos.add(new gastosDetail_list(concepto,cantidad,tG,fecha,idR,idG));
+                            listaProductos.add(new gastosDetail_list(concepto,cantidad,tG,fecha,idG,idR));
                             };
-
                         }catch (ParseException e1){
                             Toast.makeText(getContext(),"error "+e1,Toast.LENGTH_LONG ).show();
                         }

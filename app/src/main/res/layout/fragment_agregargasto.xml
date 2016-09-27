@@ -75,7 +75,7 @@
                     android:id="@+id/edtNombreConcepto"
                     android:layout_gravity="center_horizontal"
                     android:elevation="1dp"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:layout_marginStart="10dp" />
 
                 <TextView
@@ -94,7 +94,7 @@
                     android:layout_gravity="center_horizontal"
                     android:elevation="1dp"
                     android:numeric="decimal"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:layout_marginStart="10dp" />
 
 

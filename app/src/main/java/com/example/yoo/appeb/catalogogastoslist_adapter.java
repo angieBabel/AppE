@@ -43,6 +43,11 @@ public class catalogogastoslist_adapter extends ArrayAdapter {
         TextView idCG = (TextView) item.findViewById(R.id.txtidCG);
         idCG.setText(datos.get(position).getIdCG());
 
+        TextView idRubro = (TextView) item.findViewById(R.id.txtidRubro);
+        idRubro.setText(datos.get(position).getidRubro());
+
+
+
 
         // Devolvemos la vista para que se muestre en el ListView.
         return item;
