@@ -69,7 +69,8 @@ tools:context="com.example.yoo.appeb.editventa">
                 android:id="@+id/edtNombreProd"
                 android:layout_gravity="center_horizontal"
                 android:elevation="1dp"
-                android:inputType="text" />
+                android:inputType="text"
+                android:enabled="false"/>
 
             <!--<TextView
                 android:layout_width="fill_parent"

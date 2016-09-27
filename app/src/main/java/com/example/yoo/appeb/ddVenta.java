@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,13 +52,18 @@ public class ddVenta extends Fragment {
     EditText nuevoRubro; //edtTextNuevoRubro
     String modoP;
     Spinner spinner;
-    ArrayList<String> listaProductos= new ArrayList<String>();
-    ArrayAdapter<String> ad;
+    //ArrayList<String> listaProductos= new ArrayList<String>();
+    ArrayList<spinner_productos> listaProductos = new ArrayList<spinner_productos>();
+    //ArrayAdapter<String> ad;
+    spinnerProductos_adapter ad;
     ListView lista;
     RequestQueue requestQueueSend;
     RequestQueue requestQueueGet;
     String user;
     SharedPreferences prefs;
+    String precioProducto;
+    String idProducto;
+    EditText precioProduct;
 
 
     public ddVenta() {
@@ -80,6 +86,7 @@ public class ddVenta extends Fragment {
 
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
+        precioProduct= (EditText) getView().findViewById(R.id.costoProducto);
 
         spinner = (Spinner)getView().findViewById(R.id.spinnerProducto);
 
@@ -157,8 +164,10 @@ public class ddVenta extends Fragment {
                 //idP+","+nombre + "  ,  " + preci
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put("id_usuario",user);
-                parameters.put("idP", productos[0]);
-                parameters.put("precio", productos[2]);
+                //parameters.put("idP", productos[0]);
+                parameters.put("idP",idProducto);
+                //parameters.put("precio", productos[2]);
+                parameters.put("precio", precioProducto);
                 parameters.put("cantidad", cant.getText().toString());
                 parameters.put("modopago", modoP);
                 parameters.put("deudor", deudo.getText().toString());
@@ -189,7 +198,8 @@ public class ddVenta extends Fragment {
                         String usuario = producto.getString("id_usuario");
                         String idP = producto.getString("id_producto");
                         if (usuario.equals(user)){
-                            listaProductos.add(idP+","+nombre + "," + precio);
+                            //listaProductos.add(idP+","+nombre + "," + precio);
+                            listaProductos.add(new spinner_productos(idP,nombre,precio));
                         };
 
 
@@ -210,9 +220,29 @@ public class ddVenta extends Fragment {
         });
 
         requestQueueGet.add(jsonObjectRequest);
-        ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,listaProductos);
-        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        /*ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,listaProductos);
+        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
+        ad = new spinnerProductos_adapter(getActivity(), listaProductos);
         spinner.setAdapter(ad);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
+            {
+                //String cost=listaCatGastos.get(position).getPreciosp();
+                precioProducto=listaProductos.get(position).getPrecioProduct();
+                idProducto = listaProductos.get(position).getIdproductos();
+                precioProduct.setText(precioProducto);
+                //Toast.makeText(getActivity(),datos,Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                //nothing
+            }
+        });
 
 
     }
