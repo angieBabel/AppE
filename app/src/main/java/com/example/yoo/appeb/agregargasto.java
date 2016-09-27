@@ -80,7 +80,6 @@ public class agregargasto extends Fragment {
     @Override
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
-
         nombreConcepto = (EditText)getView().findViewById(R.id.edtNombreConcepto);
         precioConcpeto = (EditText)getView().findViewById(R.id.edtPrecioConcepto);
         nuevoRubro = (EditText)getView().findViewById(R.id.newRubro);
@@ -120,7 +119,7 @@ public class agregargasto extends Fragment {
 
 
     public void addNewConcepto(){
-        if (!rubroExistente.equals("no")){
+        if (rubroExistente.equals("si")){
             String text = spinner.getSelectedItem().toString();
             String[] rubros=text.split("\n");
             //rubroExistente=rubros[0].trim();
@@ -166,7 +165,7 @@ public class agregargasto extends Fragment {
 
     public void mostrarRE(View view) {
         tipoRubro="Existe";
-
+        rubroExistente="si";
         //((TextView) view.findViewById(R.id.textView_superior)).setText(mItem.textoEncima);
         ((LinearLayout) view.findViewById(R.id.RE)).setVisibility(View.VISIBLE);
         ((LinearLayout) view.findViewById(R.id.RN)).setVisibility(View.GONE);

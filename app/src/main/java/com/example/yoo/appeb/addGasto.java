@@ -55,7 +55,7 @@ public class addGasto extends Fragment {
     spnconcept_adapter dataAdapter;
     RequestQueue requestQueueSend;
     RequestQueue requestQueueGetCatGastos;
-    String user= "1";
+    String user;
     EditText cantidadD;
     String costo;
     String idconcepto;
@@ -68,6 +68,9 @@ public class addGasto extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias",getActivity().MODE_PRIVATE);
+        String usuario = prefs.getString("User", "0");
+        user = usuario;
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_gasto, container, false);
         //text = (TextView) view.findViewById(R.id.Productos);
