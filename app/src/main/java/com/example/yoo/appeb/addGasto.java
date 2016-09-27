@@ -1,6 +1,7 @@
 package com.example.yoo.appeb;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.example.yoo.appeb.R.id.cantidad;
@@ -47,8 +49,10 @@ public class addGasto extends Fragment {
     String getURL = "http://webcolima.com/wsecomapping/catalogogastos.php";
 
     Spinner spinner;
-    ArrayList<String> listaCatGastos= new ArrayList<String>();
-    ArrayAdapter<String> dataAdapter;
+    //ArrayList<String> listaCatGastos= new ArrayList<String>();
+    ArrayList<spnconcept> listaCatGastos = new ArrayList<spnconcept>();
+    //ArrayAdapter<String> dataAdapter;
+    spnconcept_adapter dataAdapter;
     RequestQueue requestQueueSend;
     RequestQueue requestQueueGetCatGastos;
     String user= "1";
@@ -72,9 +76,9 @@ public class addGasto extends Fragment {
         super.onActivityCreated(state);
 
         cantidadD = (EditText) getView().findViewById(R.id.cantidad);
-        spinner = (Spinner)getView().findViewById(R.id.spinnerGastos);
 
-        listaCatGastos.clear();
+
+        //listaCatGastos.clear();
         requestQueueGetCatGastos= Volley.newRequestQueue(getContext());
         //listaA(la);
 
@@ -92,7 +96,9 @@ public class addGasto extends Fragment {
                         String costo = alumno.getString("costo");
                         String usuario = alumno.getString("id_usuario");
                         if (usuario.equals(user)){
-                            listaCatGastos.add(idC + "," + nombre+ "," +costo);
+                            //listaCatGastos.add(idC + "," + nombre+ "," +costo);
+                            listaCatGastos.add(new spnconcept(idC,nombre,costo));
+
                         };
                         //listaA[i]=idaula;
                     }
@@ -111,9 +117,38 @@ public class addGasto extends Fragment {
         });
 
         requestQueueGetCatGastos.add(jsonObjectRequest);
-        dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,listaCatGastos);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
+
+        //dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, listaCatGastos);
+
+        dataAdapter = new spnconcept_adapter(getActivity(), listaCatGastos);
+        //dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        /*listaCatGastos.add(new spnconcept("1d","2d","3d"));
+        listaCatGastos.add(new spnconcept("1d","3d","3d"));
+        listaCatGastos.add(new spnconcept("1d","4d","3d"));
+        listaCatGastos.add(new spnconcept("1d","5d","3d"));*/
+
+
+        spinner = (Spinner)getView().findViewById(R.id.spinnerGastos);
         spinner.setAdapter(dataAdapter);
+        //spinner.setAdapter(new spnconcept_adapter(getActivity(),listaCatGastos));
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
+            {
+                //String cost=listaCatGastos.get(position).getPreciosp();
+                String datos = listaCatGastos.get(position).getConceptosp();
+                Toast.makeText(getActivity(),datos,Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                //nothing
+            }
+        });
 
 
         Button addPP = (Button) getView().findViewById(R.id.button);
