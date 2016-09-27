@@ -211,8 +211,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Calendar c1 = GregorianCalendar.getInstance();
                     c1.add(Calendar.MONTH, -1);
                     String dateI =  sdf.format(c1.getTime());
-                    Calendar c2 = GregorianCalendar.getInstance();
-                    String dateF =  sdf.format(c2.getTime());
+
+
+                    String dateF = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+                    //Calendar c2 = GregorianCalendar.getInstance();
+                    //String dateF =  sdf.format(c2.getTime());
 
                     SharedPreferences.Editor editor = prefs.edit();
 
@@ -258,6 +261,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //Envio de datos del perfil
     private  void openProfile(View view){
+        finish();
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         /*ntent.putExtra(KEY_USERNAME,username);*/
         intent.putExtra("User",idUser);
@@ -265,6 +269,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void signin(View v) {
+        finish();
         //Toast.makeText(LoginActivity.this,"lo inento",Toast.LENGTH_LONG ).show();
         Intent intent = new Intent(LoginActivity.this, registrar.class);
         //ntent.putExtra(KEY_USERNAME,username);

@@ -137,7 +137,7 @@ public class addGasto extends Fragment {
             {
                 //String cost=listaCatGastos.get(position).getPreciosp();
                 costo=listaCatGastos.get(position).getPreciosp();
-                idconcepto = listaCatGastos.get(position).getConceptosp();
+                idconcepto = listaCatGastos.get(position).getIdconceptosp();
                 precioConcept.setText(costo);
                 //Toast.makeText(getActivity(),datos,Toast.LENGTH_LONG).show();
             }
