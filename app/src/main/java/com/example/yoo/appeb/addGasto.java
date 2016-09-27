@@ -35,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.example.yoo.appeb.R.id.cantidad;
@@ -48,12 +49,17 @@ public class addGasto extends Fragment {
     String getURL = "http://webcolima.com/wsecomapping/catalogogastos.php";
 
     Spinner spinner;
-    ArrayList<String> listaCatGastos= new ArrayList<String>();
-    ArrayAdapter<String> dataAdapter;
+    //ArrayList<String> listaCatGastos= new ArrayList<String>();
+    ArrayList<spnconcept> listaCatGastos = new ArrayList<spnconcept>();
+    //ArrayAdapter<String> dataAdapter;
+    spnconcept_adapter dataAdapter;
     RequestQueue requestQueueSend;
     RequestQueue requestQueueGetCatGastos;
     String user;
     EditText cantidadD;
+    String costo;
+    String idconcepto;
+    EditText precioConcept;
 
     public addGasto() {
         // Required empty public constructor
@@ -76,7 +82,8 @@ public class addGasto extends Fragment {
         super.onActivityCreated(state);
 
         cantidadD = (EditText) getView().findViewById(R.id.cantidad);
-        spinner = (Spinner)getView().findViewById(R.id.spinnerGastos);
+        precioConcept= (EditText) getView().findViewById(R.id.pConcept);
+
 
         listaCatGastos.clear();
         requestQueueGetCatGastos= Volley.newRequestQueue(getContext());
@@ -96,7 +103,8 @@ public class addGasto extends Fragment {
                         String costo = alumno.getString("costo");
                         String usuario = alumno.getString("id_usuario");
                         if (usuario.equals(user)){
-                            listaCatGastos.add(idC + "," + nombre+ "," +costo);
+                            listaCatGastos.add(new spnconcept(idC,nombre,costo));
+
                         };
                         //listaA[i]=idaula;
                     }
@@ -115,9 +123,31 @@ public class addGasto extends Fragment {
         });
 
         requestQueueGetCatGastos.add(jsonObjectRequest);
-        dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,listaCatGastos);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        dataAdapter = new spnconcept_adapter(getActivity(), listaCatGastos);
+
+
+        spinner = (Spinner)getView().findViewById(R.id.spinnerGastos);
         spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
+            {
+                //String cost=listaCatGastos.get(position).getPreciosp();
+                costo=listaCatGastos.get(position).getPreciosp();
+                idconcepto = listaCatGastos.get(position).getConceptosp();
+                precioConcept.setText(costo);
+                //Toast.makeText(getActivity(),datos,Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                //nothing
+            }
+        });
 
 
         Button addPP = (Button) getView().findViewById(R.id.button);
@@ -161,13 +191,16 @@ public class addGasto extends Fragment {
 
                // listaCatGastos.add(idC + "," + nombre+ "," +costo);
                 String cant =cantidadD.getText().toString();
-                int tot = Integer.parseInt(cant)*Integer.parseInt(gastos[2]);
+
+                //int tot = Integer.parseInt(cant)*Integer.parseInt(gastos[2]);
+                int tot = Integer.parseInt(cant)*Integer.parseInt(costo);
                 String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
 
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put("id_usuario",user);
                 parameters.put("cantidad", cant);
-                parameters.put("id_concepto", gastos[0]);
+                //parameters.put("id_concepto", gastos[0]);
+                parameters.put("id_concepto", idconcepto);
                 parameters.put("fecha", date);
                 parameters.put("total", String.valueOf(tot));
 
