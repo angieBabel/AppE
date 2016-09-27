@@ -7,10 +7,13 @@ package com.example.yoo.appeb;
 public class spinner_rubros {
 
         private String idRubro;
+
         private String nombreRubro;
+
         //private String idProducto;
 
         public spinner_rubros(String idRubro, String nombreRubro) {
+            super();
             this.idRubro = idRubro;
             this.nombreRubro = nombreRubro;
         }
@@ -30,6 +33,5 @@ public class spinner_rubros {
         public void setidRubro(String idRubro) {
             this.idRubro = idRubro;
         }
-
 
 }
