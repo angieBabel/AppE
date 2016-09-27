@@ -212,8 +212,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     c1.add(Calendar.MONTH, -1);
                     String dateI =  sdf.format(c1.getTime());
 
+                    //String dateI = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
-                    String dateF = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+
+                    String dateF = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
                     //Calendar c2 = GregorianCalendar.getInstance();
                     //String dateF =  sdf.format(c2.getTime());
 
