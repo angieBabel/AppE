@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtidCG"
         android:textSize="14sp"
-        android:layout_weight="0.16"
+        android:layout_weight="0.0"
         android:visibility="gone" />
 
     <TextView

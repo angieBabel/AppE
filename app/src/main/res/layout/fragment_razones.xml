@@ -7,140 +7,146 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.yoo.appeb.VentasFragment">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.yoo.appeb.VentasFragment">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:weightSum="1"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/TituloProductos"
-                android:layout_marginTop="5dp"
-                android:layout_margin="10dp">
+                android:weightSum="1"
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView10" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp">
-                    <ImageView
+                    android:id="@+id/TituloProductos"
+                    android:layout_marginTop="5dp"
+                    android:layout_margin="10dp">
+
+                    <TextView
+                        android:text="TextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/imageView3"
-                        android:src="@drawable/ic_primaryrazones"
-                        android:adjustViewBounds="true" />
-                    <TextView
+                        android:id="@+id/textView10" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="62dp"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Razones Financieras"
-                        android:id="@+id/Rfinancieras"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:textSize="25dp"
-                        android:textIsSelectable="true"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView3"
+                            android:src="@drawable/ic_primaryrazones"
+                            android:adjustViewBounds="true" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="62dp"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Razones Financieras"
+                            android:id="@+id/Rfinancieras"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="25dp"
+                            android:textIsSelectable="true"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
 
-            </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
 
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp">
+
+                <TextView
+                    android:text="Rotación de cobros"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/textView11"
+                    android:layout_marginTop="10dp"
+                    android:capitalize="sentences"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="5dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No tienes cuentas por cobrar"
+                    android:id="@+id/aviso"
+                    android:scrollIndicators="top"
+                    android:layout_marginTop="15dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="X veces se crean y cobran las cuentas por cobrar "
+                    android:id="@+id/RotacionCobros"
+                    android:scrollIndicators="top"
+                    android:layout_marginTop="15dp" />
+
+                <TextView
+                    android:text="Significado : Representa el número de veces que se cumple el círculo comercial en el periodo a que se refieren las ventas netas. "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView6"
+                    android:layout_marginTop="15dp" />
+
+                <TextView
+                    android:text="Aplicación: proporciona el elemento básico para conocer la rapidez y la eficiencia del crédito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView9"
+                    android:layout_marginTop="15dp" />
+
+                <TextView
+                    android:text="Periodo promedio de crédito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/textView12"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="5dp" />
+
+                <TextView
+                    android:text="La empresa tarda X días en trasformar en efectivo las ventas realizadas. "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/PeriodoCredito"
+                    android:layout_marginTop="15dp" />
+
+                <TextView
+                    android:text="Significado: Indica el periodo promedio de tiempo que se requiere para cobrar las cuentas pendientes "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView15"
+                    android:layout_marginTop="15dp" />
+
+                <TextView
+                    android:text="Aplicación: Mide la eficiencia en la rapidez del cobro."
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView13"
+                    android:layout_marginTop="15dp" />
+            </LinearLayout>
 
         </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp">
-
-            <TextView
-                android:text="Rotación de cobros"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/textView11"
-                android:layout_marginTop="10dp"
-                android:capitalize="sentences"
-                android:textAlignment="center"
-                android:layout_marginBottom="5dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="No tienes cuentas por cobrar"
-                android:id="@+id/aviso"
-                android:scrollIndicators="top"
-                android:layout_marginTop="15dp"
-                android:visibility="gone" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="X veces se crean y cobran las cuentas por cobrar "
-                android:id="@+id/RotacionCobros"
-                android:scrollIndicators="top"
-                android:layout_marginTop="15dp" />
-
-            <TextView
-                android:text="Significado : Representa el número de veces que se cumple el círculo comercial en el periodo a que se refieren las ventas netas. "
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView6"
-                android:layout_marginTop="15dp" />
-
-            <TextView
-                android:text="Aplicación: proporciona el elemento básico para conocer la rapidez y la eficiencia del crédito"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView9"
-                android:layout_marginTop="15dp" />
-
-            <TextView
-                android:text="Periodo promedio de crédito"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/textView12"
-                android:layout_marginTop="10dp"
-                android:textAlignment="center"
-                android:layout_marginBottom="5dp" />
-
-            <TextView
-                android:text="La empresa tarda X días en trasformar en efectivo las ventas realizadas. "
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/PeriodoCredito"
-                android:layout_marginTop="15dp" />
-
-            <TextView
-                android:text="Significado: Indica el periodo promedio de tiempo que se requiere para cobrar las cuentas pendientes "
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView15"
-                android:layout_marginTop="15dp" />
-
-            <TextView
-                android:text="Aplicación: Mide la eficiencia en la rapidez del cobro."
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView13"
-                android:layout_marginTop="15dp" />
-        </LinearLayout>
-    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

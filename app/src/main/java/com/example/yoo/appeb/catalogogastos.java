@@ -4,6 +4,7 @@ package com.example.yoo.appeb;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -47,7 +48,7 @@ public class catalogogastos extends Fragment {
     ArrayAdapter<String> ad;
     ListView lista;
     ProgressDialog PD;
-    String user= "1";
+    String user;
     public static final String KEY_datos="datos";
     String datos;
     String nombreR;
@@ -66,6 +67,9 @@ public class catalogogastos extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias",getActivity().MODE_PRIVATE);
+        String usuario = prefs.getString("User", "0");
+        user = usuario;
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_catalogogastos, container, false);
 
@@ -116,7 +120,8 @@ public class catalogogastos extends Fragment {
                                 nombreR= listaGastos.get(position).getNombreRubroCG();
                                 concepto= listaGastos.get(position).getConceptoCG();
                                 costo= listaGastos.get(position).getCostoCG();
-                                idCG= listaGastos.get(position).getIdCG();
+                                //idCG= listaGastos.get(position).getIdCG();
+                                idCG=listaGastos.get(position).getIdCG();
 
                                 editConcepto fragment = new editConcepto();
                                 Bundle args = new Bundle();
@@ -212,7 +217,7 @@ public class catalogogastos extends Fragment {
 
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getContext(),"Producto eliminado con éxito",Toast.LENGTH_LONG ).show();
+                Toast.makeText(getContext(),"Concepto eliminado con éxito",Toast.LENGTH_LONG ).show();
                 //ad.clear();
                 adapter.clear();
                 //ad.notifyDataSetChanged();

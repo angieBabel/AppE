@@ -73,7 +73,8 @@ public class editConcepto extends Fragment {
         nombreR = getArguments().getString("rubro");
         concepto = getArguments().getString("concepto");
         costo =getArguments().getString("costo");
-        idCG =getArguments().getString("idCG");
+        idCG =getArguments().getString("ideCG");
+
 
         //datos = getArguments().getString("datos");
         //idC+","+rubro+", "+nombre+", "+costo
@@ -85,9 +86,6 @@ public class editConcepto extends Fragment {
             }
 
         });
-
-
-
         return view;
     }
     @Override
@@ -144,27 +142,13 @@ public class editConcepto extends Fragment {
         dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,listaRubros);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
-        spinner.setSelection(3);//getIndex(spinner)
-    }
-    private int getIndex(Spinner spinner)
-    {
-        int index = 0;
-
-        for (int i=0;i<spinner.getCount();i++){
-            if (spinner.getItemAtPosition(i).toString().indexOf(dataArray[1]) != -1){
-                index = i;
-                break;
-            }
-        }
-        return index;
+        //spinner.setSelection(3);//getIndex(spinner)
     }
 
     public void editConcept(){
-
         String text = spinner.getSelectedItem().toString();
         String[] rubros=text.split("\n");
         rubroExistente=rubros[0].trim();
-
         requestQueueSend = Volley.newRequestQueue(getContext());
         StringRequest request = new StringRequest(Request.Method.POST, editURL, new Response.Listener<String>() {
 
@@ -182,12 +166,15 @@ public class editConcepto extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getContext(),"no se pudo"+error,Toast.LENGTH_LONG ).show();
             }
         }) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
+
+                //Toast.makeText(getContext(),"id concepto"+idCG,Toast.LENGTH_LONG ).show();
+
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put("idConcepto",idCG);
                 parameters.put("nombre", nombreConcepto.getText().toString());
