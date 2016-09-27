@@ -61,6 +61,8 @@ public class editConcepto extends Fragment {
     String costo;
     String idCG;
     String idr;
+    String idRubro;
+
 
 
     public editConcepto() {
@@ -78,6 +80,7 @@ public class editConcepto extends Fragment {
         concepto = getArguments().getString("concepto");
         costo =getArguments().getString("costo");
         idCG =getArguments().getString("ideCG");
+        idRubro =getArguments().getString("idRubro");
 
 
         //datos = getArguments().getString("datos");
@@ -148,7 +151,11 @@ public class editConcepto extends Fragment {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
         dataAdapter = new spinner_rubros_adapter(getActivity(), listaRubros);
         spinner.setAdapter(dataAdapter);
-        //spinner.setSelection(3);//getIndex(spinner)
+        //spinner.set
+        //spinner.setSelection(4);
+        setSpin();
+
+
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -168,19 +175,23 @@ public class editConcepto extends Fragment {
             }
         });
     }
-    private int getIndex(Spinner spinner)
-    {
-        int index = 0;
 
-        for (int i=0;i<spinner.getCount();i++){
-            if (spinner.getItemAtPosition(i).toString().indexOf(dataArray[1]) != -1){
-                index = i;
+    public void setSpin(){
+        int tamanio= listaRubros.size();
+        //Toast.makeText(getContext(),"entra al set spin "+tamanio,Toast.LENGTH_LONG ).show();
+        spinner.setSelection(5);
+        //Toast.makeText(getContext(),listaRubros.size(),Toast.LENGTH_LONG ).show();
+        for (int i=0;i<listaRubros.size();i++){
+            Toast.makeText(getContext(),"entra al ciclo ",Toast.LENGTH_LONG ).show();
+            if (listaRubros.get(i).getidRubro()== idRubro){
+                Toast.makeText(getContext(),"datos del id del gasto "+listaRubros.get(i).getidRubro(),Toast.LENGTH_LONG ).show();
+                spinner.setSelection(i);
                 break;
+            }else {
+                Toast.makeText(getContext(),"entra al else ",Toast.LENGTH_LONG ).show();
             }
         }
-        return index;
     }
-
     public void editConcept(){
         String text = spinner.getSelectedItem().toString();
         String[] rubros=text.split("\n");

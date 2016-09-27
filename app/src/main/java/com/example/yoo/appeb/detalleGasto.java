@@ -96,7 +96,7 @@ public class detalleGasto extends Fragment {
                 //datos = (String) lista.getItemAtPosition(position);
                 datos = listaProductos.get(position).getIdGD();
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
-                Toast.makeText(getContext(),"datos del id del gasto "+datos,Toast.LENGTH_LONG ).show();
+                //Toast.makeText(getContext(),"datos del id del gasto "+datos,Toast.LENGTH_LONG ).show();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 

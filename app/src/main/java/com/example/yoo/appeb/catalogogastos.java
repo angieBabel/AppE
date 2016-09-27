@@ -55,6 +55,7 @@ public class catalogogastos extends Fragment {
     String concepto;
     String costo;
     String idCG;
+    String idRubro;
     catalogogastoslist_adapter adapter;
 
 
@@ -99,7 +100,8 @@ public class catalogogastos extends Fragment {
                                     final int position, long arg3) {
                 //datos = (String) lista.getItemAtPosition(position);
                 datos = listaGastos.get(position).getIdCG();
-                //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
+
+                //Toast.makeText(getActivity(),datos,Toast.LENGTH_LONG).show();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -122,6 +124,7 @@ public class catalogogastos extends Fragment {
                                 costo= listaGastos.get(position).getCostoCG();
                                 //idCG= listaGastos.get(position).getIdCG();
                                 idCG=listaGastos.get(position).getIdCG();
+                                idRubro=listaGastos.get(position).getidRubro();
 
                                 editConcepto fragment = new editConcepto();
                                 Bundle args = new Bundle();
@@ -129,6 +132,7 @@ public class catalogogastos extends Fragment {
                                 args.putString("concepto", concepto);
                                 args.putString("costo", costo);
                                 args.putString("ideCG", idCG);
+                                args.putString("idRubro", idRubro);
 
                                 fragment.setArguments(args);
                                 android.support.v4.app.FragmentTransaction fragmentTransaction =
@@ -165,12 +169,13 @@ public class catalogogastos extends Fragment {
                         JSONObject producto = alumnos.getJSONObject(i);
                         String rubro = producto.getString("nombrerubro");
                         String nombre = producto.getString("nombre");
+                        String idRubro = producto.getString("rubro");
                         String costo = producto.getString("costo");
                         String usuario = producto.getString("id_usuario");
                         String idC = producto.getString("id_concepto");
                         if (usuario.equals(user)){
                             //listaGastos.add(idC+","+rubro+", "+nombre+", "+costo);
-                            listaGastos.add(new catalogoGastos_list(rubro,nombre,costo,idC));
+                            listaGastos.add(new catalogoGastos_list(rubro,nombre,costo,idC,idRubro));
                         };
 
 
