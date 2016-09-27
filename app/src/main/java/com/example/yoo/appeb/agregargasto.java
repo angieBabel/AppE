@@ -51,11 +51,15 @@ public class agregargasto extends Fragment {
     String tipoRubro;
     Button addConcepto;
     Spinner spinner;
-    ArrayList<String> listaRubros= new ArrayList<String>();
-    ArrayAdapter<String> dataAdapter;
+    //ArrayList<String> listaRubros= new ArrayList<String>();
+    ArrayList<spinner_rubros> listaRubros= new ArrayList<spinner_rubros>();
+    //ArrayAdapter<String> dataAdapter;
+    spinner_rubros_adapter dataAdapter;
     RequestQueue requestQueueSend;
     RequestQueue requestQueueGetRubros;
     String user;
+    String idr;
+    String idName;
 
     public agregargasto() {
         // Required empty public constructor
@@ -119,7 +123,9 @@ public class agregargasto extends Fragment {
         if (!rubroExistente.equals("no")){
             String text = spinner.getSelectedItem().toString();
             String[] rubros=text.split("\n");
-            rubroExistente=rubros[0].trim();
+            //rubroExistente=rubros[0].trim();
+            rubroExistente=idr;
+
         }
 
         requestQueueA = Volley.newRequestQueue(getContext());
@@ -181,7 +187,8 @@ public class agregargasto extends Fragment {
                         String nombre = alumno.getString("nombre");
                         String usuario = alumno.getString("id_usuario");
                         if (usuario.equals(user) || usuario.equals("0") ){
-                            listaRubros.add(idRubro + "\n" + nombre);
+                            //listaRubros.add(idRubro + "\n" + nombre);
+                            listaRubros.add(new spinner_rubros(idRubro,nombre));
                         };
                         //listaA[i]=idaula;
                     }
@@ -200,11 +207,31 @@ public class agregargasto extends Fragment {
         });
 
         requestQueueGetRubros.add(jsonObjectRequest);
-        dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,listaRubros);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        /*dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,listaRubros);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
+        dataAdapter = new spinner_rubros_adapter(getActivity(), listaRubros);
         spinner.setAdapter(dataAdapter);
         //spinnerAlumAc.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
         //rubroExistente = spinnerAlumAc.getSelectedItem().toString();
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
+            {
+
+                idr=listaRubros.get(position).getidRubro();
+                //Toast.makeText(getActivity(),datos,Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                //nothing
+            }
+        });
+
     }
 
     public void mostrarRN(View view){

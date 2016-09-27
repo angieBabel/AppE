@@ -8,18 +8,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by jordigarcia on 9/25/16.
  */
 
-/*public class spinner_rubros_adapter extends ArrayAdapter<spinner_rubros> {
+public class spinner_rubros_adapter extends ArrayAdapter{
     private Context context;
 
-    List<spinner_rubros> datos = null;
+    ArrayList<spinner_rubros> datos= null;
 
-    public spinner_rubros_adapter(Context context, List<spinner_rubros> datos)
+
+    public spinner_rubros_adapter(Context context, ArrayList<spinner_rubros> datos)
     {
         //se debe indicar el layout para el item que seleccionado (el que se muestra sobre el botón del botón)
 
@@ -28,87 +30,50 @@ import java.util.List;
         this.datos = datos;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View item = inflater.inflate(R.layout.spinner_rubros, null);
-
-
-        TextView nombreRubroCG = (TextView ) item.findViewById(R.id.idRubro);
-        nombreRubroCG.setText(datos.get(position).getidRubro());
-
-        TextView conceptoCG = (TextView) item.findViewById(R.id.nombreRubro);
-        conceptoCG.setText(datos.get(position).getNombre());
-
-
-        // Devolvemos la vista para que se muestre en el ListView.
-        return item;
-    }
-}*/
-public class spinner_rubros_adapter extends ArrayAdapter<spinner_rubros> {
-    private Context context;
-
-    List<spinner_rubros> datos = null;
-
-
-    public spinner_rubros_adapter(Context context, List<spinner_rubros> datos)
-    {
-        //se debe indicar el layout para el item que seleccionado (el que se muestra sobre el botón del botón)
-
-        super(context, R.layout.spinner_rubros,datos);
-        this.context = context;
-        this.datos = datos;
-    }
-
-    public spinner_rubros_adapter(Context context, int simple_spinner_item, List<spinner_rubros> datos)
-    {
-        //se debe indicar el layout para el item que seleccionado (el que se muestra sobre el botón del botón)
-
-        super(context, R.layout.spinner_rubros,datos);
-        this.context = context;
-        this.datos = datos;
-    }
 
     //este método establece el elemento seleccionado sobre el botón del spinner
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
+        View item=convertView;
         if (convertView == null)
         {
-            convertView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.spinner_rubros,null);
+            LayoutInflater inflater = LayoutInflater.from(context);
+            item = inflater.inflate(R.layout.spinner_rubros, null);
         }
-        ((TextView) convertView.findViewById(R.id.nombreRubro)).setText(datos.get(position).getNombre());
-        ((TextView) convertView.findViewById(R.id.idRubro)).setText(datos.get(position).getidRubro());
 
-        return convertView;
+        TextView nombreRubro = (TextView ) item.findViewById(R.id.nombreRubro);
+        nombreRubro .setText(datos.get(position).getNombre());
+
+        TextView idrubro = (TextView) item.findViewById(R.id.idRubro);
+        idrubro.setText(datos.get(position).getidRubro());
+
+        // Devolvemos la vista para que se muestre en el ListView.
+        return item;
     }
 
-    //gestiona la lista usando el View Holder Pattern. Equivale a la típica implementación del getView
-    //de un Adapter de un ListView ordinario
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent)
     {
         View row = convertView;
         if (row == null)
         {
-            LayoutInflater layoutInflater;
-            layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = layoutInflater.inflate(R.layout.spinner_rubros, parent, false);
+            LayoutInflater layoutInflater = LayoutInflater.from(context);
+            row = layoutInflater.inflate(R.layout.spinner_rubros,parent, false);
         }
 
         if (row.getTag() == null)
         {
             SocialNetworkHolder redSocialHolder = new SocialNetworkHolder();
-            redSocialHolder.setTextView((TextView) row.findViewById(R.id.idRubro));
-            redSocialHolder.setTextView((TextView) row.findViewById(R.id.nombreRubro));
+            redSocialHolder.setTextIdrubro((TextView) row.findViewById(R.id.idRubro));
+            redSocialHolder.setTextNameRubro((TextView) row.findViewById(R.id.nombreRubro));
             row.setTag(redSocialHolder);
         }
 
         //rellenamos el layout con los datos de la fila que se está procesando
-         spinner_rubros redSocial = datos.get(position);
-        ((SocialNetworkHolder) row.getTag()).getTextView().setText(redSocial.getidRubro());
-        ((SocialNetworkHolder) row.getTag()).getTextView().setText(redSocial.getNombre());
+        spinner_rubros redSocial = datos.get(position);
+        ((SocialNetworkHolder) row.getTag()).getTextIdrubro().setText(redSocial.getidRubro());
+        ((SocialNetworkHolder) row.getTag()).getTextNameRubro().setText(redSocial.getNombre());
 
 
         return row;
@@ -126,18 +91,28 @@ public class spinner_rubros_adapter extends ArrayAdapter<spinner_rubros> {
     {
 
 
+        private TextView textNameRubro;
+        private TextView textIdrubro;
 
-        private TextView textView;
 
-
-        public TextView getTextView()
+        public TextView getTextNameRubro()
         {
-            return textView;
+            return textNameRubro;
         }
 
-        public void setTextView(TextView textView)
+        public void setTextNameRubro(TextView textNameRubro)
         {
-            this.textView = textView;
+            this.textNameRubro = textNameRubro;
+        }
+
+        public TextView getTextIdrubro()
+        {
+            return textIdrubro;
+        }
+
+        public void setTextIdrubro(TextView textIdrubro)
+        {
+            this.textIdrubro = textIdrubro;
         }
 
     }
