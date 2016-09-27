@@ -1,9 +1,13 @@
 package com.example.yoo.appeb;
 import com.facebook.FacebookSdk;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -65,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     //
+    AlertDialog.Builder builder;
 
     View view;
 
@@ -141,7 +146,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             }
         });
-
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -222,15 +226,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor.commit();
                     openProfile(view);
                 }else {
-                    //signin(view);
-                }
+                    builder = new AlertDialog.Builder(LoginActivity.this);
 
+                    builder.setMessage("¿Ya tienes cuenta?")
+                            .setTitle("Credenciales invalidas")
+                            .setPositiveButton("Si, intentar de nuevo", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Log.i("Dialogos", "Confirmacion Agregar.");
+
+                                }
+                            })
+                            .setNegativeButton("No, crear una", new DialogInterface.OnClickListener()  {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Log.i("Dialogos", "Confirmacion Eliminar.");
+                                    signin(view);
+
+                                }
+                            });
+                    builder.show();
+                }
             }
         }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
-
                 Toast.makeText(LoginActivity.this,error.toString(),Toast.LENGTH_LONG ).show();
             }
         });
@@ -247,7 +265,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void signin(View v) {
-        Toast.makeText(LoginActivity.this,"lo inento",Toast.LENGTH_LONG ).show();
+        //Toast.makeText(LoginActivity.this,"lo inento",Toast.LENGTH_LONG ).show();
         Intent intent = new Intent(LoginActivity.this, registrar.class);
         //ntent.putExtra(KEY_USERNAME,username);
         //intent.putExtra("User",idUser);
