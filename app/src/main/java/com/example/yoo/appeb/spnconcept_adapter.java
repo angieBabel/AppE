@@ -26,10 +26,6 @@ public class spnconcept_adapter extends ArrayAdapter{
         this.datos = datos;
     }
 
-    /*public spnconcept_adapter(FragmentActivity activity, int simple_spinner_item, List<spnconcept> listaCatGastos) {
-        super();
-    }*/
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
@@ -38,7 +34,6 @@ public class spnconcept_adapter extends ArrayAdapter{
         {
             LayoutInflater inflater = LayoutInflater.from(context);
             item = inflater.inflate(R.layout.spinner_concepto, null);
-            //convertView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.spinner_concepto,null);
         }
 
         TextView idconcep = (TextView ) item.findViewById(R.id.idconcepto);
@@ -52,11 +47,6 @@ public class spnconcept_adapter extends ArrayAdapter{
 
         // Devolvemos la vista para que se muestre en el ListView.
         return item;
-        /*((TextView) convertView.findViewById(R.id.idconcepto)).setText(datos.get(position).getIdconceptosp());
-        ((TextView) convertView.findViewById(R.id.nameConcept)).setText(datos.get(position).getConceptosp());
-        ((TextView) convertView.findViewById(R.id.precioConcept)).setText(datos.get(position).getPreciosp());
-
-        return convertView;*/
     }
 
     public View getDropDownView(int position, View convertView, ViewGroup parent)
@@ -66,9 +56,6 @@ public class spnconcept_adapter extends ArrayAdapter{
         {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             row = layoutInflater.inflate(R.layout.spinner_concepto,parent, false);
-            /*LayoutInflater layoutInflater;
-            layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = layoutInflater.inflate(R.layout.spinner_concepto, parent, false);*/
         }
 
         if (row.getTag() == null)

@@ -3,28 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginStart="20dp">
+    android:layout_marginStart="20dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="5dp"
+    android:weightSum="1">
 
     <TextView
         android:text="TextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/idconcepto"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_height="match_parent" />
 
     <TextView
         android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/nameConcept"
-        android:textSize="16sp"
-        android:textStyle="normal|bold" />
+        android:textSize="18sp"
+        android:paddingStart="15dp"
+        android:layout_weight="0.03"
+        android:gravity="fill_vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="5dp" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp">
+        android:layout_marginStart="10dp"
+        android:visibility="gone">
 
         <TextView
             android:text="Precio: $ "
