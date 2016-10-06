@@ -1,6 +1,6 @@
 package com.example.yoo.appeb;
 
-import com.facebook.FacebookSdk;
+//import com.facebook.FacebookSdk;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;

@@ -1,5 +1,5 @@
 package com.example.yoo.appeb;
-import com.facebook.FacebookSdk;
+//import com.facebook.FacebookSdk;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -24,20 +24,24 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.yoo.appeb.R;
+/*
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+*/
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -66,8 +70,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText inputUser,inputPassword;
     SharedPreferences prefs;
     //FB
-    private LoginButton loginButton;
-    private CallbackManager callbackManager;
+    //private LoginButton loginButton;
+    //private CallbackManager callbackManager;
     //
     AlertDialog.Builder builder;
 
@@ -76,13 +80,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //FB
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
-
-        callbackManager = CallbackManager.Factory.create();
-        //
         setContentView(R.layout.activity_login);
+        //FB
+        //FacebookSdk.sdkInitialize(getApplicationContext());
+        //AppEventsLogger.activateApp(this);
+
+        //callbackManager = CallbackManager.Factory.create();
+        //
+       // setContentView(R.layout.activity_login);
          prefs = getSharedPreferences("MisPreferencias",getApplicationContext().MODE_PRIVATE);
         String usuario = prefs.getString("User", "0");
         if (!usuario.equals("0")){
@@ -90,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             openProfile(view);
         }
         //FB
-        loginButton = (LoginButton)findViewById(R.id.loginFB);
+        //loginButton = (LoginButton)findViewById(R.id.loginFB);
         //
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -106,10 +111,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin = (Button) findViewById(R.id.log_in_button);
         btnLogin.setOnClickListener(this);
         //FB
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        /*loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 String nombre, apellido,correo, id;
+                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email"));
 
                 AccessToken accessToken = loginResult.getAccessToken();
                 //getUserDetailsFromFB(loginResult.getAccessToken());
@@ -122,7 +128,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 Toast.makeText(LoginActivity.this,"Nombre "+nombre+" Apellido "+apellido+" ID "+id,Toast.LENGTH_LONG ).show();
 
-                /*info.setText(
+                *//*info.setText(
                         "User ID: "
                                 + loginResult.getAccessToken().getUserId()
                                 + "\n" +
@@ -132,7 +138,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                  main.putExtra("name", profile.getFirstName());
         main.putExtra("surname", profile.getLastName());
-                );*/
+                );*//*
 
             }
 
@@ -145,12 +151,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onError(FacebookException e) {
 
             }
-        });
+        });*/
     }
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 
 
     @Override
