@@ -85,7 +85,7 @@ public class GraficosFragment extends Fragment {
         tipoG=tipoGrafica;
         fi = prefs.getString("FI", "0");
         ff = prefs.getString("FF", "0");
-        Toast.makeText(getContext(),tipoG,Toast.LENGTH_LONG ).show();
+        //Toast.makeText(getContext(),tipoG,Toast.LENGTH_LONG ).show();
         PD = new ProgressDialog(getContext());
         PD.setMessage("Loading.....");
         PD.setCancelable(false);
@@ -126,22 +126,22 @@ public class GraficosFragment extends Fragment {
                         if (tab.getPosition()==0){
                             //VP
                             LoadVP();
-                            Toast.makeText(getContext(),"VP",Toast.LENGTH_LONG ).show();
+                            //Toast.makeText(getContext(),"VP",Toast.LENGTH_LONG ).show();
                             //readContado();
                         }else if (tab.getPosition()==1){
                             //VM
                             LoadVM();
-                            Toast.makeText(getContext(),"VM",Toast.LENGTH_LONG ).show();
+                            //Toast.makeText(getContext(),"VM",Toast.LENGTH_LONG ).show();
                             //readCredito();
                         }else if (tab.getPosition()==2){
                             //GP
                             LoadGP();
-                            Toast.makeText(getContext(),"GP",Toast.LENGTH_LONG ).show();
+                            //Toast.makeText(getContext(),"GP",Toast.LENGTH_LONG ).show();
                             //readCredito();
                         }else if (tab.getPosition()==3){
                             //GM
                             LoadGM();
-                            Toast.makeText(getContext(),"GM",Toast.LENGTH_LONG ).show();
+                            //Toast.makeText(getContext(),"GM",Toast.LENGTH_LONG ).show();
                             //readCredito();
                         };
                     }
@@ -157,49 +157,6 @@ public class GraficosFragment extends Fragment {
                     }
                 }
         );
-
-        /*switch(tipoGrafica){
-            case "Barras":
-            barentries
-
-                break;
-            case "Lineal":
-
-                break;
-            case "Pastel":
-
-                break;
-        }*/
-
-
-        /*PieChart pieChart = (PieChart)getView().findViewById(R.id.chart);
-
-        ArrayList<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(4f, 0));
-        entries.add(new Entry(8f, 1));
-        entries.add(new Entry(6f, 2));
-        entries.add(new Entry(12f, 3));
-        entries.add(new Entry(18f, 4));
-        entries.add(new Entry(9f, 5));
-
-        PieDataSet dataset = new PieDataSet(entries, "# of Calls");
-
-        ArrayList<String> labels = new ArrayList<String>();
-        labels.add("January");
-        labels.add("February");
-        labels.add("March");
-        labels.add("April");
-        labels.add("May");
-        labels.add("June");
-
-        PieData data = new PieData(labels, dataset);
-        dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
-        pieChart.setDescription("Description");
-        pieChart.setData(data);
-
-        pieChart.animateY(5000);
-
-        pieChart.saveToGallery("/sd/mychart.jpg", 85); // 85 is the quality of the image*/
 
      }
 
@@ -221,7 +178,6 @@ public class GraficosFragment extends Fragment {
 
 
         PD.show();
-        cont=0;
         barentries.clear();
         entries.clear();
         labels.clear();
@@ -239,20 +195,26 @@ public class GraficosFragment extends Fragment {
                         String cantidad = producto.getString("cantidad");
                         String usuario = producto.getString("id_usuario");
                         //Toast.makeText(getContext(),nombre+" , "+cantidad,Toast.LENGTH_LONG ).show();
-                        cont++;
+
+                        labels.add(nombre);
                         switch(tipoG) {
                             case "Barras":
-                                barentries.add(new BarEntry(Integer.parseInt(cantidad),cont));
+                                barentries.add(new BarEntry(Integer.parseInt(cantidad),i));
+                                //Toast.makeText(getContext(),barentries.get(i)+" , "+labels.get(i),Toast.LENGTH_LONG ).show();
                                 break;
                             case "Lineal":
-                                entries.add(new Entry(Integer.parseInt(cantidad),cont));
+                                entries.add(new Entry(Integer.parseInt(cantidad),i));
+                                //Toast.makeText(getContext(),entries.get(i)+" , "+labels.get(i),Toast.LENGTH_LONG ).show();
                                 break;
                             case "Pastel":
-                                entries.add(new Entry(Integer.parseInt(cantidad),cont));
+                                entries.add(new Entry(Integer.parseInt(cantidad),i));
+                                //Toast.makeText(getContext(),entries.get(i)+" , "+labels.get(i),Toast.LENGTH_LONG ).show();
 
                                 break;
                         }
-                        labels.add(nombre);
+                        cont++;
+
+
                     } // for loop ends
                     //adapter.notifyDataSetChanged();
                     //ad.notifyDataSetChanged();
@@ -278,15 +240,17 @@ public class GraficosFragment extends Fragment {
         //lineVP
     }
     private void  LoadVM(){
+
+
+        String newurl = urlVM+"?id_usuario="+user;
         requestQueueLA = Volley.newRequestQueue(getActivity());
 
 
         PD.show();
-        cont=0;
         barentries.clear();
         entries.clear();
         labels.clear();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,urlVM,new com.android.volley.Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,newurl,new com.android.volley.Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -300,20 +264,64 @@ public class GraficosFragment extends Fragment {
                         String total = producto.getString("total");
                         String usuario = producto.getString("id_usuario");
                         //Toast.makeText(getContext(),nombre+" , "+cantidad,Toast.LENGTH_LONG ).show();
-                        cont++;
+
+                        switch(mes) {
+                            case "0":
+                                labels.add("");
+                            case "1":
+                                labels.add("Enero");
+                                break;
+                            case "2":
+                                labels.add("Febrero");
+                                break;
+                            case "3":
+                                labels.add("Marzo");
+                                break;
+                            case "4":
+                                labels.add("Abril");
+                                break;
+                            case "5":
+                                labels.add("Mayo");
+                                break;
+                            case "6":
+                                labels.add("Junio");
+                                break;
+                            case "7":
+                                labels.add("Julio");
+                                break;
+                            case "8":
+                                labels.add("Agosto");
+                                break;
+                            case "9":
+                                labels.add("Septiembre");
+                                break;
+                            case "10":
+                                labels.add("Octubre");
+                                break;
+                            case "11":
+                                labels.add("Noviembre");
+                                break;
+                            case "12":
+                                labels.add("Diciembre");
+                                break;
+                        }
                         switch(tipoG) {
                             case "Barras":
-                                barentries.add(new BarEntry(Integer.parseInt(total),cont));
+                                barentries.add(new BarEntry(Integer.parseInt(total),i));
+                                //Toast.makeText(getContext(),barentries.get(i)+" , "+labels.get(i),Toast.LENGTH_LONG ).show();
                                 break;
                             case "Lineal":
-                                entries.add(new Entry(Integer.parseInt(total),cont));
+                                entries.add(new Entry(Integer.parseInt(total),i));
+                                //Toast.makeText(getContext(),entries.get(i)+" , "+labels.get(i),Toast.LENGTH_LONG ).show();
                                 break;
                             case "Pastel":
-                                entries.add(new Entry(Integer.parseInt(total),cont));
+                                entries.add(new Entry(Integer.parseInt(total),i));
+                                //Toast.makeText(getContext(),entries.get(i)+" , "+labels.get(i),Toast.LENGTH_LONG ).show();
 
                                 break;
                         }
-                        labels.add(mes);
+                        cont++;
+
                     } // for loop ends
                     //adapter.notifyDataSetChanged();
                     //ad.notifyDataSetChanged();
@@ -354,7 +362,6 @@ public class GraficosFragment extends Fragment {
 
 
         PD.show();
-        cont=0;
         barentries.clear();
         entries.clear();
         labels.clear();
@@ -372,21 +379,24 @@ public class GraficosFragment extends Fragment {
                         String cantidad = producto.getString("cantidad");
                         //String usuario = producto.getString("id_usuario");
                         //Toast.makeText(getContext(),nombre+" , "+cantidad,Toast.LENGTH_LONG ).show();
-                        cont++;
 
+                        labels.add(nombre);
                         switch(tipoG) {
                             case "Barras":
-                                barentries.add(new BarEntry(Integer.parseInt(cantidad),cont));
+                                barentries.add(new BarEntry(Integer.parseInt(cantidad),i));
+                                //Toast.makeText(getContext(),barentries.get(i)+" , "+labels.get(i),Toast.LENGTH_LONG ).show();
                                 break;
                             case "Lineal":
-                                entries.add(new Entry(Integer.parseInt(cantidad),cont));
+                                entries.add(new Entry(Integer.parseInt(cantidad),i));
+                                //Toast.makeText(getContext(),entries.get(i)+" , "+labels.get(i),Toast.LENGTH_LONG ).show();
                                 break;
                             case "Pastel":
-                                entries.add(new Entry(Integer.parseInt(cantidad),cont));
+                                entries.add(new Entry(Integer.parseInt(cantidad),i));
+                                //Toast.makeText(getContext(),entries.get(i)+" , "+labels.get(i),Toast.LENGTH_LONG ).show();
 
                                 break;
                         }
-                        labels.add(nombre);
+                        cont++;
                     } // for loop ends
                     //adapter.notifyDataSetChanged();
                     //ad.notifyDataSetChanged();
@@ -413,26 +423,16 @@ public class GraficosFragment extends Fragment {
 
     }
     private void  LoadGM(){
-        String a,m,d,aa,mm,dd;
-        String[] fech=fi.split("/");
-        d = fech[0];
-        m = fech[1];
-        a = fech[2];
-        String[] fechh=ff.split("/");
-        dd = fechh[0];
-        mm = fechh[1];
-        aa = fechh[2];
+        String newurl = urlGM+"?id_usuario="+user;
 
-        //String newurl = urlVP+"?id_usuario="+user+"&fechaInicio="+a+"-"+m+"-"+d+"&fechaFin="+aa+"-"+mm+"-"+dd;
         requestQueueLA = Volley.newRequestQueue(getActivity());
 
 
         PD.show();
-        cont=0;
         barentries.clear();
         entries.clear();
         labels.clear();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,urlGM,new com.android.volley.Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,newurl,new com.android.volley.Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -448,24 +448,71 @@ public class GraficosFragment extends Fragment {
                         //Toast.makeText(getContext(),nombre+" , "+cantidad,Toast.LENGTH_LONG ).show();
                         cont++;
 
+                        cont++;
+                        switch(mes) {
+                            case "0":
+                                labels.add("");
+                            case "1":
+                                labels.add("Enero");
+                                break;
+                            case "2":
+                                labels.add("Febrero");
+                                break;
+                            case "3":
+                                labels.add("Marzo");
+                                break;
+                            case "4":
+                                labels.add("Abril");
+                                break;
+                            case "5":
+                                labels.add("Mayo");
+                                break;
+                            case "6":
+                                labels.add("Junio");
+                                break;
+                            case "7":
+                                labels.add("Julio");
+                                break;
+                            case "8":
+                                labels.add("Agosto");
+                                break;
+                            case "9":
+                                labels.add("Septiembre");
+                                break;
+                            case "10":
+                                labels.add("Octubre");
+                                break;
+                            case "11":
+                                labels.add("Noviembre");
+                                break;
+                            case "12":
+                                labels.add("Diciembre");
+                                break;
+                        }
                         switch(tipoG) {
                             case "Barras":
-                                barentries.add(new BarEntry(Integer.parseInt(total),cont));
+                                barentries.add(new BarEntry(Integer.parseInt(total),i));
+                                //Toast.makeText(getContext(),barentries.get(i)+" , "+labels.get(i),Toast.LENGTH_LONG ).show();
                                 break;
                             case "Lineal":
-                                entries.add(new Entry(Integer.parseInt(total),cont));
+                                entries.add(new Entry(Integer.parseInt(total),i));
+                                //Toast.makeText(getContext(),entries.get(i)+" , "+labels.get(i),Toast.LENGTH_LONG ).show();
                                 break;
                             case "Pastel":
-                                entries.add(new Entry(Integer.parseInt(total),cont));
+                                entries.add(new Entry(Integer.parseInt(total),i));
+                                //Toast.makeText(getContext(),entries.get(i)+" , "+labels.get(i),Toast.LENGTH_LONG ).show();
 
                                 break;
                         }
-                        labels.add(mes);
+                        //Toast.makeText(getContext(),labels.size()+" tamanio del LABELS",Toast.LENGTH_LONG ).show();
+
                     } // for loop ends
                     //adapter.notifyDataSetChanged();
                     //ad.notifyDataSetChanged();
 
                     PD.dismiss();
+
+                    //Toast.makeText(getContext(),labels.get(2).toString()+" tamanio del LABELS",Toast.LENGTH_LONG ).show();
                     /*Toast.makeText(getContext(),entries.size()+" tamanio del entries",Toast.LENGTH_LONG ).show();
                     Toast.makeText(getContext(),labels.size()+" tamanio del labels",Toast.LENGTH_LONG ).show();*/
                     LGMTG();
